@@ -8,22 +8,23 @@ import com.google.gson.annotations.SerializedName;
 public class PharmItem {
 
     @SerializedName("MAIN_KEY")
-    public String mainKey;
+    private String mainKey;
     @SerializedName("NAME_KOR")
-    public String nameKor;
+    private String nameKor;
     @SerializedName("ADD_KOR_ROAD")
-    public String addKorRoad;
+    private String addKorRoad;
     @SerializedName("H_KOR_CITY")
-    public String hKorCity;
+    private String hKorCity;
     @SerializedName("H_KOR_GU")
-    public String hKorGu;
+    private String hKorGu;
     @SerializedName("H_KOR_DONG")
-    public String hKorDong;
+    private String hKorDong;
     @SerializedName("TEL")
-    public String tel;
+    private String tel;
     @SerializedName("AVAIL_LAN")
-    public String availLan;
-/*
+    private String availLan;
+
+    // constructor
     public PharmItem() {
 
     }
@@ -38,6 +39,7 @@ public class PharmItem {
         this.availLan = availLan;
     }
 
+    // getter & setter
     public String getMainKey() {
         return mainKey;
     }
@@ -101,5 +103,4 @@ public class PharmItem {
     public void setAvailLan(String availLan) {
         this.availLan = availLan;
     }
-    */
 }

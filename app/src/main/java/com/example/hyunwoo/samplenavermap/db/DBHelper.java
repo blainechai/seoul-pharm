@@ -43,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // /?
     }
 
-/*
+
     public void addPharmItem (PharmItem item) {
         // 1. get reference to writable DB
         SQLiteDatabase db = getWritableDatabase();
@@ -108,7 +108,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.query("addressTable", columns, selection, args, null, null, orderBy);
         return c;
     }
-*/
+
 
 /*
     public void update(AddressItem item) {

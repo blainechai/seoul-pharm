@@ -8,29 +8,31 @@ import java.util.List;
 /**
  * Created by Hyunwoo on 2016. 10. 8..
  */
-public class SebcPharmacyInfoKor {
-    // response type model
+public class SebcPharmacyInfoKor {  // response type model
 
     @SerializedName("list_total_count")
-    public int listTotalCount;
-
+    private int listTotalCount;
     @SerializedName("RESULT")
-    public Result result;
+    private Result result;
+    private List<PharmItem> row;
 
-    public List<PharmItem> row;
-/*
-    public SebcPharmacyInfoKor (int listTotalCount, Result result) {
+    // constructor
+    public SebcPharmacyInfoKor (int listTotalCount, Result result, List<PharmItem> row) {
         this.listTotalCount = listTotalCount;
         this.result = result;
+        this.row = row;
     }
 
-
+    // getter & setter
     public int getListTotalCount() {
         return listTotalCount;
     }
     public Result getResult() {
         return result;
     }
+    public List<PharmItem> getRow() {
+        return row;
+    }
 
-*/
+
 }

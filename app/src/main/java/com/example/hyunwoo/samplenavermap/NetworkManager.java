@@ -41,12 +41,12 @@ public class NetworkManager {
     public static final String OPEN_API_URL = "http://openapi.seoul.go.kr:8088/477a6b4d74626c613836547a636172/json/SebcPharmacyInfoKor/1/10/";
 
 
-    public void getPharms(Context context, final OnResultListener<SebcPharmacyInfoKor> listener) {
+    public void getPharms(Context context, final OnResultListener<ResponseResult> listener) {
         client.get(context, OPEN_API_URL, new TextHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                SebcPharmacyInfoKor result = gson.fromJson(responseString, SebcPharmacyInfoKor.class);
+                ResponseResult result = gson.fromJson(responseString, ResponseResult.class);
                 listener.onSuccess(result);
             }
 
