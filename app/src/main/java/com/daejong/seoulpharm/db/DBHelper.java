@@ -1,8 +1,16 @@
 package com.daejong.seoulpharm.db;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
+
+import com.daejong.seoulpharm.model.PharmItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Hyunwoo on 2016. 10. 1..
@@ -19,7 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String sql = "CREATE TABLE "+PharmDB.PharmTable.TABLE_NAME + "(" +
-                PharmDB.PharmTable.COLUMN_MAIN_KEY + " TEXT NOT NULL, " +
+                PharmDB.PharmTable.COLUMN_MAIN_KEY + " TEXT PRIMARY KEY NOT NULL, " +
                 PharmDB.PharmTable.COLUMN_NAME_KOR + " TEXT NOT NULL, " +
                 PharmDB.PharmTable.COLUMN_ADD_KOR_ROAD + " TEXT, " +
                 PharmDB.PharmTable.COLUMN_H_KOR_CITY + " TEXT, " +
@@ -35,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // /?
     }
 
-/*
+    // INSERT DATA
     public void addPharmItem (PharmItem item) {
         // 1. get reference to writable DB
         SQLiteDatabase db = getWritableDatabase();
@@ -61,9 +69,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<PharmItem> getAddressList(String keyword) {
+    // GET DATA LIST
+    public List<PharmItem> getPharmList(String keyword) {
         List<PharmItem> list = new ArrayList<PharmItem>();
-        Cursor c = getAddressCursor(keyword);
+        Cursor c = getPharmCursor(keyword);
         while(c.moveToNext()) {
             PharmItem item = new PharmItem();
             item.setMainKey(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_MAIN_KEY)));
@@ -79,7 +88,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public Cursor getAddressCursor(String keyword) {
+
+    public Cursor getPharmCursor(String keyword) {
         SQLiteDatabase db = getReadableDatabase();
         String[] columns = {PharmDB.PharmTable.COLUMN_MAIN_KEY,
                 PharmDB.PharmTable.COLUMN_NAME_KOR,
@@ -100,7 +110,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.query("addressTable", columns, selection, args, null, null, orderBy);
         return c;
     }
-*/
+
 
 /*
     public void update(AddressItem item) {

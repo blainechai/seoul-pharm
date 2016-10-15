@@ -24,6 +24,9 @@ public class PharmDB {
         public static final String COLUMN_TEL = "TEL";
         public static final String COLUMN_AVAIL_LAN = "AVAIL_LAN";
 
+        // 추가 -----
+        // ---------
+
     }
 
 }
