@@ -21,6 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daejong.seoulpharm.R;
+
 public class Fragment2 extends Fragment {
 
 	@Override

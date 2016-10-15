@@ -1,6 +1,7 @@
 package com.daejong.seoulpharm;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.daejong.seoulpharm.model.SebcPharmacyInfoKor;
 import com.google.gson.Gson;
@@ -44,6 +45,8 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                Log.d("blaine", responseString);
                 SebcPharmacyInfoKor result = gson.fromJson(responseString, SebcPharmacyInfoKor.class);
                 listener.onSuccess(result);
             }

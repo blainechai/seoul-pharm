@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         NetworkManager.getInstance().getPharms(MainActivity.this, new NetworkManager.OnResultListener<SebcPharmacyInfoKor>() {
             @Override
             public void onSuccess(SebcPharmacyInfoKor result) {
-                textView.setText(result.listTotalCount);
+                textView.setText(""+result.list_total_count);
             }
 
             @Override

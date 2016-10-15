@@ -11,10 +11,10 @@ public class SebcPharmacyInfoKor {
     // response type model
 
     @SerializedName("list_total_count")
-    public int listTotalCount;
+    public int list_total_count;
 
     @SerializedName("RESULT")
-    public Result result;
+    public Result RESULT;
 
     public List<PharmItem> row;
 /*

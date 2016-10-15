@@ -18,6 +18,7 @@ package com.daejong.seoulpharm.mapviewer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.daejong.seoulpharm.R;
 import com.nhn.android.maps.NMapView;
 
 public class FragmentMapActivity extends FragmentActivity {
