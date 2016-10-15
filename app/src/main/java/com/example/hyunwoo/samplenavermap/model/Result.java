@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Hyunwoo on 2016. 10. 8..
  */
 public class Result {
+
     @SerializedName("CODE")
     private String code;
     @SerializedName("MESSAGE")

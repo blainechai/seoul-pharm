@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Hyunwoo on 2016. 10. 8..
  */
 public class ResponseResult {
+
     @SerializedName("SebcPharmacyInfoKor")
     private SebcPharmacyInfoKor sebcPharmacyInfoKor;
 

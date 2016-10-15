@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ResponseResult result) {
                 textView.setText(""+result.getSebPharmacyInfoKor().getRow().get(0).getNameKor());
-                // insert DB
+                // insert data
                 for (PharmItem item : result.getSebPharmacyInfoKor().getRow()) {
                     db.addPharmItem(item);
                 }
