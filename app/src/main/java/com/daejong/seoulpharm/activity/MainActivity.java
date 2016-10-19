@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.daejong.seoulpharm.util.NetworkManager;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.db.DBHelper;
-import com.daejong.seoulpharm.mapviewer.NMapViewer;
 import com.daejong.seoulpharm.model.PharmItem;
 import com.daejong.seoulpharm.model.ResponseResult;
 
