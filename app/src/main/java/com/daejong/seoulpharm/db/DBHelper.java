@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql = "CREATE TABLE " + PharmDB.PharmTable.TABLE_NAME + "(" +
+        String sql = "CREATE TABLE "+PharmDB.PharmTable.TABLE_NAME + "(" +
                 PharmDB.PharmTable.COLUMN_MAIN_KEY + " TEXT PRIMARY KEY NOT NULL, " +
                 PharmDB.PharmTable.COLUMN_NAME_KOR + " TEXT NOT NULL, " +
                 PharmDB.PharmTable.COLUMN_ADD_KOR_ROAD + " TEXT, " +
@@ -44,21 +44,21 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // INSERT DATA
-    public void addPharmItem(PharmItem item) {
+    public void addPharmItem (PharmItem item) {
         // 1. get reference to writable DB
         SQLiteDatabase db = getWritableDatabase();
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.clear();
-        values.put(PharmDB.PharmTable.COLUMN_MAIN_KEY, item.getMainKey());
-        values.put(PharmDB.PharmTable.COLUMN_NAME_KOR, item.getNameKor());
-        values.put(PharmDB.PharmTable.COLUMN_ADD_KOR_ROAD, item.getAddKorRoad());
-        values.put(PharmDB.PharmTable.COLUMN_H_KOR_CITY, item.gethKorCity());
-        values.put(PharmDB.PharmTable.COLUMN_H_KOR_GU, item.gethKorGu());
-        values.put(PharmDB.PharmTable.COLUMN_H_KOR_DONG, item.gethKorDong());
-        values.put(PharmDB.PharmTable.COLUMN_TEL, item.getTel());
-        values.put(PharmDB.PharmTable.COLUMN_AVAIL_LAN, item.getAvailLan());
+        values.put(PharmDB.PharmTable.COLUMN_MAIN_KEY , item.getMainKey());
+        values.put(PharmDB.PharmTable.COLUMN_NAME_KOR , item.getNameKor());
+        values.put(PharmDB.PharmTable.COLUMN_ADD_KOR_ROAD , item.getAddKorRoad());
+        values.put(PharmDB.PharmTable.COLUMN_H_KOR_CITY , item.gethKorCity());
+        values.put(PharmDB.PharmTable.COLUMN_H_KOR_GU , item.gethKorGu());
+        values.put(PharmDB.PharmTable.COLUMN_H_KOR_DONG , item.gethKorDong());
+        values.put(PharmDB.PharmTable.COLUMN_TEL , item.getTel());
+        values.put(PharmDB.PharmTable.COLUMN_AVAIL_LAN , item.getAvailLan());
 
         // 3. insert
         db.insertWithOnConflict(PharmDB.PharmTable.TABLE_NAME, // table
@@ -74,7 +74,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public List<PharmItem> getPharmList(String keyword) {
         List<PharmItem> list = new ArrayList<PharmItem>();
         Cursor c = getPharmCursor(keyword);
-        while (c.moveToNext()) {
+        while(c.moveToNext()) {
             PharmItem item = new PharmItem();
             item.setMainKey(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_MAIN_KEY)));
             item.setNameKor(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_NAME_KOR)));
@@ -99,13 +99,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 PharmDB.PharmTable.COLUMN_H_KOR_GU,
                 PharmDB.PharmTable.COLUMN_H_KOR_DONG,
                 PharmDB.PharmTable.COLUMN_TEL,
-                PharmDB.PharmTable.COLUMN_AVAIL_LAN};
+                PharmDB.PharmTable.COLUMN_AVAIL_LAN };
 
         String selection = null;
         String[] args = null;
         if (!TextUtils.isEmpty(keyword)) {
             selection = "name LIKE ? OR address LIKE ? OR phone LIKE ? OR office LIKE ?";
-            args = new String[]{"%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%", "%" + keyword + "%"};
+            args = new String[] {"%" + keyword + "%","%" + keyword + "%","%" + keyword + "%","%" + keyword + "%"};
         }
         String orderBy = " name COLLATE LOCALIZED ASC";
         Cursor c = db.query("addressTable", columns, selection, args, null, null, orderBy);
