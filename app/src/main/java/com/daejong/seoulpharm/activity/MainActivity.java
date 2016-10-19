@@ -1,4 +1,4 @@
-package com.daejong.seoulpharm.activities;
+package com.daejong.seoulpharm.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.daejong.seoulpharm.NetworkManager;
+import com.daejong.seoulpharm.util.NetworkManager;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.mapviewer.NMapViewer;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.map_btn:
-                startActivity(new Intent(MainActivity.this, NMapViewer.class));
+                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
         }
     }

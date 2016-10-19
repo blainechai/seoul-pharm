@@ -1,10 +1,8 @@
-package com.daejong.seoulpharm;
+package com.daejong.seoulpharm.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.daejong.seoulpharm.model.ResponseResult;
-import com.daejong.seoulpharm.model.SebcPharmacyInfoKor;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;

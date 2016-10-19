@@ -1,4 +1,4 @@
-package com.daejong.seoulpharm.activities;
+package com.daejong.seoulpharm.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

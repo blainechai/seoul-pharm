@@ -34,9 +34,10 @@
         <activity
             android:name=".mapviewer.FragmentMapActivity"
             android:configChanges="keyboardHidden|orientation" />
-        <activity android:name=".activities.ComponentActivity" />
-        <activity android:name=".activities.DasanCallActivity" />
-        <activity android:name=".activities.ConversationActivity"></activity>
+        <activity android:name=".activity.ComponentActivity" />
+        <activity android:name=".activity.DasanCallActivity" />
+        <activity android:name=".activity.ConversationActivity" />
+        <activity android:name=".activity.MapActivity"></activity>
     </application>
 
 </manifest>
