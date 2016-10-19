@@ -1,11 +1,14 @@
 package com.daejong.seoulpharm.activity;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.daejong.seoulpharm.R;
 
 public class SplashActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
