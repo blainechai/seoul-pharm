@@ -99,7 +99,7 @@ public class NMapViewer extends NMapActivity {
 	private NMapPOIdataOverlay mFloatingPOIdataOverlay;
 	private NMapPOIitem mFloatingPOIitem;
 
-	private static boolean USE_XML_LAYOUT = false;
+	private static boolean USE_XML_LAYOUT = true;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -176,8 +176,8 @@ public class NMapViewer extends NMapActivity {
 		poiData.beginPOIdata(2);
 
 
-//		poiData.addPOIitem(127.062998737, 37.4931560639, "우리집 777-111", markerId, 0);
-//		poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
+		poiData.addPOIitem(127.062998737, 37.4931560639, "우리집 777-111", markerId, 0);
+		poiData.addPOIitem(127.061, 37.51, "Pizza 123-456", markerId, 0);
 		NGeoPoint nGeoPoint = new NGeoPoint();
 //		find
 		poiData.endPOIdata();
