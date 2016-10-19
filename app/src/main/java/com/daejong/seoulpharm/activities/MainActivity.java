@@ -1,9 +1,11 @@
-package com.daejong.seoulpharm;
+package com.daejong.seoulpharm.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.daejong.seoulpharm.NetworkManager;
+import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.PharmItem;
 import com.daejong.seoulpharm.model.ResponseResult;

@@ -61,9 +61,10 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(PharmDB.PharmTable.COLUMN_AVAIL_LAN , item.getAvailLan());
 
         // 3. insert
-        db.insert(PharmDB.PharmTable.TABLE_NAME, // table
+        db.insertWithOnConflict(PharmDB.PharmTable.TABLE_NAME, // table
                 null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
+                values,
+                SQLiteDatabase.CONFLICT_IGNORE); // key/value -> keys = column names/ values = column values
 
         // 4. close
         db.close();
