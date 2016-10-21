@@ -90,6 +90,7 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
         nMapView.setClickable(true);
         nMapView.setBuiltInZoomControls(true, null);
         nMapView.setOnMapStateChangeListener(this);
+        nMapView.setScalingFactor(4.0f);
 
         // 지도 조작 컨트롤러 생성
         nMapController = nMapView.getMapController();
@@ -128,7 +129,8 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
 
         // id값이 0으로 지정된 모든 오버레이가 표시되고 있는 위치로
         // 지도의 중심과 ZOOM을 재설정
-        poiDataOverlay.showAllPOIdata(0);
+        nMapController.setMapCenter(currentPos, 12);
+        //poiDataOverlay.showAllPOIdata(0);
 
         // 현재위치 ...
 //        startMyLocation();

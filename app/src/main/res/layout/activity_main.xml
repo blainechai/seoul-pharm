@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity">
 
     <!-- As the main content view, the view below consumes the entire
@@ -22,57 +20,84 @@
             android:background="#76a6f0"
             android:minHeight="?attr/actionBarSize"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
             <Spinner
+                android:id="@+id/spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner" />
+                android:layout_height="wrap_content" />
         </android.support.v7.widget.Toolbar>
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/main_toolbar">
 
+        <!-- main container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/main_toolbar"
+            android:orientation="vertical"
+            android:id="@+id/container">
+
+            <!-- API로부터 약국을 잘 받고있는지 테스트 -->
+            <TextView
+                android:id="@+id/resultView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello World!" />
+
+            <!-- Main Image -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.8"
+                android:background="@drawable/ic_main_center_image"
+                android:adjustViewBounds="true"
+                android:id="@+id/logo_image"/>
+
+            <!-- Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/resultView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hello World!" />
-
-                <Button
-                    android:id="@+id/map_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="지도" />
-
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_map"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_main_map" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_conversation"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_main_conversation"/>
             </LinearLayout>
-        </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_component"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_main_component" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/btn_scrap"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_main_scrap"/>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
     </RelativeLayout>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/chat_drawer_view"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:background="@android:color/white">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-            <ListView
-                android:id="@+id/chat_member_navigation_listview"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0px"
-                android:paddingBottom="56dp" />
-
-        </RelativeLayout>
-    </android.support.design.widget.NavigationView>
+    <include layout="@layout/navigation_drawer" />
 </android.support.v4.widget.DrawerLayout>
