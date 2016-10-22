@@ -8,8 +8,6 @@
     android:orientation="vertical"
     tools:context=".activity.DasanCallActivity">
 
-    <!-- As the main content view, the view below consumes the entire
-         space available using match_parent in both dimensions. -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -72,7 +70,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
