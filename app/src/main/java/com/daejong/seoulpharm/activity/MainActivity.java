@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView textView;
     DBHelper db;
-    Button mapBtn;
+    ImageView mapBtn;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
-        mapBtn = (Button) findViewById(R.id.map_btn);
+        mapBtn = (ImageView) findViewById(R.id.btn_map);
         mapBtn.setOnClickListener(this);
 
         NetworkManager.getInstance().getPharms(MainActivity.this, new NetworkManager.OnResultListener<ResponseResult>() {
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.map_btn:
+            case R.id.btn_map:
                 startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_tutorial_btn:
