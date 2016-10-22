@@ -29,74 +29,108 @@
 
 
         <!-- main container -->
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/main_toolbar"
-            android:orientation="vertical"
-            android:id="@+id/container">
+            android:orientation="vertical">
 
             <!-- API로부터 약국을 잘 받고있는지 테스트 -->
-            <TextView
-                android:id="@+id/resultView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hello World!" />
+
 
             <!-- Main Image -->
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.8"
-                android:background="@drawable/ic_main_center_image"
-                android:adjustViewBounds="true"
-                android:id="@+id/logo_image"/>
+                android:layout_height="match_parent"
+                android:layout_above="@+id/hi"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/resultView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello World!" />
+
+                <ImageView
+                    android:id="@+id/logo_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/ic_main_center_image" />
+
+            </LinearLayout>
+
 
             <!-- Buttons -->
             <LinearLayout
+                android:id="@+id/hi"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:id="@+id/btn_map"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_main_map" />
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btn_map"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_main_map"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <ImageView
+                        android:id="@+id/btn_conversation"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_main_conversation"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:id="@+id/btn_conversation"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_main_conversation"/>
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btn_component"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:adjustViewBounds="true"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@drawable/ic_main_component" />
+
+                    <ImageView
+                        android:id="@+id/btn_scrap"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:adjustViewBounds="true"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@drawable/ic_main_scrap" />
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:id="@+id/btn_component"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_main_component" />
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:id="@+id/btn_scrap"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_main_scrap"/>
-            </LinearLayout>
 
 
-
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
     <include layout="@layout/navigation_drawer" />
