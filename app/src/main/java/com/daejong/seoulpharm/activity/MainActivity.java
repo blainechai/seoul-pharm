@@ -21,7 +21,7 @@ import com.daejong.seoulpharm.model.ResponseResult;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView textView;
+    TextView currentAddressView;
     DBHelper db;
     ImageView mapBtn;
     Toolbar toolbar;
@@ -34,11 +34,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         db = new DBHelper(MainActivity.this);
-        textView = (TextView) findViewById(R.id.resultView);
+        currentAddressView = (TextView) findViewById(R.id.current_address_view);
+//        NetworkManager.getInstance().getAddress(MainActivity.this, );
 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        toolbar.setTitle("Seoul Pharm");
-        toolbar.setTitleMarginStart(16);
+//        toolbar.setTitle("Seoul Pharm");
+//        toolbar.setTitleMarginStart(16);
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         setSupportActionBar(toolbar);
         setDrawerToggle();
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mapBtn = (ImageView) findViewById(R.id.btn_map);
         mapBtn.setOnClickListener(this);
         findViewById(R.id.btn_conversation).setOnClickListener(this);
+
+
 /*
         NetworkManager.getInstance().getPharms(MainActivity.this, new NetworkManager.OnResultListener<ResponseResult>() {
             @Override

@@ -3,6 +3,7 @@ package com.daejong.seoulpharm.util;
 import android.content.Context;
 import android.util.Log;
 
+import com.daejong.seoulpharm.model.AddressResponse;
 import com.daejong.seoulpharm.model.ResponseResult;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
@@ -80,6 +81,30 @@ public class NetworkManager {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 listener.onSuccess(responseString);
+            }
+        });
+    }
+
+    // 좌표 > 주소 변환
+    public static final String CONVERT_TO_ADDRESS_URL = "https://openapi.naver.com/v1/map/reversegeocode";
+    public void getAddress(Context context, long latitude, long longtitude, final OnResultListener<String> listener) {
+        RequestParams params = new RequestParams();
+        params.put("query", longtitude+","+latitude);
+
+        client.addHeader("Content-Type", "application/xml");
+        client.addHeader("X-Naver-Client-Id", "VTse802YjiIWqbRNxuIl");
+        client.addHeader("X-Naver-Client-Secret", "THzJyx3ZHT");
+
+        client.get(context, CONVERT_TO_ADDRESS_URL, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                listener.onFail(statusCode, responseString);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                AddressResponse response = gson.fromJson(responseString, AddressResponse.class);
+                listener.onSuccess(response.getResult().getItems().get(0).getAddress());
             }
         });
     }

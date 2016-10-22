@@ -43,24 +43,53 @@
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/main_toolbar"
-            android:orientation="vertical">
+            android:layout_below="@+id/main_toolbar">
 
-            <!-- API로부터 약국을 잘 받고있는지 테스트 -->
+            <!-- Show Current Address -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/panel_current_address"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:background="#707070"
+                android:orientation="horizontal" >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_map_blue_ball"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="현재 주소"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="@dimen/margin_space_10dp"
+                    android:id="@+id/current_address_view"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_map_gray_ball"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_space_10dp"
+                    android:textColor="#E4E4E4"
+                    android:text="위치 재설정"/>
+            </LinearLayout>
 
 
-            <!-- Main Image -->
+            <!-- Main 지도 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/hi"
+                android:layout_above="@+id/panel_buttons"
+                android:layout_below="@+id/panel_current_address"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/resultView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hello World!" />
 
                 <ImageView
                     android:id="@+id/logo_image"
@@ -72,9 +101,9 @@
             </LinearLayout>
 
 
-            <!-- Buttons -->
+            <!-- Main Buttons -->
             <LinearLayout
-                android:id="@+id/hi"
+                android:id="@+id/panel_buttons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
