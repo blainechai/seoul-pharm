@@ -1,12 +1,18 @@
 package com.daejong.seoulpharm.adapter;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.daejong.seoulpharm.R;
+import com.daejong.seoulpharm.model.ConversationConst;
+import com.daejong.seoulpharm.util.TreeNode;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -14,22 +20,120 @@ import java.util.List;
  */
 public class ConversationListAdatper extends BaseAdapter {
 
-    List<String> symptomItems = new ArrayList<>();
+    List<TreeNode<String>> items = new ArrayList<>();
 
-    public void setSymptomItems(String symptom) {
-        symptomItems.add(symptom);
+    TreeNode<String> root = new TreeNode<String>(ConversationConst.ROOT);
+    {
+        TreeNode<String> currentSymptom = root.addChild(ConversationConst.KOR_CURRENT_SYMPTOM);
+        {
+            TreeNode<String> head = currentSymptom.addChild(ConversationConst.KOR_D1_HEAD);
+            {
+                TreeNode<String> scalp = head.addChild(ConversationConst.KOR_D2_SCALP);
+                {
+                    TreeNode<String> bleeding = scalp.addChild(ConversationConst.KOR_DSYMP_BLEEDING);
+                    TreeNode<String> bruise = scalp.addChild(ConversationConst.KOR_DSYMP_BRUISE);
+                    TreeNode<String> itching = scalp.addChild(ConversationConst.KOR_DSYMP_ITCHING);
+                    TreeNode<String> burn = scalp.addChild(ConversationConst.KOR_DSYMP_BURN);
+                    TreeNode<String> lump = scalp.addChild(ConversationConst.KOR_DSYMP_LUMP);
+                    TreeNode<String> numbness = scalp.addChild(ConversationConst.KOR_DSYMP_NUMBLESS);
+                    TreeNode<String> swelling = scalp.addChild(ConversationConst.KOR_DSYMP_SWELLING);
+                }
+                TreeNode<String> eye = currentSymptom.addChild(ConversationConst.KOR_D2_EYES);
+                {
+                    TreeNode<String> bleeding = eye.addChild(ConversationConst.KOR_DSYMP_BLEEDING);
+                    TreeNode<String> blind_spot = eye.addChild(ConversationConst.KOR_DSYMP_BLIND_SPOT);
+                    TreeNode<String> blurred_vision = eye.addChild(ConversationConst.KOR_DSYMP_BLURRED_VISION);
+                    TreeNode<String> bruise = eye.addChild(ConversationConst.KOR_DSYMP_BRUISE);
+                    TreeNode<String> cloudy_vision = eye.addChild(ConversationConst.KOR_DSYMP_CLOUDY_VISION);
+                    TreeNode<String> bulging_eyes = eye.addChild(ConversationConst.KOR_DSYMP_BULGING_EYES);
+                    TreeNode<String> mucus = eye.addChild(ConversationConst.KOR_DSYMP_MUCUS);
+                    TreeNode<String> double_vision = eye.addChild(ConversationConst.KOR_DSYMP_DOUBLE_VISION);
+                    TreeNode<String> pus = eye.addChild(ConversationConst.KOR_DSYMP_PUS);
+                    TreeNode<String> dry = eye.addChild(ConversationConst.KOR_DSYMP_DRY);
+                    TreeNode<String> irritation = eye.addChild(ConversationConst.KOR_DSYMP_IRRITATION);
+                    TreeNode<String> redness = eye.addChild(ConversationConst.KOR_DSYMP_REDNESS);
+                    TreeNode<String> pain = eye.addChild(ConversationConst.KOR_DSYMP_PAIN);
+                    TreeNode<String> puffy = eye.addChild(ConversationConst.KOR_DSYMP_PUFFY);
+                    TreeNode<String> sth_in_the_eye = eye.addChild(ConversationConst.KOR_DSYMP_STH_IN_THE_EYE);
+                    TreeNode<String> watery = eye.addChild(ConversationConst.KOR_DSYMP_WATERY);
+                }
+                TreeNode<String> nose = currentSymptom.addChild(ConversationConst.KOR_D2_NOSE);
+                {
+                    // TreeNode<String>
+                }
+            }
+            TreeNode<String> neck = currentSymptom.addChild("목");
+            TreeNode<String> arm = currentSymptom.addChild("팔");
+            TreeNode<String> chest = currentSymptom.addChild("흉부");
+        }
+        TreeNode<String> chronicDisease = root.addChild(ConversationConst.KOR_CHRONIC_DISEASE);
+    }
+
+    // CURRENT NODE (현재 보여지고 있는 화면)
+    TreeNode<String> currentNode = root;
+
+    // 하위 계층으로
+    public void changeCurrentNode(String selectedChildName) {
+        for (TreeNode<String> child : currentNode.getChildren()) {
+            // 선택된 child item을 탐색
+            if (child.toString().equals(selectedChildName)) {
+                // 선택된 child가 마지막 노드라면
+                if (child.isLastChild()) {
+                    return;             // 하위 노드로 이동하지 않는다.
+                }
+                // 선택된 child가 마지막 노드가 아니라면
+                currentNode = child;    // 현재 노드를 child 노드로 바꾸고
+                showCurrnetList();      // 리스트에 뿌려준다.
+                return;
+            }
+        }
+    }
+
+    // current node의 children 리스트를 items에 담는다.
+    public void showCurrnetList() {
+        items.clear();
+        for (TreeNode<String> child : currentNode.getChildren()) {
+            items.add(child);
+        }
         notifyDataSetChanged();
+    }
+
+    // 선택된 노드 정보를 가져온다.
+    public TreeNode<String> getSelectedNode(String selectedChildName) {
+        for (TreeNode<String> child : currentNode.getChildren()) {
+            if (child.toString().equals(selectedChildName)) {
+                return child;
+            }
+        }
+        return null;
+    }
+
+    // Node의 selected 상태를 바꿈
+    public void setNodeSelected(String nodeName, boolean isSelected) {
+        for(TreeNode<String> child : items) {
+            if (child.toString().equals(nodeName)) {
+                child.setSelected(isSelected);
+            }
+        }
+        notifyDataSetChanged();
+    }
+    public void setNodeSelected(int position, boolean isSelected) {
+        items.get(position).setSelected(isSelected);
+        notifyDataSetChanged();
+    }
+    public boolean getNodeSelected(int position) {
+        return items.get(position).getSelected();
     }
 
 
     @Override
     public int getCount() {
-        return symptomItems.size();
+        return items.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return symptomItems.get(position);
+        return items.get(position);
     }
 
     @Override
@@ -45,11 +149,15 @@ public class ConversationListAdatper extends BaseAdapter {
         } else {
             view = new ConversationItemView(parent.getContext());
         }
-        view.setSymptomText(symptomItems.get(position));
+        if (items.get(position).getSelected()) {
+            view.findViewById(R.id.list_item).setBackgroundColor(parent.getContext().getResources().getColor(R.color.colorPrimary));
+            Log.d("SELECTED!!!!", "POSITION"+position+"  BG"+view.getBackground());
+        } else {
+            view.findViewById(R.id.list_item).setBackgroundColor(parent.getContext().getResources().getColor(R.color.color_efefef));
+            Log.d("????????????", "POSITION"+position+"  BG"+view.getBackground());
+        }
+        view.setItemText(items.get(position).toString());
         return view;
     }
-
-
-
 
 }

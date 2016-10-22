@@ -89,7 +89,7 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
     @Override
     protected void onStart() {
         super.onStart();
-        registerLocationListener();
+        // registerLocationListener();
     }
 
     @Override
@@ -185,6 +185,8 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
     public void pushMapHistoryFragment() {
         getFragmentManager().beginTransaction().replace(R.id.container, new MapHistoryFragment()).addToBackStack(null).commit();
     }
+
+
     public void popFragment() {
         getFragmentManager().popBackStack();
     }
@@ -247,7 +249,7 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
     private void setMap(NGeoPoint currentPos) {
 
         // 현재위치 검색
-        registerLocationListener();
+        // registerLocationListener();
 
         // 현재 위치로 지도의 중심과 ZOOM 설정
         nMapController.setMapCenter(currentPos, 12);
