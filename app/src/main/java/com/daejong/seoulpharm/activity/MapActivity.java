@@ -68,6 +68,15 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         findViewById(R.id.nav_hamburger_btn).setOnClickListener(this);
 
+        // Nav Buttons Setting
+        findViewById(R.id.nav_drawer_component_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_config_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_main_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_conversation_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
+
         // View initialize
         nMapView = (NMapView) findViewById(R.id.mapView);
         searchInputView = (EditText) findViewById(R.id.search_input_view);
@@ -89,7 +98,7 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
     @Override
     protected void onStart() {
         super.onStart();
-        registerLocationListener();
+//        registerLocationListener();
     }
 
     @Override
@@ -116,9 +125,13 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
 //                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_map_btn:
+                drawerLayout.closeDrawers();
+                finish();
                 startActivity(new Intent(MapActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_component_btn:
+                drawerLayout.closeDrawers();
+                finish();
                 startActivity(new Intent(MapActivity.this, ComponentActivity.class));
                 break;
             case R.id.nav_drawer_star_btn:
@@ -128,9 +141,13 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
 //                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_conversation_btn:
+                drawerLayout.closeDrawers();
+                finish();
                 startActivity(new Intent(MapActivity.this, ConversationActivity.class));
                 break;
             case R.id.search_input_view :
+                drawerLayout.closeDrawers();
+                finish();
                 goToInputMode();
                 break;
             case R.id.cancel_btn :
@@ -247,7 +264,7 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
     private void setMap(NGeoPoint currentPos) {
 
         // 현재위치 검색
-        registerLocationListener();
+//        registerLocationListener();
 
         // 현재 위치로 지도의 중심과 ZOOM 설정
         nMapController.setMapCenter(currentPos, 12);

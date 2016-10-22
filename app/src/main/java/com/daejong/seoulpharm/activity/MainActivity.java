@@ -105,9 +105,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_map_btn:
+                drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_component_btn:
+                drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this, ComponentActivity.class));
                 break;
             case R.id.nav_drawer_star_btn:
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 drawerLayout.closeDrawers();
                 break;
             case R.id.nav_drawer_conversation_btn:
+                drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this, ConversationActivity.class));
                 break;
         }
