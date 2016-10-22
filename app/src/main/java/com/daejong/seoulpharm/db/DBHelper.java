@@ -34,7 +34,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 PharmDB.PharmTable.COLUMN_H_KOR_GU + " TEXT, " +
                 PharmDB.PharmTable.COLUMN_H_KOR_DONG + " TEXT, " +
                 PharmDB.PharmTable.COLUMN_TEL + " TEXT, " +
-                PharmDB.PharmTable.COLUMN_AVAIL_LAN + " TEXT ); ";
+                PharmDB.PharmTable.COLUMN_AVAIL_LAN + " TEXT, " +
+                PharmDB.PharmTable.COLUMN_LATITUDE + " TEXT," +
+                PharmDB.PharmTable.COLUMN_LONGTITUDE + " TEXT );";
         sqLiteDatabase.execSQL(sql);
     }
 

@@ -8,10 +8,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daejong.seoulpharm.util.NetworkManager;
 import com.daejong.seoulpharm.R;
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         setDrawerToggle();
 
+        // Nav Buttons Setting
         findViewById(R.id.nav_drawer_component_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_config_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_main_btn).setOnClickListener(this);
@@ -49,9 +49,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
+
+        // setting Buttons in this activity
         mapBtn = (ImageView) findViewById(R.id.btn_map);
         mapBtn.setOnClickListener(this);
-
+        findViewById(R.id.btn_conversation).setOnClickListener(this);
+/*
         NetworkManager.getInstance().getPharms(MainActivity.this, new NetworkManager.OnResultListener<ResponseResult>() {
             @Override
             public void onSuccess(ResponseResult result) {
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 textView.setText("FAILED");
             }
         });
-
+*/
     }
 
     @Override
@@ -76,6 +79,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_map:
                 startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
+            case R.id.btn_conversation:
+
+                NetworkManager.getInstance().getEngAddress(this, new NetworkManager.OnResultListener<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Toast.makeText(MainActivity.this, ""+result, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFail(int code, String responseString) {
+                        Log.d("REQTESTTTT","error code:"+code+"\n"+responseString);
+                    }
+                });
+
+                break;
+
             case R.id.nav_drawer_tutorial_btn:
 //                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;

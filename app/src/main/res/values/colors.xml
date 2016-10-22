@@ -12,4 +12,5 @@
     <color name="color_nav_drawer_list_background">#f1f1f1</color>
     <color name="color_nav_drawer_font">#666666</color>
 
+    <color name="color_white">#FFFFFF</color>
 </resources>

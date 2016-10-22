@@ -82,7 +82,7 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
         nMapInit();
 
         // 초기 화면은 Map이 보여지는 모드로! (MapViewMode: 지도모드 / InputMode: 검색모드)
-        goToMapViewMode();
+        goToInputMode();
 
     }
 
@@ -104,6 +104,31 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
         switch (view.getId()) {
             case R.id.nav_hamburger_btn :
                 drawerLayout.openDrawer(Gravity.LEFT);
+                break;
+            case R.id.nav_drawer_main_btn:
+                drawerLayout.closeDrawers();
+                finish();
+                break;
+            case R.id.btn_map:
+                drawerLayout.closeDrawers();
+                break;
+            case R.id.nav_drawer_tutorial_btn:
+//                startActivity(new Intent(MainActivity.this, MapActivity.class));
+                break;
+            case R.id.nav_drawer_map_btn:
+                startActivity(new Intent(MapActivity.this, MapActivity.class));
+                break;
+            case R.id.nav_drawer_component_btn:
+                startActivity(new Intent(MapActivity.this, ComponentActivity.class));
+                break;
+            case R.id.nav_drawer_star_btn:
+//                startActivity(new Intent(MainActivity.this, MapActivity.class));
+                break;
+            case R.id.nav_drawer_config_btn:
+//                startActivity(new Intent(MainActivity.this, MapActivity.class));
+                break;
+            case R.id.nav_drawer_conversation_btn:
+                startActivity(new Intent(MapActivity.this, ConversationActivity.class));
                 break;
             case R.id.search_input_view :
                 goToInputMode();

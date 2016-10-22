@@ -23,9 +23,8 @@ public class PharmDB {
         public static final String COLUMN_H_KOR_DONG = "H_KOR_DONG";
         public static final String COLUMN_TEL = "TEL";
         public static final String COLUMN_AVAIL_LAN = "AVAIL_LAN";
-
-        // 추가 -----
-        // ---------
+        public static final String COLUMN_LATITUDE = "LATITUDE";
+        public static final String COLUMN_LONGTITUDE = "LONGTITUDE";
 
     }
 
