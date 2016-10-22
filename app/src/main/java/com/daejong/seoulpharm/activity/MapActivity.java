@@ -11,9 +11,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -50,6 +54,9 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
     NMapView nMapView;
     EditText searchInputView;
     Button cancelBtn;
+    ActionBarDrawerToggle mDrawerToggle;
+
+    DrawerLayout drawerLayout;
 
     // NAVER MAP API KEY
     public static final String CLIENT_ID = "s3q7uwJzMyOjOZfTnYDK";
@@ -79,6 +86,10 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
         nMapInit();
 
         goToMapViewMode();
+
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        findViewById(R.id.nav_hamburger_btn).setOnClickListener(this);
 
     }
 
@@ -222,12 +233,18 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+            case R.id.nav_hamburger_btn :
+                drawerLayout.openDrawer(Gravity.LEFT);
+                break;
+
             case R.id.search_input_view :
                 goToInputMode();
                 break;
             case R.id.cancel_btn :
                 goToMapViewMode();
                 break;
+
         }
     }
 
@@ -405,4 +422,5 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
         super.onStart();
         registerLocationListener();
     }
+
 }
