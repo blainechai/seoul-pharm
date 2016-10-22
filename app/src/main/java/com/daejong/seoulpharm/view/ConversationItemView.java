@@ -2,6 +2,7 @@ package com.daejong.seoulpharm.view;
 
 import android.content.Context;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
@@ -11,7 +12,8 @@ import com.daejong.seoulpharm.R;
  */
 public class ConversationItemView extends FrameLayout {
 
-    TextView symptomText;
+    TextView text;
+    LinearLayout item;
 
     public ConversationItemView(Context context) {
         super(context);
@@ -20,12 +22,15 @@ public class ConversationItemView extends FrameLayout {
 
     private void init() {
         inflate(getContext(), R.layout.view_conversation_list_item, this);
-        symptomText = (TextView) findViewById(R.id.symptom_text);
+        text = (TextView) findViewById(R.id.symptom_text);
 
 
     }
 
-    public void setSymptomText (String symptom) {
-        symptomText.setText(symptom);
+    public void setItemText (String symptom) {
+        text.setText(symptom);
+    }
+    public String getItemText() {
+        return text.getText().toString();
     }
 }
