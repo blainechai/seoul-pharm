@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView = (TextView) findViewById(R.id.resultView);
 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar.setTitle("Seoul Pharm");
+        toolbar.setTitleMarginStart(16);
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         setSupportActionBar(toolbar);
         setDrawerToggle();
