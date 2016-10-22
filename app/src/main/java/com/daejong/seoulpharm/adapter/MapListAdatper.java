@@ -19,6 +19,7 @@ public class MapListAdatper extends BaseAdapter {
 
     public void add(MapHistoryItem item) {
         items.add(item);
+        notifyDataSetChanged();
     }
 
     @Override

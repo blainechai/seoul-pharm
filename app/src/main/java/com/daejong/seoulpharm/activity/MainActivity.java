@@ -15,14 +15,12 @@ import android.widget.Toast;
 import com.daejong.seoulpharm.util.NetworkManager;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.db.DBHelper;
-import com.daejong.seoulpharm.model.PharmItem;
-import com.daejong.seoulpharm.model.ResponseResult;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView currentAddressView;
-    DBHelper db;
+//    DBHelper db;
     ImageView mapBtn;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db = new DBHelper(MainActivity.this);
+//        db = new DBHelper(MainActivity.this);
         currentAddressView = (TextView) findViewById(R.id.current_address_view);
 //        NetworkManager.getInstance().getAddress(MainActivity.this, );
 
@@ -57,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mapBtn = (ImageView) findViewById(R.id.btn_map);
         mapBtn.setOnClickListener(this);
         findViewById(R.id.btn_conversation).setOnClickListener(this);
+        findViewById(R.id.btn_scrap).setOnClickListener(this);
 
 
 /*
@@ -81,11 +80,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_map:
+            case R.id.btn_map :
                 startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
-            case R.id.btn_conversation:
-
+            case R.id.btn_conversation :
+                startActivity(new Intent(MainActivity.this, ConversationActivity.class));
+                break;
+            case R.id.btn_scrap :
+                // 주소검색 테스트
                 NetworkManager.getInstance().getEngAddress(this, new NetworkManager.OnResultListener<String>() {
                     @Override
                     public void onSuccess(String result) {
@@ -97,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.d("REQTESTTTT","error code:"+code+"\n"+responseString);
                     }
                 });
-
                 break;
 
             case R.id.nav_drawer_tutorial_btn:

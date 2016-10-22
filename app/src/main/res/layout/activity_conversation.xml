@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:background="#76a6f0"
             android:minHeight="?attr/actionBarSize"
+            android:title="의사소통"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <Spinner
@@ -32,6 +33,14 @@
             android:layout_height="fill_parent"
             android:layout_below="@+id/main_toolbar"
             android:id="@+id/container">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="9dp"
+                android:paddingBottom="9dp"
+                android:divider="@null"
+                android:id="@+id/conversation_list" />
 
         </RelativeLayout>
     </RelativeLayout>

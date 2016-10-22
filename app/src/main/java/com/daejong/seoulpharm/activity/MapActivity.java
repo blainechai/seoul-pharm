@@ -82,7 +82,7 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
         nMapInit();
 
         // 초기 화면은 Map이 보여지는 모드로! (MapViewMode: 지도모드 / InputMode: 검색모드)
-        goToInputMode();
+        goToMapViewMode();
 
     }
 
