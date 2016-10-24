@@ -69,11 +69,26 @@ public class ConversationListAdatper extends BaseAdapter {
         TreeNode<String> chronicDisease = root.addChild(ConversationConst.KOR_CHRONIC_DISEASE);
     }
 
+
     // CURRENT NODE (현재 보여지고 있는 화면)
-    TreeNode<String> currentNode = root;
+    private TreeNode<String> currentNode = root;
+
+    public TreeNode<String> getCurrentNode() {
+        return currentNode;
+    }
+
+    public boolean currentNodeIsRoot() {
+        return (currentNode==root) ? true : false;
+    }
+
+    // 상위 계층으로
+    public void currentNodeToParent() {
+        currentNode = currentNode.getParent();
+        showCurrentList();
+    }
 
     // 하위 계층으로
-    public void changeCurrentNode(String selectedChildName) {
+    public void currentNodeToChild(String selectedChildName) {
         for (TreeNode<String> child : currentNode.getChildren()) {
             // 선택된 child item을 탐색
             if (child.toString().equals(selectedChildName)) {
@@ -83,14 +98,14 @@ public class ConversationListAdatper extends BaseAdapter {
                 }
                 // 선택된 child가 마지막 노드가 아니라면
                 currentNode = child;    // 현재 노드를 child 노드로 바꾸고
-                showCurrnetList();      // 리스트에 뿌려준다.
+                showCurrentList();      // 리스트에 뿌려준다.
                 return;
             }
         }
     }
 
     // current node의 children 리스트를 items에 담는다.
-    public void showCurrnetList() {
+    public void showCurrentList() {
         items.clear();
         for (TreeNode<String> child : currentNode.getChildren()) {
             items.add(child);
@@ -109,18 +124,11 @@ public class ConversationListAdatper extends BaseAdapter {
     }
 
     // Node의 selected 상태를 바꿈
-    public void setNodeSelected(String nodeName, boolean isSelected) {
-        for(TreeNode<String> child : items) {
-            if (child.toString().equals(nodeName)) {
-                child.setSelected(isSelected);
-            }
-        }
-        notifyDataSetChanged();
-    }
     public void setNodeSelected(int position, boolean isSelected) {
         items.get(position).setSelected(isSelected);
         notifyDataSetChanged();
     }
+    // Node의 selected 상태를 반환
     public boolean getNodeSelected(int position) {
         return items.get(position).getSelected();
     }

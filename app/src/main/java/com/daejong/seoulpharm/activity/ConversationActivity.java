@@ -16,7 +16,7 @@ import com.daejong.seoulpharm.fragment.SymptomFragment;
 import com.daejong.seoulpharm.model.ConversationConst;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
-public class ConversationActivity extends AppCompatActivity {
+public class ConversationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     ListView conversationListView;
     ConversationListAdatper mAdatper;
@@ -29,36 +29,24 @@ public class ConversationActivity extends AppCompatActivity {
         conversationListView = (ListView) findViewById(R.id.conversation_list);
         mAdatper = new ConversationListAdatper();
         conversationListView.setAdapter(mAdatper);
-        mAdatper.showCurrnetList();
-        // mAdatper.setOnLastNodeListener(this);
+        mAdatper.showCurrentList();
 
-        conversationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-               String selectedNodeName = ((ConversationItemView)view).getItemText();
-               if (mAdatper.getSelectedNode(selectedNodeName).isLastParent()) {
-                   setMultipleSelectMode();
-               }
-               mAdatper.changeCurrentNode(selectedNodeName);
-           }
-        });
+        conversationListView.setOnItemClickListener(this);
     }
 
-    String testtt;
-
-
-    public void setMultipleSelectMode() {
-        conversationListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-        conversationListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                if (mAdatper.getNodeSelected(position)) {
-                    mAdatper.setNodeSelected(position, false);
-                } else {
-                    mAdatper.setNodeSelected(position, true);
-                }
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        if (mAdatper.getCurrentNode().isLastParent()) {
+            if (mAdatper.getNodeSelected(position)) {
+                mAdatper.setNodeSelected(position, false);
+            } else {
+                mAdatper.setNodeSelected(position, true);
             }
-        });
+        }
+        else {
+            String selectedNodeName = ((ConversationItemView)view).getItemText();
+            mAdatper.currentNodeToChild(selectedNodeName);
+        }
     }
 
     /*
@@ -70,4 +58,15 @@ public class ConversationActivity extends AppCompatActivity {
         getSupportFragmentManager().popBackStack();
     }
     */
+
+    @Override
+    public void onBackPressed() {
+        if (mAdatper.currentNodeIsRoot()) {
+            // 현재 노드가 최상위 노드일 때
+            super.onBackPressed();
+        } else {
+            // 현재 노드가 하위 노드일 떄
+            mAdatper.currentNodeToParent();
+        }
+    }
 }

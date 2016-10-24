@@ -9,10 +9,11 @@ import java.util.List;
  */
 public class TreeNode<T> {
 
-    boolean isSelected = false;
     T data;
     TreeNode<T> parent;
     List<TreeNode<T>> children;
+
+    boolean isSelected = false;
 
     public TreeNode(T data) {
         this.data = data;
@@ -26,9 +27,13 @@ public class TreeNode<T> {
         return childNode;
     }
 
+
     // other features ...
     public List<TreeNode<T>> getChildren() {
         return children;
+    }
+    public TreeNode<T> getParent() {
+        return parent;
     }
 
     public boolean isLastParent() {
