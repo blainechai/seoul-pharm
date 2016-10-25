@@ -432,4 +432,6 @@ public class MapActivity extends NMapActivity implements View.OnClickListener, N
     public void onSingleTapUp(NMapView nMapView, MotionEvent motionEvent) {
     }
 
+
+
 }
