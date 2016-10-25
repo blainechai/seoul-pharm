@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daejong.seoulpharm.db.DBHelper;
+import com.daejong.seoulpharm.model.PharmItem;
 import com.daejong.seoulpharm.navermap.NMapPOIflagType;
 import com.daejong.seoulpharm.navermap.NMapViewerResourceProvider;
 import com.daejong.seoulpharm.util.NetworkManager;
@@ -52,6 +54,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     // VIEWS
     DrawerLayout drawerLayout;
     Toolbar toolbar;
+    TextView toolbarTitle;
     Button toolbarBtn;
 
     TextView currentAddressView;
@@ -74,7 +77,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     LocationManager mLM;
 
     // Map DB
-    //    DBHelper db;
+    DBHelper db;
+
+    // Map List
+    List<PharmItem> pharmList;
 
 
     @Override
@@ -87,6 +93,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         btnContainer = (LinearLayout) findViewById(R.id.panel_buttons);
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         nMapView = (NMapView) findViewById(R.id.mapView);
         currentAddressView = (TextView) findViewById(R.id.current_address_view);
         currentRefreshView = (TextView) findViewById(R.id.current_refresh_view);
@@ -94,8 +101,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         // NMap Initialize
         nMapInit();
 
-//        db = new DBHelper(MainActivity.this);
-
+        // get Pharms location in Database
+        db = new DBHelper(MainActivity.this);
+        pharmList = db.getPharmList();
 
         // Navigation Drawer Setting
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
@@ -121,11 +129,17 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     }
 
     private static final String MODE_MAP_DETAIL = "MODE_MAP_DETAIL";
-    private static final String MODE_MAP_WITH_BUTTONS = "MODE_MAP_WITH_BUTTONS";
-    private String currentMode = MODE_MAP_WITH_BUTTONS;
+    private static final String MODE_MAIN = "MODE_MAIN";
+    private static final String TITLE_MAP_DETAIL = "약국 찾기";
+    private static final String TITLE_MAIN = "Seoul Pharm";
+
+    private String currentMode = MODE_MAIN;
     private void changeMode(String mode) {
         switch (mode) {
             case MODE_MAP_DETAIL :
+                // set toolbar title
+                toolbarTitle.setText(TITLE_MAP_DETAIL);
+
                 // btn container gone
                 btnContainer.setVisibility(View.GONE);
 
@@ -138,7 +152,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
                 break;
 
-            case MODE_MAP_WITH_BUTTONS :
+            case MODE_MAIN :
+                // set toolbar title
+                toolbarTitle.setText(TITLE_MAIN);
+
                 // btn container visible
                 btnContainer.setVisibility(View.VISIBLE);
 
@@ -147,7 +164,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 btnContainer.setAnimation(animAppearFromBottom);
 
                 // change mode status
-                currentMode = MODE_MAP_WITH_BUTTONS;
+                currentMode = MODE_MAIN;
 
                 break;
 
@@ -183,44 +200,38 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         nMapMyLocationOverlay = new NMapMyLocationOverlay(this, nMapView, nMapLocationManager, null, nMapViewerResourceProvider);
     }
 
+
     // ========== 지도 구현 ========== //
-    List<NGeoPoint> pois = new ArrayList<>();
     private void setNaverMap(NGeoPoint currentPos) {
 
         // 현재 위치로 지도의 중심과 ZOOM 설정
         nMapController.setMapCenter(currentPos, 12);
 
-
-        // ===== 근처 약국위치 가져오기 ===== //
-        // 약국 위치들을 DB에서 읽어옴
-//        pois.add(new NGeoPoint(/* getLongtitude(), getLatitide() */));
-
-
         // ===== 가져온 위치들을 화면에 뿌리기 ===== //
+        // 기존의 위치들을 지도에서 삭제
+        nMapOverlayManager.removeMyLocationOverlay();
+        nMapOverlayManager.removePersistentOverlay();
+
         // 오버래이에 표시하기 위한 마커 이미지의 id값 생성
         int markerId = NMapPOIflagType.PIN;
 
         // 표시할 위치 데이터를 지정한다. -- 마지막 인자가 오버래이를 인식하기 위한 id값
-        NMapPOIdata poiDatas = new NMapPOIdata(1, nMapViewerResourceProvider);
-        nMapOverlayManager.removeMyLocationOverlay();
-        poiDatas.removeAllPOIdata();
-        poiDatas.beginPOIdata(1);
+        NMapPOIdata poiDatas = new NMapPOIdata(pharmList.size()+1, nMapViewerResourceProvider);
+        poiDatas.beginPOIdata(pharmList.size()+1);
         // 현재 위치 등록
         poiDatas.addPOIitem(currentPos.getLongitude(), currentPos.getLatitude(), "현재위치", markerId, 0);  // PIN 바꾸기
-        // for (NGeoPoint poi : searchedPharms) {
-//         poiDatas.addPOIitem(127.0630205, 37.5091300, "약국이름!!", markerId, 0);
-        // }
-
+        for (PharmItem item : pharmList) {
+            double latitude = Double.parseDouble(item.getLatitude());
+            double longtitude = Double.parseDouble(item.getLongtitude());
+//            Log.d(" LIST ADDED !! ","LAT : "+latitude + "  /  LNG : "+longtitude);
+            poiDatas.addPOIitem(longtitude, latitude, item.getNameKor(), markerId, 0);
+        }
         poiDatas.endPOIdata();
 
         // 위치 데이터를 사용하여 오버레이 생성
         NMapPOIdataOverlay poiDataOverlay = nMapOverlayManager.createPOIdataOverlay(poiDatas, null);
 
     }
-
-
-
-
 
 
     // ========== 현재 위치 정보 검색 ========== //
@@ -270,7 +281,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         }
     }
 
-    // 현재 위치 검색 해제
+    // ========== 현재 위치 정보 검색 해제 ========== //
     private void unRegisterLocationListener() {
         try {
             mLM.removeUpdates(mListener);
@@ -294,6 +305,23 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         }
     };
 
+
+    // 위치 기반으로 주소 검색하여 주소 TextView 갱신
+    private void findLocationAddress(NGeoPoint location) {
+        NetworkManager.getInstance().getAddress(MainActivity.this, location.getLatitude(), location.getLongitude(), new NetworkManager.OnResultListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+                currentAddressView.setText(result);
+            }
+
+            @Override
+            public void onFail(int code, String response) {
+                Toast.makeText(MainActivity.this, "ERROR get current address code:"+code+"\n"+response, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     NGeoPoint currentPos;
     // LocationListener : Application이 Location Service로부터 위치와 관련된 정보를 수신하기 위해 사용하는 interface
     LocationListener mListener = new LocationListener() {
@@ -302,23 +330,14 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             // 새로 fix된 위치정보가 있을 시 타임아웃 핸들러 끄기
             mHandler.removeMessages(MESSAGE_TIMEOUT_LOCATION_UPDATE);
 
-            // Toast.makeText(MapActivity.this, ""+location.getLatitude(), Toast.LENGTH_SHORT).show();
-            // 시작 경로를 설정
+            // 현재 위치 저장
             currentPos = new NGeoPoint(location.getLongitude(), location.getLatitude());
-            NetworkManager.getInstance().getAddress(MainActivity.this, currentPos.getLatitude(), currentPos.getLongitude(), new NetworkManager.OnResultListener<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    currentAddressView.setText(result);
-                }
-
-                @Override
-                public void onFail(int code, String response) {
-                    Toast.makeText(MainActivity.this, "ERROR get current address code:"+code+"\n"+response, Toast.LENGTH_SHORT).show();
-                }
-            });
 
             // 현재 위치를 중심으로 Map을 세팅
             setNaverMap(currentPos);
+
+            // 주소 TextView를 현재 주소로
+            findLocationAddress(currentPos);
         }
 
         @Override
@@ -356,9 +375,12 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     }
     @Override
     public void onMapCenterChange(NMapView nMapView, NGeoPoint nGeoPoint) {
-        // 맵 중심이 변경됬을 때
-        // 주소 재검색 후
+        // 맵 중심이 변경됬을 때 중심 좌표의 주소 재검색
+        Log.d("POS CHANGED", "latitude : "+nGeoPoint.getLatitude()+", longtitude : "+nGeoPoint.getLongitude());
+        findLocationAddress(nGeoPoint);
+
         // 주소가 변경되었다면 약국 다시 뿌리기
+
     }
     @Override
     public void onMapCenterChangeFine(NMapView nMapView) {
@@ -378,7 +400,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     @Override
     public void onTouchDown(NMapView nMapView, MotionEvent motionEvent) {
         Log.d("MAP TOUCH DOWN", "CLICKED");
-        if (currentMode.equals(MODE_MAP_WITH_BUTTONS)) {
+        if (currentMode.equals(MODE_MAIN)) {
             Log.d("MAP TOUCH DOWN", "MODE CHANGED");
             changeMode(MODE_MAP_DETAIL);
         }
@@ -453,7 +475,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 break;
             case R.id.nav_drawer_main_btn:
                 drawerLayout.closeDrawers();
-                changeMode(MODE_MAP_WITH_BUTTONS);
+                changeMode(MODE_MAIN);
                 break;
             case R.id.nav_drawer_conversation_btn:
                 drawerLayout.closeDrawers();
@@ -482,8 +504,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             // NavigationDrawer가 열려있는 경우 >> Drawer close
             drawerLayout.closeDrawers();
         } else if (currentMode.equals(MODE_MAP_DETAIL)) {
-            // MAP_DETAIL 모드인 경우 >> MAP_WITH_BUTTONS 모드로
-            changeMode(MODE_MAP_WITH_BUTTONS);
+            // MAP_DETAIL 모드인 경우 >> MAIN 모드로
+            changeMode(MODE_MAIN);
         } else {
             super.onBackPressed();
         }

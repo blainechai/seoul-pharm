@@ -5,46 +5,65 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
+import com.daejong.seoulpharm.db.DBHelper;
+import com.daejong.seoulpharm.db.PharmDB;
+import com.daejong.seoulpharm.model.PharmItem;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SplashActivity extends AppCompatActivity {
 
-    Handler mHandler = new Handler(Looper.getMainLooper());
-
     /** 두 가지 경우를 체크
-     * 1) DB가 Initialize 되었는가?
-     * 2) 필요한 Permission들이 Runtime으로 허가되었는가? (API >= 23)
-     *
+     * 1) 필요한 Permission들이 Runtime으로 허가되었는가? (API >= 23)
+     * 2) DB가 Initialize 되었는가?
      */
+
+    private static final int MESSAGE_PERMISSION_CHECKED = 1;
+    private static final int MESSAGE_DB_INITIALIZED = 2;
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MESSAGE_PERMISSION_CHECKED :
+                    checkDBInitialized();
+                    break;
+                case MESSAGE_DB_INITIALIZED :
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    finish();
+                    break;
+            }
+        }
+    };
+
+    DBHelper db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
-//        checkAndRequestPermissions();
-//        checkDBInitialized();
+        db = new DBHelper(SplashActivity.this);
         if (checkAndRequestPermissions()) {
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    finish();
-                }
-            }, 2000);
+            mHandler.sendEmptyMessage(MESSAGE_PERMISSION_CHECKED);
         }
-
 
     }
 
@@ -53,7 +72,43 @@ public class SplashActivity extends AppCompatActivity {
      *
      */
     private boolean checkDBInitialized() {
-        return true;
+        if (db.getRowCount() != 550) {
+            InputStream inputStream = getResources().openRawResource(R.raw.seoul_pharm_data);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            try {
+                String csvLine;
+                while ((csvLine = reader.readLine()) != null) {
+                    String[] row = csvLine.split(",");
+                    PharmItem item = new PharmItem();
+                    item.setMainKey(row[0]);
+                    item.setNameKor(row[1]);
+                    item.setAddKorRoad(row[2]);
+                    item.sethKorCity(row[3]);
+                    item.sethKorGu(row[4]);
+                    item.sethKorDong(row[5]);
+                    item.setTel(row[6]);
+                    item.setAvailLan(row[7]);
+                    item.setLongtitude(row[8]);
+                    item.setLatitude(row[9]);
+                    db.addPharmItem(item);
+                    Log.d("!!! DB Initializing !!!", "DATA : " + row[1]);
+                }
+                mHandler.sendEmptyMessage(MESSAGE_DB_INITIALIZED);
+                return true;
+            } catch (IOException ex) {
+                throw new RuntimeException("Error iv reading CSV file:" + ex);
+            } finally {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    throw new RuntimeException("Error while closing input strem:" + e);
+                }
+            }
+        } else {
+            mHandler.sendEmptyMessage(MESSAGE_DB_INITIALIZED);
+            return true;
+        }
     }
 
 
@@ -100,7 +155,8 @@ public class SplashActivity extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 권한 허가
                     // 해당 권한을 사용해서 작업을 진행할 수 있습니다
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    mHandler.sendEmptyMessage(MESSAGE_PERMISSION_CHECKED);
+//                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
 
 
                 } else {
@@ -117,5 +173,12 @@ public class SplashActivity extends AppCompatActivity {
             // permissions this app might request
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHandler.removeMessages(MESSAGE_PERMISSION_CHECKED);
+        mHandler.removeMessages(MESSAGE_DB_INITIALIZED);
+        super.onDestroy();
     }
 }

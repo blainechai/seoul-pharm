@@ -31,8 +31,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/color_white"
                 android:layout_gravity="center"
+                android:id="@+id/toolbar_title"
+                android:textColor="@color/color_white"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:text="@string/app_name" />
@@ -72,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:id="@+id/current_address_view"
-                    android:text="현재 주소"
+                    android:text="현재 주소를 불러오고 있습니다."
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:layout_marginLeft="@dimen/margin_space_10dp"/>
