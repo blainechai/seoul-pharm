@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_conversation :
                 startActivity(new Intent(MainActivity.this, ConversationActivity.class));
                 break;
+            case R.id.btn_component :
+                startActivity(new Intent(MainActivity.this, ComponentActivity.class));
+                break;
             case R.id.btn_scrap :
                 // 주소검색 테스트
                 NetworkManager.getInstance().getEngAddress(this, new NetworkManager.OnResultListener<String>() {
@@ -100,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
                 break;
-
             case R.id.nav_drawer_tutorial_btn:
 //                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;

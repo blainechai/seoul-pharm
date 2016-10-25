@@ -25,8 +25,6 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_component);
 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-//        toolbar.setTitle("Seoul Pharm");
-//        toolbar.setTitleMarginStart(16);
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         setSupportActionBar(toolbar);
         setDrawerToggle();
@@ -48,7 +46,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
 
     // Handling Fragment
     // 검색 모드에서의 History List를 불러옴
-    public void pushMapHistoryFragment() {
+    public void pushComponentScannerFragment() {
         getFragmentManager().beginTransaction().replace(R.id.container, new ComponentScannerFragment()).addToBackStack(null).commit();
     }
     public void popFragment() {

@@ -2,18 +2,12 @@ package com.daejong.seoulpharm.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.daejong.seoulpharm.adapter.ConversationListAdatper;
-import com.daejong.seoulpharm.fragment.MyConversationFragment;
 import com.daejong.seoulpharm.R;
-import com.daejong.seoulpharm.fragment.SymptomFragment;
-import com.daejong.seoulpharm.model.ConversationConst;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
 public class ConversationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -49,15 +43,6 @@ public class ConversationActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
-    /*
-    public void pushSymptomFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, new SymptomFragment()).addToBackStack(null).commit();
-    }
-
-    public void popFragment() {
-        getSupportFragmentManager().popBackStack();
-    }
-    */
 
     @Override
     public void onBackPressed() {

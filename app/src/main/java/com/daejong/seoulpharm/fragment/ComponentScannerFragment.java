@@ -74,6 +74,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                 Log.d("REQTESTTTT", "error code:" + code + "\n" + responseString);
             }
         });
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.daejong.seoulpharm.R;
 
 public class ComponentInfoFragment extends Fragment implements View.OnClickListener {
 
+    LinearLayout container;
 
     public ComponentInfoFragment() {
         // Required empty public constructor
@@ -30,8 +32,18 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_component_info, container, false);
+
+        // View Initialize
+        container = (LinearLayout) view.findViewById(R.id.container);
+
         ((TextView)view.findViewById(R.id.test)).setText("" + getArguments().getString("medData"));
         Toast.makeText(getActivity(), "" + getArguments().getString("medData"), Toast.LENGTH_SHORT).show();
+
+        // response 받은 정보 중에 제조사 / 성분목록 / 등의 정보가 있다면
+
+        // container.addView(view...);
+
+
         return view;
     }
 
