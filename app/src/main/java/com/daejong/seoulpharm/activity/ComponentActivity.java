@@ -6,12 +6,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.View;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.fragment.ComponentScannerFragment;
-import com.daejong.seoulpharm.fragment.MapHistoryFragment;
 
 public class ComponentActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -67,7 +65,6 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
             case R.id.nav_drawer_map_btn:
                 drawerLayout.closeDrawers();
                 finish();
-                startActivity(new Intent(ComponentActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_component_btn:
                 drawerLayout.closeDrawers();

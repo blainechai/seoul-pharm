@@ -99,7 +99,7 @@ public class NetworkManager {
     // 좌표 > 주소 변환
     public static final String CONVERT_TO_ADDRESS_URL = "https://openapi.naver.com/v1/map/reversegeocode";
 
-    public void getAddress(Context context, long latitude, long longtitude, final OnResultListener<String> listener) {
+    public void getAddress(Context context, double latitude, double longtitude, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
         params.put("query", longtitude + "," + latitude);
 

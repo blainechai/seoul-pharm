@@ -9,4 +9,6 @@ public class AddressResponse {
     public AddressResult getResult() {
         return result;
     }
+
+
 }
