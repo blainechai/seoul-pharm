@@ -68,11 +68,12 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     /** 1. DB Initialize
-     *
-     *
+     *   현재 단말기 DB의 data 수가 550개인지 확인하고
+     *   seoul_pharm_data.csv 파일을 읽어서 Database에 추가
      */
+    private static final int DB_ROW_COUNT = 550;
     private boolean checkDBInitialized() {
-        if (db.getRowCount() != 550) {
+        if (db.getRowCount() != DB_ROW_COUNT) {
             InputStream inputStream = getResources().openRawResource(R.raw.seoul_pharm_data);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -114,9 +115,10 @@ public class SplashActivity extends AppCompatActivity {
 
 
     /** 2. Request permissions at Runtime
-     * ACCESS_FINE_LOCATION
-     * ACCESS_COARSE_LOCATION
-     * CAMERA
+     *   ACCESS_FINE_LOCATION
+     *   ACCESS_COARSE_LOCATION
+     *   CAMERA
+     *   permission들에 대한 허가 요청 수행
      */
 
     String[] permissions= new String[]{
@@ -151,20 +153,19 @@ public class SplashActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_ID_MULTIPLE_PERMISSIONS : {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 권한 허가
-                    // 해당 권한을 사용해서 작업을 진행할 수 있습니다
+                    // 해당 권한을 사용해서 작업을 진행할 수 있음
                     mHandler.sendEmptyMessage(MESSAGE_PERMISSION_CHECKED);
-//                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-
 
                 } else {
                     // 권한 거부
-                    // 사용자가 해당권한을 거부했을때 해주어야 할 동작을 수행합니다.
-                    // 종료
+                    // 사용자가 해당권한을 거부했을때 해주어야 할 동작을 수행.
                     Toast.makeText(SplashActivity.this, "App 실행 시 필요한 권한을 허가해주세요", Toast.LENGTH_SHORT).show();
-                    finish();
+                    mHandler.removeMessages(MESSAGE_DB_INITIALIZED);
+                    mHandler.removeMessages(MESSAGE_PERMISSION_CHECKED);
+                    finish(); // 종료
+
                 }
                 return;
             }

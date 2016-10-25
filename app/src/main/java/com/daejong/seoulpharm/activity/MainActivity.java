@@ -338,6 +338,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
             // 주소 TextView를 현재 주소로
             findLocationAddress(currentPos);
+
+            // Location이 변경되었으면 LocationListener 종료 (최초 한번만 위치를 찾도록)
+            unRegisterLocationListener();
         }
 
         @Override
@@ -485,8 +488,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         registerLocationListener();
     }
 
