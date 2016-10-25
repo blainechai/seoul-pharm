@@ -6,13 +6,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.daejong.seoulpharm.R;
-import com.daejong.seoulpharm.model.ConversationConst;
+import com.daejong.seoulpharm.model.constant.ConversationKorConst;
 import com.daejong.seoulpharm.util.TreeNode;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -22,42 +20,42 @@ public class ConversationListAdatper extends BaseAdapter {
 
     List<TreeNode<String>> items = new ArrayList<>();
 
-    TreeNode<String> root = new TreeNode<String>(ConversationConst.ROOT);
+    TreeNode<String> root = new TreeNode<String>(ConversationKorConst.ROOT);
     {
-        TreeNode<String> currentSymptom = root.addChild(ConversationConst.KOR_CURRENT_SYMPTOM);
+        TreeNode<String> currentSymptom = root.addChild(ConversationKorConst.KOR_CURRENT_SYMPTOM);
         {
-            TreeNode<String> head = currentSymptom.addChild(ConversationConst.KOR_D1_HEAD);
+            TreeNode<String> head = currentSymptom.addChild(ConversationKorConst.KOR_D1_HEAD);
             {
-                TreeNode<String> scalp = head.addChild(ConversationConst.KOR_D2_SCALP);
+                TreeNode<String> scalp = head.addChild(ConversationKorConst.KOR_D2_SCALP);
                 {
-                    TreeNode<String> bleeding = scalp.addChild(ConversationConst.KOR_DSYMP_BLEEDING);
-                    TreeNode<String> bruise = scalp.addChild(ConversationConst.KOR_DSYMP_BRUISE);
-                    TreeNode<String> itching = scalp.addChild(ConversationConst.KOR_DSYMP_ITCHING);
-                    TreeNode<String> burn = scalp.addChild(ConversationConst.KOR_DSYMP_BURN);
-                    TreeNode<String> lump = scalp.addChild(ConversationConst.KOR_DSYMP_LUMP);
-                    TreeNode<String> numbness = scalp.addChild(ConversationConst.KOR_DSYMP_NUMBLESS);
-                    TreeNode<String> swelling = scalp.addChild(ConversationConst.KOR_DSYMP_SWELLING);
+                    TreeNode<String> bleeding = scalp.addChild(ConversationKorConst.KOR_DSYMP_BLEEDING);
+                    TreeNode<String> bruise = scalp.addChild(ConversationKorConst.KOR_DSYMP_BRUISE);
+                    TreeNode<String> itching = scalp.addChild(ConversationKorConst.KOR_DSYMP_ITCHING);
+                    TreeNode<String> burn = scalp.addChild(ConversationKorConst.KOR_DSYMP_BURN);
+                    TreeNode<String> lump = scalp.addChild(ConversationKorConst.KOR_DSYMP_LUMP);
+                    TreeNode<String> numbness = scalp.addChild(ConversationKorConst.KOR_DSYMP_NUMBLESS);
+                    TreeNode<String> swelling = scalp.addChild(ConversationKorConst.KOR_DSYMP_SWELLING);
                 }
-                TreeNode<String> eye = currentSymptom.addChild(ConversationConst.KOR_D2_EYES);
+                TreeNode<String> eye = currentSymptom.addChild(ConversationKorConst.KOR_D2_EYES);
                 {
-                    TreeNode<String> bleeding = eye.addChild(ConversationConst.KOR_DSYMP_BLEEDING);
-                    TreeNode<String> blind_spot = eye.addChild(ConversationConst.KOR_DSYMP_BLIND_SPOT);
-                    TreeNode<String> blurred_vision = eye.addChild(ConversationConst.KOR_DSYMP_BLURRED_VISION);
-                    TreeNode<String> bruise = eye.addChild(ConversationConst.KOR_DSYMP_BRUISE);
-                    TreeNode<String> cloudy_vision = eye.addChild(ConversationConst.KOR_DSYMP_CLOUDY_VISION);
-                    TreeNode<String> bulging_eyes = eye.addChild(ConversationConst.KOR_DSYMP_BULGING_EYES);
-                    TreeNode<String> mucus = eye.addChild(ConversationConst.KOR_DSYMP_MUCUS);
-                    TreeNode<String> double_vision = eye.addChild(ConversationConst.KOR_DSYMP_DOUBLE_VISION);
-                    TreeNode<String> pus = eye.addChild(ConversationConst.KOR_DSYMP_PUS);
-                    TreeNode<String> dry = eye.addChild(ConversationConst.KOR_DSYMP_DRY);
-                    TreeNode<String> irritation = eye.addChild(ConversationConst.KOR_DSYMP_IRRITATION);
-                    TreeNode<String> redness = eye.addChild(ConversationConst.KOR_DSYMP_REDNESS);
-                    TreeNode<String> pain = eye.addChild(ConversationConst.KOR_DSYMP_PAIN);
-                    TreeNode<String> puffy = eye.addChild(ConversationConst.KOR_DSYMP_PUFFY);
-                    TreeNode<String> sth_in_the_eye = eye.addChild(ConversationConst.KOR_DSYMP_STH_IN_THE_EYE);
-                    TreeNode<String> watery = eye.addChild(ConversationConst.KOR_DSYMP_WATERY);
+                    TreeNode<String> bleeding = eye.addChild(ConversationKorConst.KOR_DSYMP_BLEEDING);
+                    TreeNode<String> blind_spot = eye.addChild(ConversationKorConst.KOR_DSYMP_BLIND_SPOT);
+                    TreeNode<String> blurred_vision = eye.addChild(ConversationKorConst.KOR_DSYMP_BLURRED_VISION);
+                    TreeNode<String> bruise = eye.addChild(ConversationKorConst.KOR_DSYMP_BRUISE);
+                    TreeNode<String> cloudy_vision = eye.addChild(ConversationKorConst.KOR_DSYMP_CLOUDY_VISION);
+                    TreeNode<String> bulging_eyes = eye.addChild(ConversationKorConst.KOR_DSYMP_BULGING_EYES);
+                    TreeNode<String> mucus = eye.addChild(ConversationKorConst.KOR_DSYMP_MUCUS);
+                    TreeNode<String> double_vision = eye.addChild(ConversationKorConst.KOR_DSYMP_DOUBLE_VISION);
+                    TreeNode<String> pus = eye.addChild(ConversationKorConst.KOR_DSYMP_PUS);
+                    TreeNode<String> dry = eye.addChild(ConversationKorConst.KOR_DSYMP_DRY);
+                    TreeNode<String> irritation = eye.addChild(ConversationKorConst.KOR_DSYMP_IRRITATION);
+                    TreeNode<String> redness = eye.addChild(ConversationKorConst.KOR_DSYMP_REDNESS);
+                    TreeNode<String> pain = eye.addChild(ConversationKorConst.KOR_DSYMP_PAIN);
+                    TreeNode<String> puffy = eye.addChild(ConversationKorConst.KOR_DSYMP_PUFFY);
+                    TreeNode<String> sth_in_the_eye = eye.addChild(ConversationKorConst.KOR_DSYMP_STH_IN_THE_EYE);
+                    TreeNode<String> watery = eye.addChild(ConversationKorConst.KOR_DSYMP_WATERY);
                 }
-                TreeNode<String> nose = currentSymptom.addChild(ConversationConst.KOR_D2_NOSE);
+                TreeNode<String> nose = currentSymptom.addChild(ConversationKorConst.KOR_D2_NOSE);
                 {
                     // TreeNode<String>
                 }
@@ -66,7 +64,7 @@ public class ConversationListAdatper extends BaseAdapter {
             TreeNode<String> arm = currentSymptom.addChild("팔");
             TreeNode<String> chest = currentSymptom.addChild("흉부");
         }
-        TreeNode<String> chronicDisease = root.addChild(ConversationConst.KOR_CHRONIC_DISEASE);
+        TreeNode<String> chronicDisease = root.addChild(ConversationKorConst.KOR_CHRONIC_DISEASE);
     }
 
 

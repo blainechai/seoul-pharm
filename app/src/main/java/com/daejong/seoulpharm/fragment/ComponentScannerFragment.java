@@ -2,6 +2,7 @@ package com.daejong.seoulpharm.fragment;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.pm.ComponentInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,8 +13,16 @@ import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.activity.MainActivity;
+import com.daejong.seoulpharm.model.MedicineInfo;
 import com.daejong.seoulpharm.util.NetworkManager;
 import com.google.zxing.Result;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -50,6 +59,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
 
     }
 
+
     @Override
     public void handleResult(Result rawResult) {
 //        Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
@@ -62,11 +72,36 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
             @Override
             public void onSuccess(String result) {
 //                Toast.makeText(getActivity(), "" + result, Toast.LENGTH_SHORT).show();
-                ComponentInfoFragment fragment = new ComponentInfoFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("medData", result);
-                fragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(R.id.container,fragment).addToBackStack(null).commit();
+                try {
+                    Document document = Jsoup.parse(result);
+                    Log.d("hi!!!!!!!!!!!!!!!!", "onSuccess: " + document.getElementsByTag("c1"));
+
+                    MedicineInfo medicineInfo = new MedicineInfo();
+                    //set name
+                    Elements nameEls = document.getElementsByTag("b1");
+                    medicineInfo.setName(nameEls.get(0).text());
+
+                    //set company
+                    Elements companyEls = document.getElementsByTag("b3");
+                    medicineInfo.setCompany(companyEls.get(0).text());
+
+                    //set item seq
+                    Elements itemSeqEls = document.getElementsByTag("b7");
+                    medicineInfo.setItemSeq(itemSeqEls.get(0).text());
+
+                    //set component
+                    Elements componentEls = document.getElementsByTag("c1");
+                    ArrayList<String> components = new ArrayList<String>();
+                    for (Element el : componentEls) {
+                        components.add(el.text());
+                    }
+                    medicineInfo.setComponents(components);
+
+                    getSpecificInfo(medicineInfo);
+
+                } catch (Exception e) {
+                    onFail(500, "fail");
+                }
             }
 
             @Override
@@ -82,6 +117,40 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                 mScannerView.resumeCameraPreview(ComponentScannerFragment.this);
             }
         }, 2000);
+    }
+
+    private void getSpecificInfo(MedicineInfo medicineInfo) {
+        // get medicine specific search
+        NetworkManager.getInstance().getMedicineSpecific(getActivity(), medicineInfo, new NetworkManager.OnSpecificResultListener<String>() {
+            @Override
+            public void onSuccess(String result, MedicineInfo medicineInfo) {
+                Document document = Jsoup.parse(result);
+                medicineInfo.setEffect(document.select("#A_EE_DOC").get(0).parent().select(">div").text());
+                medicineInfo.setUsage(document.select("#A_UD_DOC").get(0).parent().select(">div").text());
+                medicineInfo.setCaution(document.select("#A_NB_DOC").get(0).parent().select(">div").text());
+                String imgSrc;
+                if (document.select(".txc-image").size() > 0) {
+                    imgSrc = document.select(".txc-image").first().absUrl("src");
+                } else {
+                    imgSrc = "http://drug.mfds.go.kr/html/images/noimages.png";
+                }
+                Log.d("!!!!!!!!!!!", "fdfghdfghdgfh" + imgSrc);
+                medicineInfo.setImageSrc(imgSrc);
+
+                ComponentInfoFragment fragment = new ComponentInfoFragment();
+                Bundle bundle = new Bundle();
+//                    bundle.putString("medData", result);
+                bundle.putSerializable("medicineInfo", medicineInfo);
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+            }
+
+            @Override
+            public void onFail(int code, String response) {
+                Log.d("REQTESTTTT", "error code:" + code + "\n" + response);
+            }
+        });
+
     }
 
     @Override

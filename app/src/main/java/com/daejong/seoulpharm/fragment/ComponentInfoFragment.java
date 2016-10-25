@@ -1,15 +1,24 @@
 package com.daejong.seoulpharm.fragment;
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
+import com.daejong.seoulpharm.model.MedicineInfo;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by blainechai on 2016. 10. 23..
@@ -17,7 +26,8 @@ import com.daejong.seoulpharm.R;
 
 public class ComponentInfoFragment extends Fragment implements View.OnClickListener {
 
-    LinearLayout container;
+    ImageView imageView;
+    LinearLayout resultContainer;
 
     public ComponentInfoFragment() {
         // Required empty public constructor
@@ -34,15 +44,35 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_component_info, container, false);
 
         // View Initialize
-        container = (LinearLayout) view.findViewById(R.id.container);
+        resultContainer = (LinearLayout) view.findViewById(R.id.container);
+        imageView = (ImageView) view.findViewById(R.id.pharm_image_view);
+        MedicineInfo medicineInfo = (MedicineInfo) getArguments().getSerializable("medicineInfo");
+//        Log.d("!!!!!!!!!!!!!!!",medicineInfo.getImageSrc());
+        ((TextView)view.findViewById(R.id.test)).setText(medicineInfo.toString());
 
-        ((TextView)view.findViewById(R.id.test)).setText("" + getArguments().getString("medData"));
-        Toast.makeText(getActivity(), "" + getArguments().getString("medData"), Toast.LENGTH_SHORT).show();
+        TextView companyTextView = (TextView) view.findViewById(R.id.pharm_maker);
+        TextView nameTextView= (TextView) view.findViewById(R.id.pharm_name_kor_view);
+        companyTextView.setText(medicineInfo.getCompany());
+        nameTextView.setText(medicineInfo.getName());
 
         // response 받은 정보 중에 제조사 / 성분목록 / 등의 정보가 있다면
 
         // container.addView(view...);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(medicineInfo.getImageSrc(), null, new AsyncHttpResponseHandler() {
 
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Bitmap image = BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length);
+                imageView.setImageBitmap(image);
+//                resultContainer.addView(imageView);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
 
         return view;
     }

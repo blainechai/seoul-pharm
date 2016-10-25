@@ -39,12 +39,12 @@
                     android:textStyle="bold"
                     android:text="타이레놀정 500mg"
                     android:textColor="@color/color_black"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/pharm_name_eng_view"
-                    android:textSize="10sp"
-                    android:text="Tylenol Tab. 500mg"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/pharm_name_eng_view"-->
+                    <!--android:textSize="10sp"-->
+                    <!--android:text="Tylenol Tab. 500mg"/>-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

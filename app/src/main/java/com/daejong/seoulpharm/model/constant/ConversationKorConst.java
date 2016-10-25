@@ -1,9 +1,9 @@
-package com.daejong.seoulpharm.model;
+package com.daejong.seoulpharm.model.constant;
 
 /**
  * Created by Hyunwoo on 2016. 10. 23..
  */
-public final class ConversationConst {
+public final class ConversationKorConst extends ConversationConst {
     public static final String ROOT = "root";
     public static final String KOR_CURRENT_SYMPTOM = "증상";
         public static final String KOR_D1_HEAD = "머리";
