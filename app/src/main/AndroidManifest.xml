@@ -28,7 +28,6 @@
         <activity android:name=".activity.ComponentActivity" />
         <activity android:name=".activity.DasanCallActivity" />
         <activity android:name=".activity.ConversationActivity" />
-        <activity android:name=".activity.MapActivity" />
     </application>
 
 </manifest>

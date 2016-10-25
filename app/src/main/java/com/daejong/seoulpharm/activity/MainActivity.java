@@ -1,8 +1,6 @@
 package com.daejong.seoulpharm.activity;
 
-import android.Manifest;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -14,8 +12,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +21,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,10 +52,13 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     // VIEWS
     DrawerLayout drawerLayout;
     Toolbar toolbar;
+    Button toolbarBtn;
+
     TextView currentAddressView;
     TextView currentRefreshView;
     ActionBarDrawerToggle mDrawerToggle;
     NMapView nMapView;    // NAVER MAP VIEW
+    LinearLayout btnContainer;
 
     // NAVER MAP API KEY
     public static final String CLIENT_ID = "s3q7uwJzMyOjOZfTnYDK";
@@ -74,7 +77,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     //    DBHelper db;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +84,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // View initialize
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        btnContainer = (LinearLayout) findViewById(R.id.panel_buttons);
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
         nMapView = (NMapView) findViewById(R.id.mapView);
         currentAddressView = (TextView) findViewById(R.id.current_address_view);
         currentRefreshView = (TextView) findViewById(R.id.current_refresh_view);
@@ -95,7 +99,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // Navigation Drawer Setting
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        findViewById(R.id.nav_hamburger_btn).setOnClickListener(this);
+        toolbarBtn.setOnClickListener(this);
 
         // Nav Buttons event callback settings
         findViewById(R.id.nav_drawer_component_btn).setOnClickListener(this);
@@ -116,6 +120,40 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
     }
 
+    private static final String MODE_MAP_DETAIL = "MODE_MAP_DETAIL";
+    private static final String MODE_MAP_WITH_BUTTONS = "MODE_MAP_WITH_BUTTONS";
+    private String currentMode = MODE_MAP_WITH_BUTTONS;
+    private void changeMode(String mode) {
+        switch (mode) {
+            case MODE_MAP_DETAIL :
+                // btn container gone
+                btnContainer.setVisibility(View.GONE);
+
+                // animation
+                Animation animDisappearToBottom = AnimationUtils.loadAnimation(MainActivity.this, R.anim.disappear_to_bottom);
+                btnContainer.setAnimation(animDisappearToBottom);
+
+                // change mode status
+                currentMode = MODE_MAP_DETAIL;
+
+                break;
+
+            case MODE_MAP_WITH_BUTTONS :
+                // btn container visible
+                btnContainer.setVisibility(View.VISIBLE);
+
+                // animation
+                Animation animAppearFromBottom = AnimationUtils.loadAnimation(MainActivity.this, R.anim.appear_from_bottom);
+                btnContainer.setAnimation(animAppearFromBottom);
+
+                // change mode status
+                currentMode = MODE_MAP_WITH_BUTTONS;
+
+                break;
+
+        }
+    }
+
 
 
     // ========== 지도 초기화 ========== //
@@ -126,6 +164,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         nMapView.setBuiltInZoomControls(false, null);
         nMapView.setOnMapStateChangeListener(this);
         nMapView.setScalingFactor(4.0f);        // Map 확대 배율
+        nMapView.setOnMapViewTouchEventListener(this);
 
 
         // 지도 조작 컨트롤러 생성
@@ -338,6 +377,11 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     }
     @Override
     public void onTouchDown(NMapView nMapView, MotionEvent motionEvent) {
+        Log.d("MAP TOUCH DOWN", "CLICKED");
+        if (currentMode.equals(MODE_MAP_WITH_BUTTONS)) {
+            Log.d("MAP TOUCH DOWN", "MODE CHANGED");
+            changeMode(MODE_MAP_DETAIL);
+        }
     }
     @Override
     public void onTouchUp(NMapView nMapView, MotionEvent motionEvent) {
@@ -363,7 +407,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 registerLocationListener();
                 break;
             case R.id.btn_map :
-                startActivity(new Intent(MainActivity.this, MapActivity.class));
+                changeMode(MODE_MAP_DETAIL);
                 break;
             case R.id.btn_conversation :
                 startActivity(new Intent(MainActivity.this, ConversationActivity.class));
@@ -395,7 +439,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 break;
             case R.id.nav_drawer_map_btn:
                 drawerLayout.closeDrawers();
-                startActivity(new Intent(MainActivity.this, MapActivity.class));
+                changeMode(MODE_MAP_DETAIL);
                 break;
             case R.id.nav_drawer_component_btn:
                 drawerLayout.closeDrawers();
@@ -408,8 +452,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 //                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_main_btn:
-//                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 drawerLayout.closeDrawers();
+                changeMode(MODE_MAP_WITH_BUTTONS);
                 break;
             case R.id.nav_drawer_conversation_btn:
                 drawerLayout.closeDrawers();
@@ -430,14 +474,21 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         unRegisterLocationListener();
     }
 
+
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            // NavigationDrawer가 열려있는 경우 >> Drawer close
             drawerLayout.closeDrawers();
+        } else if (currentMode.equals(MODE_MAP_DETAIL)) {
+            // MAP_DETAIL 모드인 경우 >> MAP_WITH_BUTTONS 모드로
+            changeMode(MODE_MAP_WITH_BUTTONS);
         } else {
             super.onBackPressed();
         }
     }
+
 
 
 }
