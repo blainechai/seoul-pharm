@@ -14,6 +14,8 @@ public class PharmDB {
      */
 
     public interface PharmTable extends BaseColumns {
+        /** TODO : DB COLUMN 추가!!
+         */
         public static final String TABLE_NAME = "PHARM_TABLE";
         public static final String COLUMN_MAIN_KEY = "MAIN_KEY";
         public static final String COLUMN_NAME_KOR = "NAME_KOR";
@@ -26,6 +28,16 @@ public class PharmDB {
         public static final String COLUMN_LATITUDE = "LATITUDE";
         public static final String COLUMN_LONGTITUDE = "LONGTITUDE";
 
+    }
+
+    public interface ScrappedPharmTable extends BaseColumns {
+        public static final String TABLE_NAME = "SCRAPPED_PHARM_TABLE";
+        public static final String COLUMN_PHARM_KEY = "MAIN_KEY";           // pharm ; MAIN_KEY
+    }
+
+    public interface ScrappedComponentTable extends BaseColumns {
+        public static final String TABLE_NAME = "SCRAPPED_COMPONENT_TABLE";
+        public static final String COLUMN_COMPONENT_KEY = "MAIN_KEY";       // Barcode key
     }
 
 }

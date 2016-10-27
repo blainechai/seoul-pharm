@@ -7,12 +7,10 @@ import android.widget.BaseAdapter;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.model.constant.ConversationConst;
-import com.daejong.seoulpharm.util.TreeNode;
+import com.daejong.seoulpharm.model.TreeNode;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,7 +22,6 @@ public class ConversationListAdatper extends BaseAdapter {
 
     TreeNode<String> root = new TreeNode<String>(ConversationConst.ROOT);
     TreeNode<String> currentSymptom = root.addChild(ConversationConst.CURRENT_SYMPTOM);
-
     {
         TreeNode<String> head = currentSymptom.addChild(ConversationConst.D1_HEAD);
         {

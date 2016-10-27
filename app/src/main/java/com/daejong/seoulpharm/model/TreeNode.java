@@ -1,6 +1,5 @@
-package com.daejong.seoulpharm.util;
+package com.daejong.seoulpharm.model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

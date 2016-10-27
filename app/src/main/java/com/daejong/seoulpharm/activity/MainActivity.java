@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,7 +16,6 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -34,6 +34,7 @@ import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.PharmItem;
 import com.daejong.seoulpharm.navermap.NMapPOIflagType;
 import com.daejong.seoulpharm.navermap.NMapViewerResourceProvider;
+import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.util.NetworkManager;
 import com.daejong.seoulpharm.R;
 import com.nhn.android.maps.NMapActivity;
@@ -45,13 +46,11 @@ import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
 import com.nhn.android.maps.overlay.NMapPOIdata;
-import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapCalloutOverlay;
 import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -62,6 +61,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     Toolbar toolbar;
     TextView toolbarTitle;
     Button toolbarBtn;
+    Button languageButton;
 
     // VIEWS
     TextView currentAddressView;
@@ -78,7 +78,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     LinearLayout mapDetailContainer;
 
     // NAVER MAP API KEY
-    public static final String CLIENT_ID = "s3q7uwJzMyOjOZfTnYDK";
+    public static final String NAVER_MAP_CLIENT_ID = "s3q7uwJzMyOjOZfTnYDK";
 
     // NAVER MAP OBJECT
     private NMapController nMapController;
@@ -107,6 +107,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        languageButton = (Button) findViewById(R.id.btn_language);
 
         // containers initialize
         btnContainer = (LinearLayout) findViewById(R.id.panel_buttons);
@@ -116,6 +117,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         nMapView = (NMapView) findViewById(R.id.mapView);
         currentAddressView = (TextView) findViewById(R.id.current_address_view);
         currentRefreshView = (TextView) findViewById(R.id.current_refresh_view);
+        // detail panel
         detailNameView = (TextView) findViewById(R.id.text_title);
         detailTelephoneView = (TextView) findViewById(R.id.text_telephone);
         detailAddressView = (TextView) findViewById(R.id.text_address);
@@ -141,6 +143,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
+        languageButton.setOnClickListener(this);
 
         // setting EventListener in this activity
         findViewById(R.id.current_refresh_view).setOnClickListener(this);
@@ -155,6 +158,34 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
     }
 
+
+    // LANGUAGE SETTING
+    private void changeLanguageInViews() {
+        String currentLanguage = LanguageSelector.getInstance().getLanguage();
+        switch (currentLanguage) {
+            case LanguageSelector.LANGUAGE_KOREAN :
+//                toolbarTitle.setText();
+                languageButton.setText("KOR");
+
+                break;
+
+            case LanguageSelector.LANGUAGE_ENGLISH :
+//                toolbarTitle.setText();
+                languageButton.setText("ENG");
+
+                break;
+
+            case LanguageSelector.LANGUAGE_CHINESE :
+//                toolbarTitle.setText();
+                languageButton.setText("CHI");
+
+                break;
+
+        }
+    }
+
+
+    // MAIN ACTIVITY MODES
     private static final String MODE_MAP_DETAIL = "MODE_MAP_DETAIL";
     private static final String MODE_MAIN = "MODE_MAIN";
     private static final String TITLE_MAP_DETAIL = "약국 찾기";
@@ -201,31 +232,62 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     }
 
 
-    // 상세 panel
+    // MAP DETAIL PANEL
+    boolean isBookmarked;
     private void setDetailPanels(final PharmItem item) {
 
+        // SET VISIBILITY AND ANIMATION
         if (mapDetailContainer.getVisibility() == View.GONE) {
             mapDetailContainer.setVisibility(View.VISIBLE);
             Animation animAppearFromBottom = AnimationUtils.loadAnimation(MainActivity.this, R.anim.appear_from_bottom);
             mapDetailContainer.setAnimation(animAppearFromBottom);
         }
 
+        // SET BOOKMARK
+        isBookmarked = db.searchPharmScrapped(item.getMainKey());
+        if (isBookmarked) {
+            // 즐겨찾기에 등록된 약국이라면
+            detailBookmarkBtn.setImageResource(R.drawable.ic_map_btn_bookmark_on);
+        } else {
+            detailBookmarkBtn.setImageResource(R.drawable.ic_map_btn_bookmark_off);
+        }
+
+        // SET TEXTS
         detailNameView.setText(item.getNameKor());
         detailAddressView.setText(item.getAddKorRoad());
         detailTelephoneView.setText(item.getTel());
 
+        // SET CLICK EVENT LISTENER
         detailCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, ""+item.getTel(), Toast.LENGTH_SHORT).show();
+                // 전화연결
+                String phoneNum = item.getTel();
+                Uri uri = Uri.parse("tel:" + phoneNum);
+                Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                startActivity(intent);
             }
         });
+        detailBookmarkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isBookmarked) {
+                    db.deletePharmScrapped(item.getMainKey());
+                    detailBookmarkBtn.setImageResource(R.drawable.ic_map_btn_bookmark_off);
+                } else {
+                    db.addPharmBookmark(item.getMainKey());
+                    detailBookmarkBtn.setImageResource(R.drawable.ic_map_btn_bookmark_on);
+                }
+                isBookmarked = !isBookmarked;
+            }
+        });
+
     }
 
     // ========== 지도 초기화 ========== //
     private void nMapInit() {
         // MapView initialize
-        nMapView.setClientId(CLIENT_ID);
+        nMapView.setClientId(NAVER_MAP_CLIENT_ID);
         nMapView.setClickable(true);
         nMapView.setBuiltInZoomControls(false, null);
         nMapView.setOnMapStateChangeListener(this);
@@ -477,7 +539,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // 클릭된 약국의 상세정보를 띄우기
         PharmItem clickedItem;
-        clickedItem = db.getPharmItem(nMapOverlayItem.getTitle());
+        clickedItem = db.getPharmItemByName(nMapOverlayItem.getTitle());
         if (!nMapOverlayItem.getTitle().equals("현재위치")) {
             setDetailPanels(clickedItem);
             // 지도의 중심을 선택한 위치로 이동
@@ -499,9 +561,13 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+            // MAP REFRESH
             case R.id.current_refresh_view :
                 registerLocationListener();
                 break;
+
+            // MAIN BUTTONS
             case R.id.btn_map :
                 changeMode(MODE_MAP_DETAIL);
                 break;
@@ -512,24 +578,13 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 startActivity(new Intent(MainActivity.this, ComponentActivity.class));
                 break;
             case R.id.btn_scrap :
-                // 주소검색 테스트
-                NetworkManager.getInstance().getEngAddress(this, new NetworkManager.OnResultListener<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Toast.makeText(MainActivity.this, ""+result, Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFail(int code, String responseString) {
-                        Log.d("REQTESTTTT","error code:"+code+"\n"+responseString);
-                    }
-                });
+                startActivity(new Intent(MainActivity.this, ScrapActivity.class));
                 break;
 
+            // NAVIGATION DRAWER BUTTONS
             case R.id.nav_hamburger_btn :
                 drawerLayout.openDrawer(Gravity.LEFT);
                 break;
-
             case R.id.nav_drawer_tutorial_btn:
 //                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
@@ -555,6 +610,14 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this, ConversationActivity.class));
                 break;
+
+            // LANGUAGE SETTING BUTTON IN TOOLBAR
+            case R.id.btn_language :
+                LanguageSelector.getInstance().changeLanguage();
+                changeLanguageInViews();
+                break;
+
+
         }
     }
 
@@ -584,7 +647,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 Animation animDisappearToBottom = AnimationUtils.loadAnimation(MainActivity.this, R.anim.disappear_to_bottom);
                 mapDetailContainer.setAnimation(animDisappearToBottom);
                 mapDetailContainer.setVisibility(View.GONE);    // 안보이도록
-
             } else {
                 // 약국 상세정보가 꺼져있다면 (맵만 보인다면)
                 changeMode(MODE_MAIN);

@@ -81,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
      */
     private static final int DB_ROW_COUNT = 550;
     private boolean checkDBInitialized() {
-        if (db.getRowCount() != DB_ROW_COUNT) {
+        if (db.getPharmRowCount() != DB_ROW_COUNT) {
             InputStream inputStream = getResources().openRawResource(R.raw.seoul_pharm_data);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 

@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.daejong.seoulpharm">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
-    <!--for barcode library-->
+    <!-- for barcode library -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -24,10 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.ComponentActivity" />
         <activity android:name=".activity.DasanCallActivity" />
         <activity android:name=".activity.ConversationActivity" />
+        <activity android:name=".activity.ScrapActivity"></activity>
     </application>
 
 </manifest>
