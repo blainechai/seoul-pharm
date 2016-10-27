@@ -124,4 +124,36 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public PharmItem getPharmItem(String pharmName) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = null;
+        PharmItem item = null;
+
+        try {
+            c = db.rawQuery("SELECT *"+
+                    " FROM " + PharmDB.PharmTable.TABLE_NAME +
+                    " WHERE " + PharmDB.PharmTable.COLUMN_NAME_KOR + "=? ", new String[] {pharmName + ""});
+
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                item = new PharmItem();
+                item.setMainKey(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_MAIN_KEY)));
+                item.setNameKor(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_NAME_KOR)));
+                item.setAddKorRoad(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_ADD_KOR_ROAD)));
+                item.sethKorCity(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_H_KOR_CITY)));
+                item.sethKorGu(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_H_KOR_GU)));
+                item.sethKorDong(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_H_KOR_DONG)));
+                item.setTel(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_TEL)));
+                item.setAvailLan(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_AVAIL_LAN)));
+                item.setLatitude(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_LATITUDE)));
+                item.setLongtitude(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_LONGTITUDE)));
+            }
+
+            return item;
+
+        } finally {
+            c.close();
+        }
+    }
+
 }

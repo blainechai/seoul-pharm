@@ -45,10 +45,18 @@ public class SplashActivity extends AppCompatActivity {
                     checkDBInitialized();
                     break;
                 case MESSAGE_DB_INITIALIZED :
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    finish();
+                    mHandler.postDelayed(goToMainRunnable, 2000);
                     break;
             }
+        }
+    };
+
+    Runnable goToMainRunnable = new Runnable() {
+        @Override
+        public void run() {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            finish();
+            mHandler.removeCallbacks(goToMainRunnable);
         }
     };
 

@@ -3,6 +3,7 @@ package com.daejong.seoulpharm.activity;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,10 +39,14 @@ import com.daejong.seoulpharm.R;
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapLocationManager;
+import com.nhn.android.maps.NMapOverlay;
+import com.nhn.android.maps.NMapOverlayItem;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
 import com.nhn.android.maps.overlay.NMapPOIdata;
+import com.nhn.android.maps.overlay.NMapPOIitem;
+import com.nhn.android.mapviewer.overlay.NMapCalloutOverlay;
 import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
@@ -49,19 +55,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends NMapActivity implements View.OnClickListener, NMapView.OnMapStateChangeListener, NMapView.OnMapViewTouchEventListener {
+public class MainActivity extends NMapActivity implements View.OnClickListener, NMapView.OnMapStateChangeListener, NMapView.OnMapViewTouchEventListener, NMapOverlayManager.OnCalloutOverlayListener {
 
-    // VIEWS
+    // TOOLBAR
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     TextView toolbarTitle;
     Button toolbarBtn;
 
+    // VIEWS
     TextView currentAddressView;
     TextView currentRefreshView;
-    ActionBarDrawerToggle mDrawerToggle;
     NMapView nMapView;    // NAVER MAP VIEW
+    TextView detailNameView;
+    TextView detailAddressView;
+    TextView detailTelephoneView;
+    ImageView detailBookmarkBtn;
+    ImageView detailCallBtn;
+
+    // CONTAINERS
     LinearLayout btnContainer;
+    LinearLayout mapDetailContainer;
 
     // NAVER MAP API KEY
     public static final String CLIENT_ID = "s3q7uwJzMyOjOZfTnYDK";
@@ -88,15 +102,25 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // View initialize
+        // Toolbar initialize
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        btnContainer = (LinearLayout) findViewById(R.id.panel_buttons);
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+
+        // containers initialize
+        btnContainer = (LinearLayout) findViewById(R.id.panel_buttons);
+        mapDetailContainer = (LinearLayout) findViewById(R.id.panel_map_detail);
+
+        // Views initialize
         nMapView = (NMapView) findViewById(R.id.mapView);
         currentAddressView = (TextView) findViewById(R.id.current_address_view);
         currentRefreshView = (TextView) findViewById(R.id.current_refresh_view);
+        detailNameView = (TextView) findViewById(R.id.text_title);
+        detailTelephoneView = (TextView) findViewById(R.id.text_telephone);
+        detailAddressView = (TextView) findViewById(R.id.text_address);
+        detailBookmarkBtn = (ImageView) findViewById(R.id.btn_bookmark);
+        detailCallBtn = (ImageView) findViewById(R.id.btn_call);
 
         // NMap Initialize
         nMapInit();
@@ -105,11 +129,11 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         db = new DBHelper(MainActivity.this);
         pharmList = db.getPharmList();
 
-        // Navigation Drawer Setting
+        // Navigation Drawer (Toolbar) Setting
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         toolbarBtn.setOnClickListener(this);
 
-        // Nav Buttons event callback settings
+        // setting EventListener Nav Buttons
         findViewById(R.id.nav_drawer_component_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_config_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_main_btn).setOnClickListener(this);
@@ -118,13 +142,16 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
 
-        // setting Buttons in this activity
+        // setting EventListener in this activity
         findViewById(R.id.current_refresh_view).setOnClickListener(this);
         findViewById(R.id.btn_map).setOnClickListener(this);
         findViewById(R.id.btn_conversation).setOnClickListener(this);
         findViewById(R.id.btn_component).setOnClickListener(this);
         findViewById(R.id.btn_scrap).setOnClickListener(this);
 
+        // setting EventListener in Detail Panel
+        detailBookmarkBtn.setOnClickListener(this);
+        detailCallBtn.setOnClickListener(this);
 
     }
 
@@ -140,8 +167,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 // set toolbar title
                 toolbarTitle.setText(TITLE_MAP_DETAIL);
 
-                // btn container gone
+                // container gone
                 btnContainer.setVisibility(View.GONE);
+                // mapDetailContainer.setVisibility(View.VISIBLE);
 
                 // animation
                 Animation animDisappearToBottom = AnimationUtils.loadAnimation(MainActivity.this, R.anim.disappear_to_bottom);
@@ -156,8 +184,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 // set toolbar title
                 toolbarTitle.setText(TITLE_MAIN);
 
-                // btn container visible
+                // container visible
                 btnContainer.setVisibility(View.VISIBLE);
+                mapDetailContainer.setVisibility(View.GONE);
 
                 // animation
                 Animation animAppearFromBottom = AnimationUtils.loadAnimation(MainActivity.this, R.anim.appear_from_bottom);
@@ -172,6 +201,26 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     }
 
 
+    // 상세 panel
+    private void setDetailPanels(final PharmItem item) {
+
+        if (mapDetailContainer.getVisibility() == View.GONE) {
+            mapDetailContainer.setVisibility(View.VISIBLE);
+            Animation animAppearFromBottom = AnimationUtils.loadAnimation(MainActivity.this, R.anim.appear_from_bottom);
+            mapDetailContainer.setAnimation(animAppearFromBottom);
+        }
+
+        detailNameView.setText(item.getNameKor());
+        detailAddressView.setText(item.getAddKorRoad());
+        detailTelephoneView.setText(item.getTel());
+
+        detailCallBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, ""+item.getTel(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     // ========== 지도 초기화 ========== //
     private void nMapInit() {
@@ -211,6 +260,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         // 기존의 위치들을 지도에서 삭제
         nMapOverlayManager.removeMyLocationOverlay();
         nMapOverlayManager.removePersistentOverlay();
+        nMapOverlayManager.clearOverlays();
+        nMapOverlayManager.clearCalloutOverlay();
 
         // 오버래이에 표시하기 위한 마커 이미지의 id값 생성
         int markerId = NMapPOIflagType.PIN;
@@ -230,6 +281,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // 위치 데이터를 사용하여 오버레이 생성
         NMapPOIdataOverlay poiDataOverlay = nMapOverlayManager.createPOIdataOverlay(poiDatas, null);
+        nMapOverlayManager.setOnCalloutOverlayListener(this);
 
     }
 
@@ -418,10 +470,29 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     public void onSingleTapUp(NMapView nMapView, MotionEvent motionEvent) {
     }
 
+    // Overlay Click event callback
+    @Override
+    public NMapCalloutOverlay onCreateCalloutOverlay(NMapOverlay nMapOverlay, NMapOverlayItem nMapOverlayItem, Rect rect) {
 
 
+        // 클릭된 약국의 상세정보를 띄우기
+        PharmItem clickedItem;
+        clickedItem = db.getPharmItem(nMapOverlayItem.getTitle());
+        if (!nMapOverlayItem.getTitle().equals("현재위치")) {
+            setDetailPanels(clickedItem);
+            // 지도의 중심을 선택한 위치로 이동
+            double lat = Double.parseDouble(clickedItem.getLatitude());
+            double lng = Double.parseDouble(clickedItem.getLongtitude());
+            Log.d(" !!! CLICKED POI !!! ", "LATITUDE : " + lat +  " / LONGTITUDE : " +lng);
+            nMapController.animateTo(new NGeoPoint(lng, lat));
+        }
 
+        /** TODO : 말풍선 띄우기!
+         *
+         */
 
+       return null;
+    }
 
 
     // Click Event
@@ -507,10 +578,20 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             // NavigationDrawer가 열려있는 경우 >> Drawer close
             drawerLayout.closeDrawers();
         } else if (currentMode.equals(MODE_MAP_DETAIL)) {
-            // MAP_DETAIL 모드인 경우 >> MAIN 모드로
-            changeMode(MODE_MAIN);
+            // MAP_DETAIL 모드인 경우
+            if (mapDetailContainer.getVisibility() == View.VISIBLE) {
+                // 약국 상세정보가 켜져있다면
+                Animation animDisappearToBottom = AnimationUtils.loadAnimation(MainActivity.this, R.anim.disappear_to_bottom);
+                mapDetailContainer.setAnimation(animDisappearToBottom);
+                mapDetailContainer.setVisibility(View.GONE);    // 안보이도록
+
+            } else {
+                // 약국 상세정보가 꺼져있다면 (맵만 보인다면)
+                changeMode(MODE_MAIN);
+            }
         } else {
-            super.onBackPressed();
+            // Main 화면이라면
+            super.onBackPressed();      // 앱 종료
         }
     }
 

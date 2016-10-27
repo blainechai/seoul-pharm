@@ -95,6 +95,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/panel_map"
                 android:layout_above="@+id/panel_buttons"
                 android:layout_below="@+id/panel_current_address"
                 android:orientation="vertical">
@@ -102,7 +103,83 @@
                 <com.nhn.android.maps.NMapView
                     android:id="@+id/mapView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="0dp"
+                    android:layout_weight="3"/>
+
+                <!-- MAP DETAIL PANEL -->
+                <LinearLayout
+                    android:id="@+id/panel_map_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingBottom="36dp"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical"
+                    android:background="@color/color_white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/text_title"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:text="약국 이름" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="8dp"
+                            android:textColor="#9DBFF4"
+                            android:textSize="16sp"
+                            android:text=" |  외국어 가능 약국" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:id="@+id/btn_bookmark"
+                            android:src="@drawable/ic_map_btn_bookmark_off"
+                            android:adjustViewBounds="true" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:layout_marginLeft="8dp"
+                            android:id="@+id/btn_call"
+                            android:src="@drawable/ic_map_btn_call"
+                            android:adjustViewBounds="true" />
+                    </LinearLayout>
+                    
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:background="#636363" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:id="@+id/text_telephone"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="#676767"
+                        android:text="Tel) " />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:id="@+id/text_address"
+                        android:textSize="16sp"
+                        android:textColor="#676767"
+                        android:text="주소" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -177,18 +254,6 @@
             </LinearLayout>
 
 
-            <!-- MAP DETAIL PANEL -->
-            <!--
-            <LinearLayout
-                android:id="@+id/panel_map_detail"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:background="@color/colorAccent">
-
-            </LinearLayout>
-            -->
 
 
         </RelativeLayout>
