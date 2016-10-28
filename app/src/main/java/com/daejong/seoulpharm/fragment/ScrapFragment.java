@@ -74,8 +74,6 @@ public class ScrapFragment extends Fragment {
                     mPharmListAdapter.addScrappedPharm(item);
                 }
 
-
-
                 break;
             case TYPE_COMPONENT :
                 // 의약품,성분 스크랩 목록

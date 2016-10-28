@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
@@ -30,7 +31,10 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
     Button toolbarBtn;
     Button languageButton;
 
+    // Tab
     TabHost tabHost;
+
+    // etc...
     ViewPager pager;
     ScrapTabsAdapter mAdapter;
 
@@ -67,7 +71,7 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         pager = (ViewPager)findViewById(R.id.pager);
         mAdapter = new ScrapTabsAdapter(this, getSupportFragmentManager(), tabHost, pager);
 
-        // Fragment Settings
+        // Fragment Params Settings
         Bundle pharmBundle = new Bundle();
         pharmBundle.putString(ScrapFragment.KEY_FRAGMENT_TYPE, ScrapFragment.TYPE_PHARMS);
         Bundle componentBundle = new Bundle();
@@ -76,6 +80,7 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         // Add Fragment to TAB
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_PHARMS).setIndicator("약국"), ScrapFragment.class, pharmBundle);
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_COMPONENT).setIndicator("의약품"), ScrapFragment.class, componentBundle);
+
 
     }
 
@@ -121,7 +126,7 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    /*
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
@@ -131,5 +136,6 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
             super.onBackPressed();
         }
     }
-    */
+
+
 }
