@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Hyunwoo on 2016. 10. 22..
  */
-public class ConversationListAdatper extends BaseAdapter {
+public class ConversationListAdapter extends BaseAdapter {
 
     List<TreeNode<String>> items = new ArrayList<>();
 
