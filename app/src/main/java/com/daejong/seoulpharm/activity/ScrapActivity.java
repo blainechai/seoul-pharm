@@ -37,11 +37,6 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAB_ID_PHARMS = "TAB_ID_PHARMS";
     private static final String TAB_ID_COMPONENT = "TAB_ID_COMPONENT";
 
-    TextView tv;
-    String fuck = "";
-
-    DBHelper db;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,15 +77,6 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_PHARMS).setIndicator("약국"), ScrapFragment.class, pharmBundle);
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_COMPONENT).setIndicator("의약품"), ScrapFragment.class, componentBundle);
 
-/*
-        tv = (TextView) findViewById(R.id.text);
-
-        List<PharmItem> items = db.getBookmarkedPharms();
-        for (PharmItem item : items) {
-            fuck += item.getNameKor()+"\n";
-        }
-        tv.setText(fuck);
-*/
     }
 
 
