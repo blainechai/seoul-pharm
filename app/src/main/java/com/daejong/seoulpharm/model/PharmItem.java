@@ -7,22 +7,24 @@ import com.google.gson.annotations.SerializedName;
  */
 public class PharmItem {
 
-    @SerializedName("MAIN_KEY")
     private String mainKey;
-    @SerializedName("NAME_KOR")
+
     private String nameKor;
-    @SerializedName("ADD_KOR_ROAD")
-    private String addKorRoad;
-    @SerializedName("H_KOR_CITY")
+    private String nameEng;
+    private String nameChi;
+
+    private String addressKor;
+    private String addressEng;
+
     private String hKorCity;
-    @SerializedName("H_KOR_GU")
     private String hKorGu;
-    @SerializedName("H_KOR_DONG")
     private String hKorDong;
-    @SerializedName("TEL")
+
     private String tel;
-    @SerializedName("AVAIL_LAN")
-    private String availLan;
+
+    private String availLanKor;
+    private String availLanEng;
+    private String availLanChi;
 
     // NOT API
     private String latitude;
@@ -32,15 +34,23 @@ public class PharmItem {
     public PharmItem() {
 
     }
-    public PharmItem(String mainKey, String nameKor, String addKorRoad, String hKorCity, String hKorGu, String hKorDong, String tel, String availLan) {
+
+    public PharmItem(String mainKey, String nameKor, String nameEng, String nameChi, String addressKor, String addressEng, String hKorCity, String hKorGu, String hKorDong, String tel, String availLanKor, String availLanEng, String availLanChi, String latitude, String longtitude) {
         this.mainKey = mainKey;
         this.nameKor = nameKor;
-        this.addKorRoad = addKorRoad;
+        this.nameEng = nameEng;
+        this.nameChi = nameChi;
+        this.addressKor = addressKor;
+        this.addressEng = addressEng;
         this.hKorCity = hKorCity;
         this.hKorGu = hKorGu;
         this.hKorDong = hKorDong;
         this.tel = tel;
-        this.availLan = availLan;
+        this.availLanKor = availLanKor;
+        this.availLanEng = availLanEng;
+        this.availLanChi = availLanChi;
+        this.latitude = latitude;
+        this.longtitude = longtitude;
     }
 
     // getter & setter
@@ -60,12 +70,36 @@ public class PharmItem {
         this.nameKor = nameKor;
     }
 
-    public String getAddKorRoad() {
-        return addKorRoad;
+    public String getNameEng() {
+        return nameEng;
     }
 
-    public void setAddKorRoad(String addKorRoad) {
-        this.addKorRoad = addKorRoad;
+    public void setNameEng(String nameEng) {
+        this.nameEng = nameEng;
+    }
+
+    public String getNameChi() {
+        return nameChi;
+    }
+
+    public void setNameChi(String nameChi) {
+        this.nameChi = nameChi;
+    }
+
+    public String getAddressKor() {
+        return addressKor;
+    }
+
+    public void setAddressKor(String addressKor) {
+        this.addressKor = addressKor;
+    }
+
+    public String getAddressEng() {
+        return addressEng;
+    }
+
+    public void setAddressEng(String addressEng) {
+        this.addressEng = addressEng;
     }
 
     public String gethKorCity() {
@@ -100,12 +134,29 @@ public class PharmItem {
         this.tel = tel;
     }
 
-    public String getAvailLan() {
-        return availLan;
+
+    public String getAvailLanKor() {
+        return availLanKor;
     }
 
-    public void setAvailLan(String availLan) {
-        this.availLan = availLan;
+    public void setAvailLanKor(String availLanKor) {
+        this.availLanKor = availLanKor;
+    }
+
+    public String getAvailLanEng() {
+        return availLanEng;
+    }
+
+    public void setAvailLanEng(String availLanEng) {
+        this.availLanEng = availLanEng;
+    }
+
+    public String getAvailLanChi() {
+        return availLanChi;
+    }
+
+    public void setAvailLanChi(String availLanChi) {
+        this.availLanChi = availLanChi;
     }
 
     public String getLatitude() {

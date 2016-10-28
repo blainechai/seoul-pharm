@@ -36,7 +36,7 @@ public class ScrapPharmItemView extends FrameLayout {
         // Language 에 따른 수정 필요
         pharmTitleView.setText(item.getNameKor());
         pharmTelView.setText(item.getTel());
-        pharmAddressView.setText(item.getAddKorRoad());
+        pharmAddressView.setText(item.getAddressKor());
     }
 
 }

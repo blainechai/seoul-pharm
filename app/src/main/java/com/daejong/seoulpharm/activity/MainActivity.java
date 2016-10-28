@@ -169,6 +169,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
         languageButton.setOnClickListener(this);
+        languageButton.setText(LanguageSelector.getInstance().getCurrentLanguage());
 
         // setting EventListener in this activity
         findViewById(R.id.current_refresh_view).setOnClickListener(this);
@@ -254,7 +255,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // SET TEXTS
         detailNameView.setText(item.getNameKor());
-        detailAddressView.setText(item.getAddKorRoad());
+        detailAddressView.setText(item.getAddressKor());
         detailTelephoneView.setText(item.getTel());
 
         // SET CLICK EVENT LISTENER
@@ -330,13 +331,14 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // 표시할 위치 데이터를 지정한다. -- 마지막 인자가 오버래이를 인식하기 위한 id값
         NMapPOIdata poiDatas = new NMapPOIdata(pharmList.size()+1, nMapViewerResourceProvider);
+
         poiDatas.beginPOIdata(pharmList.size()+1);
         // 현재 위치 등록
         poiDatas.addPOIitem(currentPos.getLongitude(), currentPos.getLatitude(), "현재위치", markerId, 0);  // PIN 바꾸기
         for (PharmItem item : pharmList) {
             double latitude = Double.parseDouble(item.getLatitude());
             double longtitude = Double.parseDouble(item.getLongtitude());
-//            Log.d(" LIST ADDED !! ","LAT : "+latitude + "  /  LNG : "+longtitude);
+            Log.d(" LIST ADDED !! ","LAT : "+latitude + "  /  LNG : "+longtitude);
             poiDatas.addPOIitem(longtitude, latitude, item.getNameKor(), markerId, 0);
         }
         poiDatas.endPOIdata();

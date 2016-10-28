@@ -77,12 +77,12 @@ public class SplashActivity extends AppCompatActivity {
 
     /** 1. DB Initialize
      *   현재 단말기 DB의 data 수가 550개인지 확인하고
-     *   seoul_pharm_data.csv 파일을 읽어서 Database에 추가
+     *   seoul_pharm_data_complete.csv 파일을 읽어서 Database에 추가
      */
     private static final int DB_ROW_COUNT = 550;
     private boolean checkDBInitialized() {
         if (db.getPharmRowCount() != DB_ROW_COUNT) {
-            InputStream inputStream = getResources().openRawResource(R.raw.seoul_pharm_data);
+            InputStream inputStream = getResources().openRawResource(R.raw.seoul_pharm_data_complete);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             try {
@@ -91,15 +91,26 @@ public class SplashActivity extends AppCompatActivity {
                     String[] row = csvLine.split(",");
                     PharmItem item = new PharmItem();
                     item.setMainKey(row[0]);
+
                     item.setNameKor(row[1]);
-                    item.setAddKorRoad(row[2]);
-                    item.sethKorCity(row[3]);
-                    item.sethKorGu(row[4]);
-                    item.sethKorDong(row[5]);
-                    item.setTel(row[6]);
-                    item.setAvailLan(row[7]);
-                    item.setLongtitude(row[8]);
-                    item.setLatitude(row[9]);
+                    item.setNameEng(row[2]);
+                    item.setNameChi(row[3]);
+
+                    item.setAddressKor(row[4]);
+                    item.setAddressEng(row[5]);
+
+                    item.sethKorCity(row[6]);
+                    item.sethKorGu(row[7]);
+                    item.sethKorDong(row[8]);
+                    item.setTel(row[9]);
+
+                    item.setAvailLanKor(row[10]);
+                    item.setAvailLanEng(row[11]);
+                    item.setAvailLanChi(row[12]);
+
+                    item.setLongtitude(row[13]);
+                    item.setLatitude(row[14]);
+
                     db.addPharmItem(item);
                     Log.d("!!! DB Initializing !!!", "DATA : " + row[1]);
                 }
