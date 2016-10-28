@@ -97,6 +97,31 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     List<PharmItem> pharmList;
 
 
+    LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener= new LanguageSelector.OnLanguageChangeListener() {
+        @Override
+        public void setViewContentsLanguage(String currentLanguage) {
+            switch (currentLanguage) {
+                case LanguageSelector.LANGUAGE_KOREAN :
+//                toolbarTitle.setText();
+                    languageButton.setText("KOR");
+
+                    break;
+
+                case LanguageSelector.LANGUAGE_ENGLISH :
+//                toolbarTitle.setText();
+                    languageButton.setText("ENG");
+
+                    break;
+
+                case LanguageSelector.LANGUAGE_CHINESE :
+//                toolbarTitle.setText();
+                    languageButton.setText("CHI");
+
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,32 +181,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         detailBookmarkBtn.setOnClickListener(this);
         detailCallBtn.setOnClickListener(this);
 
-    }
-
-
-    // LANGUAGE SETTING
-    private void changeLanguageInViews() {
-        String currentLanguage = LanguageSelector.getInstance().getLanguage();
-        switch (currentLanguage) {
-            case LanguageSelector.LANGUAGE_KOREAN :
-//                toolbarTitle.setText();
-                languageButton.setText("KOR");
-
-                break;
-
-            case LanguageSelector.LANGUAGE_ENGLISH :
-//                toolbarTitle.setText();
-                languageButton.setText("ENG");
-
-                break;
-
-            case LanguageSelector.LANGUAGE_CHINESE :
-//                toolbarTitle.setText();
-                languageButton.setText("CHI");
-
-                break;
-
-        }
+        LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);
     }
 
 
@@ -614,7 +614,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             // LANGUAGE SETTING BUTTON IN TOOLBAR
             case R.id.btn_language :
                 LanguageSelector.getInstance().changeLanguage();
-                changeLanguageInViews();
+                // changeLanguageInViews();
                 break;
 
 
