@@ -7,12 +7,10 @@ import android.widget.BaseAdapter;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.model.constant.ConversationConst;
-import com.daejong.seoulpharm.util.TreeNode;
+import com.daejong.seoulpharm.model.TreeNode;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,7 +22,6 @@ public class ConversationListAdapter extends BaseAdapter {
 
     TreeNode<String> root = new TreeNode<String>(ConversationConst.ROOT);
     TreeNode<String> currentSymptom = root.addChild(ConversationConst.CURRENT_SYMPTOM);
-
     {
         TreeNode<String> head = currentSymptom.addChild(ConversationConst.D1_HEAD);
         {
@@ -108,6 +105,7 @@ public class ConversationListAdapter extends BaseAdapter {
                 TreeNode<String> inside_mouth = mouth.addChild(ConversationConst.INSIDE_MOUTH);
                 TreeNode<String> teeth = mouth.addChild(ConversationConst.TEETH);
                 TreeNode<String> tongue = mouth.addChild(ConversationConst.TONGUE);
+                //
                 TreeNode<String> belching = mouth.addChild(ConversationConst.BELCHING);
                 TreeNode<String> bleeding = mouth.addChild(ConversationConst.BLEEDING);
                 TreeNode<String> bleeding_gums = mouth.addChild(ConversationConst.BLEEDING_GUMS);
@@ -153,37 +151,67 @@ public class ConversationListAdapter extends BaseAdapter {
         TreeNode<String> neck = currentSymptom.addChild(ConversationConst.D1_NECK);
         {
             TreeNode<String> front = neck.addChild(ConversationConst.FRONT);
-            TreeNode<String> back = front.addChild(ConversationConst.BACK);
-            TreeNode<String> inner = front.addChild(ConversationConst.INNER);
-            TreeNode<String> bleeding = front.addChild(ConversationConst.BLEEDING);
-            TreeNode<String> broken_bone = front.addChild(ConversationConst.BROKEN_BONE);
-            TreeNode<String> bruising = front.addChild(ConversationConst.BRUISING);
-            TreeNode<String> pus = front.addChild(ConversationConst.PUS);
-            TreeNode<String> swollen_glands = front.addChild(ConversationConst.SWOLLEN_GLANDS);
-            TreeNode<String> involuntary_head_turning_or_twisting = front.addChild(ConversationConst.INVOLUNTARY_HEAD_TURNING_OR_TWISTING);
-            TreeNode<String> joint_ache = front.addChild(ConversationConst.JOINT_ACHE);
-            TreeNode<String> lump = front.addChild(ConversationConst.LUMP);
-            TreeNode<String> cramp = front.addChild(ConversationConst.CRAMP);
-            TreeNode<String> numbness = front.addChild(ConversationConst.NUMBNESS);
-            TreeNode<String> pain = front.addChild(ConversationConst.PAIN);
-            TreeNode<String> stiffness = front.addChild(ConversationConst.STIFFNESS);
+            {
+                TreeNode<String> bleeding = front.addChild(ConversationConst.BLEEDING);
+                TreeNode<String> broken_bone = front.addChild(ConversationConst.BROKEN_BONE);
+                TreeNode<String> bruising = front.addChild(ConversationConst.BRUISING);
+                TreeNode<String> pus = front.addChild(ConversationConst.PUS);
+                TreeNode<String> swollen_glands = front.addChild(ConversationConst.SWOLLEN_GLANDS);
+                TreeNode<String> involuntary_head_turning_or_twisting = front.addChild(ConversationConst.INVOLUNTARY_HEAD_TURNING_OR_TWISTING);
+                TreeNode<String> joint_ache = front.addChild(ConversationConst.JOINT_ACHE);
+                TreeNode<String> lump = front.addChild(ConversationConst.LUMP);
+                TreeNode<String> cramp = front.addChild(ConversationConst.CRAMP);
+                TreeNode<String> numbness = front.addChild(ConversationConst.NUMBNESS);
+                TreeNode<String> pain = front.addChild(ConversationConst.PAIN);
+                TreeNode<String> stiffness = front.addChild(ConversationConst.STIFFNESS);
+            }
+            TreeNode<String> back = neck.addChild(ConversationConst.BACK);
+            {
+                TreeNode<String> bleeding = back.addChild(ConversationConst.BLEEDING);
+                TreeNode<String> broken_bone = back.addChild(ConversationConst.BROKEN_BONE);
+                TreeNode<String> bruising = back.addChild(ConversationConst.BRUISING);
+                TreeNode<String> pus = back.addChild(ConversationConst.PUS);
+                TreeNode<String> swollen_glands = back.addChild(ConversationConst.SWOLLEN_GLANDS);
+                TreeNode<String> involuntary_head_turning_or_twisting = back.addChild(ConversationConst.INVOLUNTARY_HEAD_TURNING_OR_TWISTING);
+                TreeNode<String> joint_ache = back.addChild(ConversationConst.JOINT_ACHE);
+                TreeNode<String> lump = back.addChild(ConversationConst.LUMP);
+                TreeNode<String> cramp = back.addChild(ConversationConst.CRAMP);
+                TreeNode<String> numbness = back.addChild(ConversationConst.NUMBNESS);
+                TreeNode<String> pain = back.addChild(ConversationConst.PAIN);
+                TreeNode<String> stiffness = back.addChild(ConversationConst.STIFFNESS);
+            }
+            TreeNode<String> inner = neck.addChild(ConversationConst.INNER);
+            {
+                TreeNode<String> bleeding = inner.addChild(ConversationConst.BLEEDING);
+                TreeNode<String> broken_bone = inner.addChild(ConversationConst.BROKEN_BONE);
+                TreeNode<String> bruising = inner.addChild(ConversationConst.BRUISING);
+                TreeNode<String> pus = inner.addChild(ConversationConst.PUS);
+                TreeNode<String> swollen_glands = inner.addChild(ConversationConst.SWOLLEN_GLANDS);
+                TreeNode<String> involuntary_head_turning_or_twisting = inner.addChild(ConversationConst.INVOLUNTARY_HEAD_TURNING_OR_TWISTING);
+                TreeNode<String> joint_ache = inner.addChild(ConversationConst.JOINT_ACHE);
+                TreeNode<String> lump = inner.addChild(ConversationConst.LUMP);
+                TreeNode<String> cramp = inner.addChild(ConversationConst.CRAMP);
+                TreeNode<String> numbness = inner.addChild(ConversationConst.NUMBNESS);
+                TreeNode<String> pain = inner.addChild(ConversationConst.PAIN);
+                TreeNode<String> stiffness = inner.addChild(ConversationConst.STIFFNESS);
+            }
         }
         TreeNode<String> arm = currentSymptom.addChild(ConversationConst.D1_ARM);
         {
             TreeNode<String> shoulder = arm.addChild(ConversationConst.D2_SHOULDER);
             {
-                TreeNode<String> bleeding = arm.addChild(ConversationConst.BLEEDING);
-                TreeNode<String> bruising = arm.addChild(ConversationConst.BRUISING);
-                TreeNode<String> difficulty_moving_joint = arm.addChild(ConversationConst.DIFFICULTY_MOVING_JOINT);
-                TreeNode<String> pus = arm.addChild(ConversationConst.PUS);
-                TreeNode<String> inability_to_move = arm.addChild(ConversationConst.INABILITY_TO_MOVE);
-                TreeNode<String> joint_ache = arm.addChild(ConversationConst.JOINT_ACHE);
-                TreeNode<String> lump = arm.addChild(ConversationConst.LUMP);
-                TreeNode<String> numbness = arm.addChild(ConversationConst.NUMBNESS);
-                TreeNode<String> popping_or_snapping_sound_from_joint = arm.addChild(ConversationConst.POPPING_OR_SNAPPING_SOUND_FROM_JOINT);
-                TreeNode<String> swelling = arm.addChild(ConversationConst.SWELLING);
-                TreeNode<String> broken_bone = arm.addChild(ConversationConst.BROKEN_BONE);
-                TreeNode<String> stiffness = arm.addChild(ConversationConst.STIFFNESS);
+                TreeNode<String> bleeding = shoulder.addChild(ConversationConst.BLEEDING);
+                TreeNode<String> bruising = shoulder.addChild(ConversationConst.BRUISING);
+                TreeNode<String> difficulty_moving_joint = shoulder.addChild(ConversationConst.DIFFICULTY_MOVING_JOINT);
+                TreeNode<String> pus = shoulder.addChild(ConversationConst.PUS);
+                TreeNode<String> inability_to_move = shoulder.addChild(ConversationConst.INABILITY_TO_MOVE);
+                TreeNode<String> joint_ache = shoulder.addChild(ConversationConst.JOINT_ACHE);
+                TreeNode<String> lump = shoulder.addChild(ConversationConst.LUMP);
+                TreeNode<String> numbness = shoulder.addChild(ConversationConst.NUMBNESS);
+                TreeNode<String> popping_or_snapping_sound_from_joint = shoulder.addChild(ConversationConst.POPPING_OR_SNAPPING_SOUND_FROM_JOINT);
+                TreeNode<String> swelling = shoulder.addChild(ConversationConst.SWELLING);
+                TreeNode<String> broken_bone = shoulder.addChild(ConversationConst.BROKEN_BONE);
+                TreeNode<String> stiffness = shoulder.addChild(ConversationConst.STIFFNESS);
             }
             TreeNode<String> armpit = arm.addChild(ConversationConst.D2_ARMPIT);
             {
@@ -204,6 +232,7 @@ public class ConversationListAdapter extends BaseAdapter {
                 TreeNode<String> elbow = upper_arm.addChild(ConversationConst.ELBOW);
                 TreeNode<String> wrist = upper_arm.addChild(ConversationConst.WRIST);
                 TreeNode<String> fore_arm = upper_arm.addChild(ConversationConst.FORE_ARM);
+                //
                 TreeNode<String> bleeding = upper_arm.addChild(ConversationConst.BLEEDING);
                 TreeNode<String> bruising = upper_arm.addChild(ConversationConst.BRUISING);
                 TreeNode<String> pus = upper_arm.addChild(ConversationConst.PUS);
@@ -217,27 +246,28 @@ public class ConversationListAdapter extends BaseAdapter {
             }
             TreeNode<String> hand = arm.addChild(ConversationConst.D2_HAND);
             {
-                TreeNode<String> palm = arm.addChild(ConversationConst.PALM);
-                TreeNode<String> fingers = arm.addChild(ConversationConst.FINGERS);
-                TreeNode<String> back_of_hand = arm.addChild(ConversationConst.BACK_OF_HAND);
-                TreeNode<String> nails = arm.addChild(ConversationConst.NAILS);
-                TreeNode<String> bleeding = arm.addChild(ConversationConst.BLEEDING);
-                TreeNode<String> bruising = arm.addChild(ConversationConst.BRUISING);
-                TreeNode<String> pus = arm.addChild(ConversationConst.PUS);
-                TreeNode<String> lump = arm.addChild(ConversationConst.LUMP);
-                TreeNode<String> numbness = arm.addChild(ConversationConst.NUMBNESS);
-                TreeNode<String> popping_or_snapping_sound_from_joint = arm.addChild(ConversationConst.POPPING_OR_SNAPPING_SOUND_FROM_JOINT);
-                TreeNode<String> swelling = arm.addChild(ConversationConst.SWELLING);
-                TreeNode<String> stiffness = arm.addChild(ConversationConst.STIFFNESS);
-                TreeNode<String> cold_hands = arm.addChild(ConversationConst.COLD_HANDS);
-                TreeNode<String> color_change = arm.addChild(ConversationConst.COLOR_CHANGE);
-                TreeNode<String> broken_bone = arm.addChild(ConversationConst.BROKEN_BONE);
-                TreeNode<String> involuntary_movement = arm.addChild(ConversationConst.INVOLUNTARY_MOVEMENT);
-                TreeNode<String> cramps_or_spasms = arm.addChild(ConversationConst.CRAMPS_OR_SPASMS);
-                TreeNode<String> shaking_hands_of_tremor = arm.addChild(ConversationConst.SHAKING_HANDS_OF_TREMOR);
-                TreeNode<String> joint_pain = arm.addChild(ConversationConst.JOINT_PAIN);
-                TreeNode<String> inability_to_move = arm.addChild(ConversationConst.INABILITY_TO_MOVE);
-                TreeNode<String> muscle_cramps_or_spasms = arm.addChild(ConversationConst.MUSCLE_CRAMPS_OR_SPASMS);
+                TreeNode<String> palm = hand.addChild(ConversationConst.PALM);
+                TreeNode<String> fingers = hand.addChild(ConversationConst.FINGERS);
+                TreeNode<String> back_of_hand = hand.addChild(ConversationConst.BACK_OF_HAND);
+                TreeNode<String> nails = hand.addChild(ConversationConst.NAILS);
+                //
+                TreeNode<String> bleeding = hand.addChild(ConversationConst.BLEEDING);
+                TreeNode<String> bruising = hand.addChild(ConversationConst.BRUISING);
+                TreeNode<String> pus = hand.addChild(ConversationConst.PUS);
+                TreeNode<String> lump = hand.addChild(ConversationConst.LUMP);
+                TreeNode<String> numbness = hand.addChild(ConversationConst.NUMBNESS);
+                TreeNode<String> popping_or_snapping_sound_from_joint = hand.addChild(ConversationConst.POPPING_OR_SNAPPING_SOUND_FROM_JOINT);
+                TreeNode<String> swelling = hand.addChild(ConversationConst.SWELLING);
+                TreeNode<String> stiffness = hand.addChild(ConversationConst.STIFFNESS);
+                TreeNode<String> cold_hands = hand.addChild(ConversationConst.COLD_HANDS);
+                TreeNode<String> color_change = hand.addChild(ConversationConst.COLOR_CHANGE);
+                TreeNode<String> broken_bone = hand.addChild(ConversationConst.BROKEN_BONE);
+                TreeNode<String> involuntary_movement = hand.addChild(ConversationConst.INVOLUNTARY_MOVEMENT);
+                TreeNode<String> cramps_or_spasms = hand.addChild(ConversationConst.CRAMPS_OR_SPASMS);
+                TreeNode<String> shaking_hands_of_tremor = hand.addChild(ConversationConst.SHAKING_HANDS_OF_TREMOR);
+                TreeNode<String> joint_pain = hand.addChild(ConversationConst.JOINT_PAIN);
+                TreeNode<String> inability_to_move = hand.addChild(ConversationConst.INABILITY_TO_MOVE);
+                TreeNode<String> muscle_cramps_or_spasms = hand.addChild(ConversationConst.MUSCLE_CRAMPS_OR_SPASMS);
             }
         }
         TreeNode<String> chest = currentSymptom.addChild(ConversationConst.D1_CHEST);
@@ -247,6 +277,7 @@ public class ConversationListAdapter extends BaseAdapter {
             TreeNode<String> spine = chest.addChild(ConversationConst.SPINE);
             TreeNode<String> back = chest.addChild(ConversationConst.BACK);
             TreeNode<String> lateral_chest = chest.addChild(ConversationConst.LATERAL_CHEST);
+            //
             TreeNode<String> bleeding = chest.addChild(ConversationConst.BLEEDING);
             TreeNode<String> bruising = chest.addChild(ConversationConst.BRUISING);
             TreeNode<String> pus = chest.addChild(ConversationConst.PUS);
@@ -274,6 +305,7 @@ public class ConversationListAdapter extends BaseAdapter {
         {
             TreeNode<String> breast = abdomen.addChild(ConversationConst.BREAST);
             TreeNode<String> sternum = abdomen.addChild(ConversationConst.STERNUM);
+            //
             TreeNode<String> bleeding = abdomen.addChild(ConversationConst.BLEEDING);
             TreeNode<String> bruising = abdomen.addChild(ConversationConst.BRUISING);
             TreeNode<String> pus = abdomen.addChild(ConversationConst.PUS);
@@ -300,6 +332,7 @@ public class ConversationListAdapter extends BaseAdapter {
         {
             TreeNode<String> hip = pelvis.addChild(ConversationConst.HIP);
             TreeNode<String> pelvis1 = pelvis.addChild(ConversationConst.PELVIS);
+            //
             TreeNode<String> buttocks = pelvis.addChild(ConversationConst.BUTTOCKS);
             TreeNode<String> groin = pelvis.addChild(ConversationConst.GROIN);
             TreeNode<String> genitals = pelvis.addChild(ConversationConst.GENITALS);
@@ -324,6 +357,7 @@ public class ConversationListAdapter extends BaseAdapter {
             {
                 TreeNode<String> thigh = upper_leg.addChild(ConversationConst.THIGH);
                 TreeNode<String> hamstring = upper_leg.addChild(ConversationConst.HAMSTRING);
+                //
                 TreeNode<String> bleeding = upper_leg.addChild(ConversationConst.BLEEDING);
                 TreeNode<String> bruising = upper_leg.addChild(ConversationConst.BRUISING);
                 TreeNode<String> pus = upper_leg.addChild(ConversationConst.PUS);
@@ -356,6 +390,7 @@ public class ConversationListAdapter extends BaseAdapter {
             {
                 TreeNode<String> shin = lower_leg.addChild(ConversationConst.SHIN);
                 TreeNode<String> calf = lower_leg.addChild(ConversationConst.CALF);
+                //
                 TreeNode<String> bleeding = lower_leg.addChild(ConversationConst.BLEEDING);
                 TreeNode<String> bruising = lower_leg.addChild(ConversationConst.BRUISING);
                 TreeNode<String> pus = lower_leg.addChild(ConversationConst.PUS);
@@ -389,10 +424,11 @@ public class ConversationListAdapter extends BaseAdapter {
             }
             TreeNode<String> feet = leg.addChild(ConversationConst.D2_FEET);
             {
-                TreeNode<String> sole = leg.addChild(ConversationConst.SOLE);
-                TreeNode<String> foot = leg.addChild(ConversationConst.FOOT);
-                TreeNode<String> toe = leg.addChild(ConversationConst.TOE);
-                TreeNode<String> toe_nails = leg.addChild(ConversationConst.TOE_NAILS);
+                TreeNode<String> sole = feet.addChild(ConversationConst.SOLE);
+                TreeNode<String> foot = feet.addChild(ConversationConst.FOOT);
+                TreeNode<String> toe = feet.addChild(ConversationConst.TOE);
+                TreeNode<String> toe_nails = feet.addChild(ConversationConst.TOE_NAILS);
+                //
                 TreeNode<String> bleeding = leg.addChild(ConversationConst.BLEEDING);
                 TreeNode<String> bruising = leg.addChild(ConversationConst.BRUISING);
                 TreeNode<String> difficulty_moving_joint = leg.addChild(ConversationConst.DIFFICULTY_MOVING_JOINT);
