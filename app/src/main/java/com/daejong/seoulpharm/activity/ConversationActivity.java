@@ -6,14 +6,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.daejong.seoulpharm.adapter.ConversationListAdatper;
+import com.daejong.seoulpharm.adapter.ConversationListAdapter;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
 public class ConversationActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     ListView conversationListView;
-    ConversationListAdatper mAdatper;
+    ConversationListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,37 +21,37 @@ public class ConversationActivity extends AppCompatActivity implements AdapterVi
         setContentView(R.layout.activity_conversation);
 
         conversationListView = (ListView) findViewById(R.id.conversation_list);
-        mAdatper = new ConversationListAdatper();
-        conversationListView.setAdapter(mAdatper);
-        mAdatper.showCurrentList();
+        mAdapter = new ConversationListAdapter();
+        conversationListView.setAdapter(mAdapter);
+        mAdapter.showCurrentList();
 
         conversationListView.setOnItemClickListener(this);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        if (mAdatper.getCurrentNode().isLastParent()) {
-            if (mAdatper.getNodeSelected(position)) {
-                mAdatper.setNodeSelected(position, false);
+        if (mAdapter.getCurrentNode().isLastParent()) {
+            if (mAdapter.getNodeSelected(position)) {
+                mAdapter.setNodeSelected(position, false);
             } else {
-                mAdatper.setNodeSelected(position, true);
+                mAdapter.setNodeSelected(position, true);
             }
         }
         else {
             String selectedNodeName = ((ConversationItemView)view).getItemText();
-            mAdatper.currentNodeToChild(selectedNodeName);
+            mAdapter.currentNodeToChild(selectedNodeName);
         }
     }
 
 
     @Override
     public void onBackPressed() {
-        if (mAdatper.currentNodeIsRoot()) {
+        if (mAdapter.currentNodeIsRoot()) {
             // 현재 노드가 최상위 노드일 때
             super.onBackPressed();
         } else {
             // 현재 노드가 하위 노드일 떄
-            mAdatper.currentNodeToParent();
+            mAdapter.currentNodeToParent();
         }
     }
 }

@@ -6,29 +6,38 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
+import com.daejong.seoulpharm.adapter.LanguageSpinnerAdapter;
 import com.daejong.seoulpharm.fragment.ComponentScannerFragment;
 
-public class ComponentActivity extends AppCompatActivity implements View.OnClickListener {
+public class ComponentActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Toolbar toolbar;
+    Button toolbarBtn;
+    TextView toolbarTitle;
     DrawerLayout drawerLayout;
-    ActionBarDrawerToggle mDrawerToggle;
+
+    String[] language = {"한국어", "中国语", "ENG"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_component);
 
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.component_toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        setSupportActionBar(toolbar);
-        setDrawerToggle();
+        toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-
+        toolbarBtn.setOnClickListener(this);
         // Nav Buttons Setting
         findViewById(R.id.nav_drawer_component_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_config_btn).setOnClickListener(this);
@@ -37,6 +46,13 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
+
+
+        Spinner spin = (Spinner) findViewById(R.id.spinner);
+        spin.setOnItemSelectedListener(this);
+        LanguageSpinnerAdapter languageSpinnerAdapter=new LanguageSpinnerAdapter(getApplicationContext(),language);
+        spin.setAdapter(languageSpinnerAdapter);
+        spin.getSelectedItem();
 
         getFragmentManager().beginTransaction().replace(R.id.container, new ComponentScannerFragment()).commit();
     }
@@ -55,6 +71,10 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.nav_hamburger_btn :
+                drawerLayout.openDrawer(Gravity.LEFT);
+                break;
+
             case R.id.nav_drawer_main_btn:
                 drawerLayout.closeDrawers();
                 finish();
@@ -85,14 +105,12 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    private void setDrawerToggle() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(getApplicationContext(), language[position], Toast.LENGTH_LONG).show();
     }
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+    public void onNothingSelected(AdapterView<?> arg0) {
     }
 }

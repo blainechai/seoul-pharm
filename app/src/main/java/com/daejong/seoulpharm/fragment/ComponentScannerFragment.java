@@ -15,6 +15,7 @@ import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.activity.MainActivity;
 import com.daejong.seoulpharm.model.MedicineInfo;
 import com.daejong.seoulpharm.util.NetworkManager;
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
 import org.jsoup.Jsoup;
@@ -23,6 +24,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -61,54 +64,27 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
 
 
     @Override
-    public void handleResult(Result rawResult) {
-//        Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
-//                ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
+    public void handleResult(final Result rawResult) {
+        Toast.makeText(getActivity(), "Contents = " + rawResult.getText() +
+                ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
+        Log.e("qrcode!!!!!!!!", "Contents = " + rawResult.getText() + "Format = " + rawResult.getBarcodeFormat().toString());
+
+        Pattern barcodePattern = Pattern.compile("880([6][2456789]|[0][56789])[0-9]{7}[c|C|0-9]");
+
+        Matcher matcher = barcodePattern.matcher(rawResult.getText());
+
+
+        if(matcher.find()){
+            getComponentByBarcode(matcher.group(0));
+            Log.d("!!!!!!!!!!!", matcher.group(0));
+        }
+
+
         // Note:
         // * Wait 2 seconds to resume the preview.
         // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
         // * I don't know why this is the case but I don't have the time to figure out.
-        NetworkManager.getInstance().getComponentByBarcode(getActivity(), rawResult.getText(), new NetworkManager.OnResultListener<String>() {
-            @Override
-            public void onSuccess(String result) {
-//                Toast.makeText(getActivity(), "" + result, Toast.LENGTH_SHORT).show();
-                try {
-                    Document document = Jsoup.parse(result);
-                    Log.d("hi!!!!!!!!!!!!!!!!", "onSuccess: " + document.getElementsByTag("c1"));
 
-                    MedicineInfo medicineInfo = new MedicineInfo();
-                    //set name
-                    Elements nameEls = document.getElementsByTag("b1");
-                    medicineInfo.setName(nameEls.get(0).text());
-
-                    //set company
-                    Elements companyEls = document.getElementsByTag("b3");
-                    medicineInfo.setCompany(companyEls.get(0).text());
-
-                    //set item seq
-                    Elements itemSeqEls = document.getElementsByTag("b7");
-                    medicineInfo.setItemSeq(itemSeqEls.get(0).text());
-
-                    //set component
-                    Elements componentEls = document.getElementsByTag("c1");
-                    ArrayList<String> components = new ArrayList<String>();
-                    for (Element el : componentEls) {
-                        components.add(el.text());
-                    }
-                    medicineInfo.setComponents(components);
-
-                    getSpecificInfo(medicineInfo);
-
-                } catch (Exception e) {
-                    onFail(500, "fail");
-                }
-            }
-
-            @Override
-            public void onFail(int code, String responseString) {
-                Log.d("REQTESTTTT", "error code:" + code + "\n" + responseString);
-            }
-        });
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -157,5 +133,49 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();
+    }
+
+    public void getComponentByBarcode(final String barcodeText){
+        NetworkManager.getInstance().getComponentByBarcode(getActivity(), barcodeText, new NetworkManager.OnResultListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+//                Toast.makeText(getActivity(), "" + result, Toast.LENGTH_SHORT).show();
+                try {
+                    Document document = Jsoup.parse(result);
+//                    Log.d("hi!!!!!!!!!!!!!!!!", "onSuccess: " + document.getElementsByTag("c1"));
+
+                    MedicineInfo medicineInfo = new MedicineInfo();
+                    //set name
+                    Elements nameEls = document.getElementsByTag("b1");
+                    medicineInfo.setName(nameEls.get(0).text());
+
+                    //set company
+                    Elements companyEls = document.getElementsByTag("b3");
+                    medicineInfo.setCompany(companyEls.get(0).text());
+
+                    //set item seq
+                    Elements itemSeqEls = document.getElementsByTag("b7");
+                    medicineInfo.setItemSeq(itemSeqEls.get(0).text());
+
+                    //set component
+                    Elements componentEls = document.getElementsByTag("c1");
+                    ArrayList<String> components = new ArrayList<String>();
+                    for (Element el : componentEls) {
+                        components.add(el.text());
+                    }
+                    medicineInfo.setComponents(components);
+
+                    getSpecificInfo(medicineInfo);
+
+                } catch (Exception e) {
+                    onFail(500, "Contents = " + barcodeText + "Format = ");
+                }
+            }
+
+            @Override
+            public void onFail(int code, String responseString) {
+                Log.d("REQTESTTTT", "error code:" + code + "\n" + responseString);
+            }
+        });
     }
 }
