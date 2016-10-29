@@ -12,6 +12,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
+import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HeaderElement;
 import cz.msebera.android.httpclient.ParseException;
@@ -124,7 +126,7 @@ public class NetworkManager {
     // google translator
     public static final String TRANSLATION_URL = "https://www.googleapis.com/language/translate/v2?key=AIzaSyDAjhx7PrL2slXLmN30c7eOCvcrgKhHmlc";
 
-    public void getTranslation(Context context, String source, String target, String text, final OnResultListener<String> listener) {
+    public void getTranslation(Context context, String source, String target, ArrayList<String> components, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
 //        &source=ko&q=이부루&target=en
 
@@ -136,7 +138,12 @@ public class NetworkManager {
 //        String result = jobject.get("translatedText").toString();
 //        return result;
 
-        client.get(context, TRANSLATION_URL + "&source=" + source + "&target=" + target + "&q=" + text, params, new TextHttpResponseHandler() {
+        String query = "";
+        for(String component :components){
+            query +="&q="+component;
+        }
+
+        client.get(context, TRANSLATION_URL + "&source=" + source + "&target=" + target + query, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode, responseString);
@@ -144,8 +151,7 @@ public class NetworkManager {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                AddressResponse response = gson.fromJson(responseString, AddressResponse.class);
-                listener.onSuccess(response.getResult().getItems().get(0).getAddress());
+                listener.onSuccess(responseString);
             }
         });
     }

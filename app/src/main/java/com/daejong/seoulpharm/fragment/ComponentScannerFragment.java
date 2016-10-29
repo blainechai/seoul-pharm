@@ -74,7 +74,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
         Matcher matcher = barcodePattern.matcher(rawResult.getText());
 
 
-        if(matcher.find()){
+        if (matcher.find()) {
             getComponentByBarcode(matcher.group(0));
             Log.d("!!!!!!!!!!!", matcher.group(0));
         }
@@ -100,7 +100,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
         NetworkManager.getInstance().getMedicineSpecific(getActivity(), medicineInfo, new NetworkManager.OnSpecificResultListener<String>() {
             @Override
             public void onSuccess(String result, MedicineInfo medicineInfo) {
-                Document document = Jsoup.parse(result);
+                Document document = Jsoup.parse(result, "http://drug.mfds.go.kr/html/bxsSearchDrugProduct.jsp");
                 medicineInfo.setEffect(document.select("#A_EE_DOC").get(0).parent().select(">div").text());
                 medicineInfo.setUsage(document.select("#A_UD_DOC").get(0).parent().select(">div").text());
                 medicineInfo.setCaution(document.select("#A_NB_DOC").get(0).parent().select(">div").text());
@@ -110,7 +110,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                 } else {
                     imgSrc = "http://drug.mfds.go.kr/html/images/noimages.png";
                 }
-                Log.d("!!!!!!!!!!!", "fdfghdfghdgfh" + imgSrc);
+//                Log.d("!!!!!!!!!!!", "fdfghdfghdgfh" + imgSrc);
                 medicineInfo.setImageSrc(imgSrc);
 
                 ComponentInfoFragment fragment = new ComponentInfoFragment();
@@ -135,7 +135,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
         mScannerView.stopCamera();
     }
 
-    public void getComponentByBarcode(final String barcodeText){
+    public void getComponentByBarcode(final String barcodeText) {
         NetworkManager.getInstance().getComponentByBarcode(getActivity(), barcodeText, new NetworkManager.OnResultListener<String>() {
             @Override
             public void onSuccess(String result) {

@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.adapter.LanguageSpinnerAdapter;
 import com.daejong.seoulpharm.fragment.ComponentScannerFragment;
+import com.daejong.seoulpharm.util.LanguageSelector;
 
 public class ComponentActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -24,6 +26,9 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     Button toolbarBtn;
     TextView toolbarTitle;
     DrawerLayout drawerLayout;
+    Button languageButton;
+
+    public static LanguageSelector.OnLanguageChangeListener onLanguageChangeListener;
 
     String[] language = {"한국어", "中国语", "ENG"};
 
@@ -48,11 +53,17 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
 
 
-        Spinner spin = (Spinner) findViewById(R.id.spinner);
-        spin.setOnItemSelectedListener(this);
-        LanguageSpinnerAdapter languageSpinnerAdapter=new LanguageSpinnerAdapter(getApplicationContext(),language);
-        spin.setAdapter(languageSpinnerAdapter);
-        spin.getSelectedItem();
+        Button languageButton = (Button) findViewById(R.id.btn_language);
+        languageButton.setOnClickListener(this);
+        languageButton.setText(LanguageSelector.getInstance().getCurrentLanguage());
+
+//        Spinner spin = (Spinner) findViewById(R.id.spinner);
+//        spin.setOnItemSelectedListener(this);
+//        LanguageSpinnerAdapter languageSpinnerAdapter=new LanguageSpinnerAdapter(getApplicationContext(),language);
+//        spin.setAdapter(languageSpinnerAdapter);
+//        spin.getSelectedItem();
+
+
 
         getFragmentManager().beginTransaction().replace(R.id.container, new ComponentScannerFragment()).commit();
     }
@@ -63,6 +74,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     public void pushComponentScannerFragment() {
         getFragmentManager().beginTransaction().replace(R.id.container, new ComponentScannerFragment()).addToBackStack(null).commit();
     }
+
     public void popFragment() {
         getFragmentManager().popBackStack();
     }
@@ -71,7 +83,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.nav_hamburger_btn :
+            case R.id.nav_hamburger_btn:
                 drawerLayout.openDrawer(Gravity.LEFT);
                 break;
 
@@ -101,6 +113,12 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
                 drawerLayout.closeDrawers();
                 finish();
                 startActivity(new Intent(ComponentActivity.this, ConversationActivity.class));
+                break;
+
+            case R.id.btn_language:
+                LanguageSelector.getInstance().changeLanguage();
+                Log.d("!!!!!!","dsfsfdr");
+                // changeLanguageInViews();
                 break;
         }
     }
