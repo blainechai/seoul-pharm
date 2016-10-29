@@ -104,6 +104,8 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.nav_drawer_star_btn:
                 drawerLayout.closeDrawers();
+                startActivity(new Intent(ScrapActivity.this, ScrapActivity.class));
+                finish();
                 break;
             case R.id.nav_drawer_conversation_btn:
                 drawerLayout.closeDrawers();

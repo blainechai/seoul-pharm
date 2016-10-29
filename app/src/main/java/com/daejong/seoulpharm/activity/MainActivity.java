@@ -602,7 +602,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 startActivity(new Intent(MainActivity.this, ComponentActivity.class));
                 break;
             case R.id.nav_drawer_star_btn:
-//                startActivity(new Intent(MainActivity.this, MapActivity.class));
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(MainActivity.this, ScrapActivity.class));
                 break;
             case R.id.nav_drawer_config_btn:
 //                startActivity(new Intent(MainActivity.this, MapActivity.class));

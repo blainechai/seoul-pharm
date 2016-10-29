@@ -97,11 +97,13 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.nav_drawer_component_btn:
                 drawerLayout.closeDrawers();
-                finish();
                 startActivity(new Intent(ComponentActivity.this, ComponentActivity.class));
+                finish();
                 break;
             case R.id.nav_drawer_star_btn:
-//                startActivity(new Intent(MainActivity.this, MapActivity.class));
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(ComponentActivity.this, ScrapActivity.class));
+                finish();
                 break;
             case R.id.nav_drawer_config_btn:
 //                startActivity(new Intent(MainActivity.this, MapActivity.class));
@@ -114,8 +116,6 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
 
             case R.id.btn_language:
                 LanguageSelector.getInstance().changeLanguage();
-                Log.d("!!!!!!","dsfsfdr");
-                // changeLanguageInViews();
                 break;
         }
     }
