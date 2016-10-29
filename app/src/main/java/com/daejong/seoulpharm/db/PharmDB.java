@@ -50,6 +50,10 @@ public class PharmDB {
     public interface ScrappedComponentTable extends BaseColumns {
         public static final String TABLE_NAME = "SCRAPPED_COMPONENT_TABLE";
         public static final String COLUMN_COMPONENT_KEY = "MAIN_KEY";       // Barcode key
+        public static final String COLUMN_MEDICINE_NAME = "MEDICINE_NAME";
+        public static final String COLUMN_COMPANY_NAME = "COMPANY_NAME";
+        public static final String COLUMN_IMAGE_URL = "IMAGE_URL";
+
     }
 
 }

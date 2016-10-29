@@ -7,13 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
-import com.daejong.seoulpharm.adapter.ScrapComponentListAdpater;
-import com.daejong.seoulpharm.adapter.ScrapPharmListAdpater;
+import com.daejong.seoulpharm.adapter.ScrapComponentListAdapter;
+import com.daejong.seoulpharm.adapter.ScrapPharmListAdapter;
 import com.daejong.seoulpharm.db.DBHelper;
+import com.daejong.seoulpharm.model.MedicineInfo;
 import com.daejong.seoulpharm.model.PharmItem;
 
 
@@ -31,8 +30,8 @@ public class ScrapFragment extends Fragment {
 
     // VIEW
     ListView listView;
-    ScrapPharmListAdpater mPharmListAdapter;
-    ScrapComponentListAdpater mComponentListAdapter;
+    ScrapPharmListAdapter mPharmListAdapter;
+    ScrapComponentListAdapter mComponentListAdapter;
 
     // DB
     DBHelper db;
@@ -66,8 +65,8 @@ public class ScrapFragment extends Fragment {
         db = new DBHelper(getActivity());
 
         listView = (ListView) view.findViewById(R.id.listView);
-        mPharmListAdapter = new ScrapPharmListAdpater();
-        mComponentListAdapter = new ScrapComponentListAdpater();
+        mPharmListAdapter = new ScrapPharmListAdapter();
+        mComponentListAdapter = new ScrapComponentListAdapter();
 
         switch (type) {
             case TYPE_PHARMS :
@@ -81,7 +80,9 @@ public class ScrapFragment extends Fragment {
             case TYPE_COMPONENT :
                 // 의약품,성분 스크랩 목록
                 listView.setAdapter(mComponentListAdapter);
-
+                for (MedicineInfo medicineInfo : db.getScrappedMedicine()) {
+                    mComponentListAdapter.addScrappedMedicine(medicineInfo);
+                }
 
                 break;
         }
