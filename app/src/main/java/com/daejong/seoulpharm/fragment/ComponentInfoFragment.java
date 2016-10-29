@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
+import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.MedicineInfo;
 import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.util.NetworkManager;
@@ -49,6 +50,11 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
     Button languageButton;
     MedicineInfo medicineInfo;
     MedicineInfo enMedicineInfo = new MedicineInfo();
+    ImageView bookmarkImageView;
+
+    DBHelper dbHelper;
+
+    boolean isBookmarkChecked;
 
 
     public ComponentInfoFragment() {
@@ -67,7 +73,18 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         // View Initialize
         resultContainer = (LinearLayout) view.findViewById(R.id.container);
         imageView = (ImageView) view.findViewById(R.id.pharm_image_view);
+        bookmarkImageView = (ImageView) view.findViewById(R.id.btn_bookmark);
         medicineInfo = (MedicineInfo) getArguments().getSerializable("medicineInfo");
+
+        dbHelper = new DBHelper(getActivity());
+        if (dbHelper.searchMedicine(medicineInfo.getItemSeq())) {
+            bookmarkImageView.setImageResource(R.drawable.ic_map_btn_bookmark_on);
+            isBookmarkChecked = true;
+        } else {
+            isBookmarkChecked = false;
+        }
+
+        bookmarkImageView.setOnClickListener(this);
 
         // set text around image
         TextView companyTextView = (TextView) view.findViewById(R.id.pharm_maker);
@@ -91,10 +108,9 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         String component = "";
         ArrayList<String> components = medicineInfo.getComponents();
         for (int i = 0; i < components.size(); i++) {
-            if (i == components.size() - 1) {
-                component += components.get(i);
-            }
-            component += components.get(i) + "/n";
+            if (i == components.size() - 1) component += components.get(i);
+            else component += components.get(i) + "\n";
+
         }
         ((TextView) contentView.findViewById(R.id.text_content)).setText(component);
         resultContainer.addView(contentView);
@@ -162,7 +178,19 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.btn_bookmark:
+                if (!isBookmarkChecked) {
+                    bookmarkImageView.setImageResource(R.drawable.ic_map_btn_bookmark_on);
+                    dbHelper.addMedicineBookmark(medicineInfo);
+                    isBookmarkChecked = !isBookmarkChecked;
+                } else {
+                    bookmarkImageView.setImageResource(R.drawable.ic_map_btn_bookmark_off);
+                    dbHelper.deleteMedicineScrapped(medicineInfo.getItemSeq());
+                    isBookmarkChecked = !isBookmarkChecked;
+                }
+                break;
+        }
     }
 
     @Override
@@ -197,7 +225,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
     public void onNothingSelected(AdapterView<?> arg0) {
     }
 
-    public void getEngInfo(MedicineInfo medicineInfo){
+    public void getEngInfo(MedicineInfo medicineInfo) {
         ArrayList<String> components = medicineInfo.getComponents();
         enMedicineInfo.setComponents(new ArrayList<String>());
         NetworkManager.getInstance().getTranslation(getActivity(), "ko", "en", components, new NetworkManager.OnResultListener<String>() {

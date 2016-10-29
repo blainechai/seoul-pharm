@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Hyunwoo on 2016. 10. 28..
  */
-public class ScrapPharmListAdpater extends BaseAdapter implements ScrapPharmItemView.OnDeleteButtonClickListener {
+public class ScrapPharmListAdapter extends BaseAdapter implements ScrapPharmItemView.OnDeleteButtonClickListener {
 
     List<PharmItem> pharmItems = new ArrayList<>();
 

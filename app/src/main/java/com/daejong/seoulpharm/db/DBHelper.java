@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.daejong.seoulpharm.model.MedicineInfo;
 import com.daejong.seoulpharm.model.PharmItem;
 
 import java.util.ArrayList;
@@ -23,7 +24,8 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    /** TODO : DB COLUMN 추가 적용! (Initialize)
+    /**
+     * TODO : DB COLUMN 추가 적용! (Initialize)
      */
 
     @Override
@@ -58,7 +60,10 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql);
 
         sql = "CREATE TABLE " + PharmDB.ScrappedComponentTable.TABLE_NAME + "(" +
-                PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY + " TEXT PRIMARY KEY NOT NULL );";
+                PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY + " TEXT PRIMARY KEY NOT NULL," +
+                PharmDB.ScrappedComponentTable.COLUMN_COMPANY_NAME + " TEXT, " +
+                PharmDB.ScrappedComponentTable.COLUMN_IMAGE_URL + " TEXT, " +
+                PharmDB.ScrappedComponentTable.COLUMN_MEDICINE_NAME + " TEXT );";
         sqLiteDatabase.execSQL(sql);
     }
 
@@ -68,32 +73,32 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // INSERT DATA
-    public void addPharmItem (PharmItem item) {
+    public void addPharmItem(PharmItem item) {
         // 1. get reference to writable DB
         SQLiteDatabase db = getWritableDatabase();
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.clear();
-        values.put(PharmDB.PharmTable.COLUMN_MAIN_KEY , item.getMainKey());
+        values.put(PharmDB.PharmTable.COLUMN_MAIN_KEY, item.getMainKey());
 
-        values.put(PharmDB.PharmTable.COLUMN_NAME_KOR , item.getNameKor());
-        values.put(PharmDB.PharmTable.COLUMN_NAME_ENG , item.getNameEng());
-        values.put(PharmDB.PharmTable.COLUMN_NAME_CHI , item.getNameChi());
+        values.put(PharmDB.PharmTable.COLUMN_NAME_KOR, item.getNameKor());
+        values.put(PharmDB.PharmTable.COLUMN_NAME_ENG, item.getNameEng());
+        values.put(PharmDB.PharmTable.COLUMN_NAME_CHI, item.getNameChi());
 
-        values.put(PharmDB.PharmTable.COLUMN_ADDRESS_KOR , item.getAddressKor());
-        values.put(PharmDB.PharmTable.COLUMN_ADDRESS_ENG , item.getAddressEng());
+        values.put(PharmDB.PharmTable.COLUMN_ADDRESS_KOR, item.getAddressKor());
+        values.put(PharmDB.PharmTable.COLUMN_ADDRESS_ENG, item.getAddressEng());
 
-        values.put(PharmDB.PharmTable.COLUMN_H_KOR_CITY , item.gethKorCity());
-        values.put(PharmDB.PharmTable.COLUMN_H_KOR_GU , item.gethKorGu());
-        values.put(PharmDB.PharmTable.COLUMN_H_KOR_DONG , item.gethKorDong());
-        values.put(PharmDB.PharmTable.COLUMN_TEL , item.getTel());
+        values.put(PharmDB.PharmTable.COLUMN_H_KOR_CITY, item.gethKorCity());
+        values.put(PharmDB.PharmTable.COLUMN_H_KOR_GU, item.gethKorGu());
+        values.put(PharmDB.PharmTable.COLUMN_H_KOR_DONG, item.gethKorDong());
+        values.put(PharmDB.PharmTable.COLUMN_TEL, item.getTel());
 
-        values.put(PharmDB.PharmTable.COLUMN_AVAIL_LAN_KOR , item.getAvailLanKor());
-        values.put(PharmDB.PharmTable.COLUMN_AVAIL_LAN_ENG , item.getAvailLanEng());
-        values.put(PharmDB.PharmTable.COLUMN_AVAIL_LAN_CHI , item.getAvailLanChi());
+        values.put(PharmDB.PharmTable.COLUMN_AVAIL_LAN_KOR, item.getAvailLanKor());
+        values.put(PharmDB.PharmTable.COLUMN_AVAIL_LAN_ENG, item.getAvailLanEng());
+        values.put(PharmDB.PharmTable.COLUMN_AVAIL_LAN_CHI, item.getAvailLanChi());
 
-        values.put(PharmDB.PharmTable.COLUMN_LATITUDE , item.getLatitude());
+        values.put(PharmDB.PharmTable.COLUMN_LATITUDE, item.getLatitude());
         values.put(PharmDB.PharmTable.COLUMN_LONGTITUDE, item.getLongtitude());
 
 
@@ -159,7 +164,10 @@ public class DBHelper extends SQLiteOpenHelper {
             }
 
         } finally {
-            try { c.close(); } catch (Exception ignore) {}
+            try {
+                c.close();
+            } catch (Exception ignore) {
+            }
         }
 
         return list;
@@ -172,9 +180,9 @@ public class DBHelper extends SQLiteOpenHelper {
         PharmItem item = null;
 
         try {
-            c = db.rawQuery("SELECT *"+
+            c = db.rawQuery("SELECT *" +
                     " FROM " + PharmDB.PharmTable.TABLE_NAME +
-                    " WHERE " + PharmDB.PharmTable.COLUMN_NAME_KOR + "=? ", new String[] {pharmName + ""});
+                    " WHERE " + PharmDB.PharmTable.COLUMN_NAME_KOR + "=? ", new String[]{pharmName + ""});
 
             if (c.getCount() > 0) {
                 c.moveToFirst();
@@ -214,9 +222,9 @@ public class DBHelper extends SQLiteOpenHelper {
         PharmItem item = null;
 
         try {
-            c = db.rawQuery("SELECT *"+
+            c = db.rawQuery("SELECT *" +
                     " FROM " + PharmDB.PharmTable.TABLE_NAME +
-                    " WHERE " + PharmDB.PharmTable.COLUMN_MAIN_KEY + "=? ", new String[] {key + ""});
+                    " WHERE " + PharmDB.PharmTable.COLUMN_MAIN_KEY + "=? ", new String[]{key + ""});
 
             if (c.getCount() > 0) {
                 c.moveToFirst();
@@ -251,8 +259,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-
-    public void addPharmBookmark (String key) {
+    public void addPharmBookmark(String key) {
         // 1. get reference to writable DB
         SQLiteDatabase db = getWritableDatabase();
 
@@ -260,7 +267,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.clear();
 
-        values.put(PharmDB.PharmTable.COLUMN_MAIN_KEY , key);
+        values.put(PharmDB.PharmTable.COLUMN_MAIN_KEY, key);
 
 
         // 3. insert
@@ -273,26 +280,25 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deletePharmScrapped (String deleteKey) {
+    public void deletePharmScrapped(String deleteKey) {
         SQLiteDatabase db = getWritableDatabase();
-        db.delete( PharmDB.ScrappedPharmTable.TABLE_NAME , PharmDB.ScrappedPharmTable.COLUMN_PHARM_KEY+ " = ? " , new String[]{deleteKey+""} );
+        db.delete(PharmDB.ScrappedPharmTable.TABLE_NAME, PharmDB.ScrappedPharmTable.COLUMN_PHARM_KEY + " = ? ", new String[]{deleteKey + ""});
     }
 
-    public boolean searchPharmScrapped (String searchKey) {
+    public boolean searchPharmScrapped(String searchKey) {
         SQLiteDatabase db = getWritableDatabase();
 
         Cursor c = db.rawQuery("SELECT " + PharmDB.ScrappedPharmTable.COLUMN_PHARM_KEY +
                 " FROM " + PharmDB.ScrappedPharmTable.TABLE_NAME +
-                " WHERE " + PharmDB.ScrappedPharmTable.COLUMN_PHARM_KEY + " = ? " , new String[] {searchKey + ""} );
+                " WHERE " + PharmDB.ScrappedPharmTable.COLUMN_PHARM_KEY + " = ? ", new String[]{searchKey + ""});
 
-        if(c.getCount() <= 0){
+        if (c.getCount() <= 0) {
             c.close();
             return false;
         }
         c.close();
         return true;
     }
-
 
 
     public List<PharmItem> getScrappedPharms() {
@@ -316,11 +322,92 @@ public class DBHelper extends SQLiteOpenHelper {
             }
 
         } finally {
-            try { c.close(); } catch (Exception ignore) {}
+            try {
+                c.close();
+            } catch (Exception ignore) {
+            }
         }
 
 
         return list;
     }
 
+
+    public void addMedicineBookmark(MedicineInfo medicineInfo) {
+        // 1. get reference to writable DB
+        SQLiteDatabase db = getWritableDatabase();
+
+        // 2. create ContentValues to add key "column"/value
+        ContentValues values = new ContentValues();
+        values.clear();
+
+        values.put(PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY, medicineInfo.getItemSeq());
+        values.put(PharmDB.ScrappedComponentTable.COLUMN_COMPANY_NAME, medicineInfo.getCompany());
+        values.put(PharmDB.ScrappedComponentTable.COLUMN_MEDICINE_NAME, medicineInfo.getName());
+        values.put(PharmDB.ScrappedComponentTable.COLUMN_IMAGE_URL, medicineInfo.getImageSrc());
+
+        // 3. insert
+        db.insertWithOnConflict(PharmDB.ScrappedComponentTable.TABLE_NAME, // table
+                null, //nullColumnHack
+                values,
+                SQLiteDatabase.CONFLICT_REPLACE); // key/value -> keys = column names/ values = column values
+
+        // 4. close
+        db.close();
+    }
+
+    public void deleteMedicineScrapped(String deleteKey) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(PharmDB.ScrappedComponentTable.TABLE_NAME, PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY + " = ? ", new String[]{deleteKey + ""});
+    }
+
+    public boolean searchMedicine(String searchKey) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT " + PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY +
+                " FROM " + PharmDB.ScrappedComponentTable.TABLE_NAME +
+                " WHERE " + PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY + " = ? ", new String[]{searchKey + ""});
+
+        if (c.getCount() <= 0) {
+            c.close();
+            return false;
+        }
+        c.close();
+        return true;
+    }
+
+    public List<MedicineInfo> getScrappedMedicine() {
+        List<MedicineInfo> list = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + PharmDB.ScrappedComponentTable.TABLE_NAME;
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        try {
+            // looping through all rows and adding to list
+            if (c.moveToFirst()) {
+                do {
+
+                    String key = c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY));
+                    MedicineInfo item = new MedicineInfo();
+                    item.setName(c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_MEDICINE_NAME)));
+                    item.setCompany(c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_COMPANY_NAME)));
+                    item.setImageSrc(c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_IMAGE_URL)));
+                    item.setItemSeq(c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY)));
+                    list.add(item);
+
+                } while (c.moveToNext());
+            }
+
+        } finally {
+            try {
+                c.close();
+            } catch (Exception ignore) {
+            }
+        }
+
+
+        return list;
+    }
 }
