@@ -32,7 +32,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import cz.msebera.android.httpclient.Header;
 

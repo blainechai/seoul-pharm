@@ -1,6 +1,5 @@
 package com.daejong.seoulpharm.model;
 
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Hyunwoo on 2016. 10. 1..

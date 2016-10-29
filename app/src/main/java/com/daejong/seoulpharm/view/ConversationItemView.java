@@ -1,9 +1,7 @@
 package com.daejong.seoulpharm.view;
 
 import android.content.Context;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;

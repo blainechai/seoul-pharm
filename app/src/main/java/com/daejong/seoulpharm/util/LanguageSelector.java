@@ -17,7 +17,6 @@ public class LanguageSelector {
     private LanguageSelector() {
     }
 
-
     public static final String LANGUAGE_KOREAN = "MODE_KOREAN";
     public static final String LANGUAGE_CHINESE = "MODE_CHINESE";
     public static final String LANGUAGE_ENGLISH = "MODE_ENGLISH";

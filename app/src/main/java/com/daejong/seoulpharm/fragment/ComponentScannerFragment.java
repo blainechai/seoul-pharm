@@ -1,8 +1,6 @@
 package com.daejong.seoulpharm.fragment;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.pm.ComponentInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
-import com.daejong.seoulpharm.activity.MainActivity;
 import com.daejong.seoulpharm.model.MedicineInfo;
 import com.daejong.seoulpharm.util.NetworkManager;
-import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
 import org.jsoup.Jsoup;

@@ -3,11 +3,7 @@ package com.daejong.seoulpharm.navermap;
 /**
  * Created by Hyunwoo on 2016. 10. 20..
  */
-/**
- * Wrapper class representing POI flag types on map view.
- *
- * @author kyjkim
- */
+
 public class NMapPOIflagType {
     public static final int UNKNOWN = 0x0000;
 
