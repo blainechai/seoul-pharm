@@ -338,7 +338,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         for (PharmItem item : pharmList) {
             double latitude = Double.parseDouble(item.getLatitude());
             double longtitude = Double.parseDouble(item.getLongtitude());
-            Log.d(" LIST ADDED !! ","LAT : "+latitude + "  /  LNG : "+longtitude);
+//            Log.d(" LIST ADDED !! ","LAT : "+latitude + "  /  LNG : "+longtitude);
             poiDatas.addPOIitem(longtitude, latitude, item.getNameKor(), markerId, 0);
         }
         poiDatas.endPOIdata();

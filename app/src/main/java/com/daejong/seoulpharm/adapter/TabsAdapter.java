@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by Hyunwoo on 2016. 10. 28..
  */
-public class ScrapTabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
     /**
      * TabHost와 Pager를 연동하여 관리할 수 있도록 만든 class.
      */
@@ -59,11 +59,11 @@ public class ScrapTabsAdapter extends FragmentPagerAdapter implements TabHost.On
     }
 
     /* Constructor */
-    public ScrapTabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
+    public TabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
         this(activity, activity.getSupportFragmentManager(), tabHost, pager);
     }
 
-    public ScrapTabsAdapter(Context context, FragmentManager fragmentManager, TabHost tabHost, ViewPager pager) {
+    public TabsAdapter(Context context, FragmentManager fragmentManager, TabHost tabHost, ViewPager pager) {
         super(fragmentManager);
         mContext = context;
         mFragmentManager = fragmentManager;

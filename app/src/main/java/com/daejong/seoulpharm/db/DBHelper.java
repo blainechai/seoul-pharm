@@ -154,8 +154,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     item.setLongtitude(c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_LONGTITUDE)));
 
                     list.add(item);
-                    Log.d(" GET PHARMS ITEM POS ","LAT : "+c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_LATITUDE))
-                            + "  /  LNG : "+c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_LONGTITUDE)));
+//                    Log.d(" GET PHARMS ITEM POS ","LAT : "+c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_LATITUDE))
+//                            + "  /  LNG : "+c.getString(c.getColumnIndex(PharmDB.PharmTable.COLUMN_LONGTITUDE)));
 
                 } while (c.moveToNext());
             }

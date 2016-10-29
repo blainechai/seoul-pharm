@@ -4,9 +4,9 @@
     <drawable name="black_color">#ff000000</drawable>
     <drawable name="selected_list_color">#ff32A800</drawable>
     <drawable name="default_list_color">#ffffffff</drawable>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#76a6f0</color>
+    <color name="colorPrimaryDark">#4676c0</color>
+    <color name="colorAccent">#76a6f0</color>
     <color name="color_nav_drawer_border">#c6c6c6</color>
     <color name="color_nav_drawer_background">#c0c0c0</color>
     <color name="color_nav_drawer_list_background">#f1f1f1</color>
@@ -15,4 +15,5 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_black">#000000</color>
     <color name="color_efefef">#EFEFEF</color>
+    <color name="color_333333">#333333</color>
 </resources>

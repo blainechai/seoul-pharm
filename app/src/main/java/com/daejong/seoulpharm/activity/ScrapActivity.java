@@ -10,17 +10,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
-import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
-import com.daejong.seoulpharm.adapter.ScrapTabsAdapter;
-import com.daejong.seoulpharm.db.DBHelper;
+import com.daejong.seoulpharm.adapter.TabsAdapter;
 import com.daejong.seoulpharm.fragment.ScrapFragment;
-import com.daejong.seoulpharm.model.PharmItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ScrapActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,7 +30,7 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
 
     // etc...
     ViewPager pager;
-    ScrapTabsAdapter mAdapter;
+    TabsAdapter mAdapter;
 
     private static final String TAB_ID_PHARMS = "TAB_ID_PHARMS";
     private static final String TAB_ID_COMPONENT = "TAB_ID_COMPONENT";
@@ -69,7 +63,7 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         tabHost.setup();
 
         pager = (ViewPager)findViewById(R.id.pager);
-        mAdapter = new ScrapTabsAdapter(this, getSupportFragmentManager(), tabHost, pager);
+        mAdapter = new TabsAdapter(this, getSupportFragmentManager(), tabHost, pager);
 
         // Fragment Params Settings
         Bundle pharmBundle = new Bundle();
