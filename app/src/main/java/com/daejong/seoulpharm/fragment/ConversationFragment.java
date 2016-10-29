@@ -185,6 +185,8 @@ public class ConversationFragment extends Fragment implements ConversationActivi
 
     @Override
     public void onBackPressed() {
+        getActivity().finish();
+        /*
         if (selectedItems.size() != 0) {
             // 선택된 아이템들이 있다면
             Animation animDisappearToBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.disappear_to_bottom);
@@ -198,6 +200,7 @@ public class ConversationFragment extends Fragment implements ConversationActivi
 //            getActivity().finish();
 //            Toast.makeText(getActivity(), "SIZE0 "+selectedItems.size(), Toast.LENGTH_SHORT).show();
         }
+        */
     }
 
     @Override
