@@ -1,6 +1,7 @@
 package com.daejong.seoulpharm.activity;
 
 import android.content.Intent;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ import com.daejong.seoulpharm.adapter.TabsAdapter;
 import com.daejong.seoulpharm.fragment.ConversationFragment;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
-public class ConversationActivity extends AppCompatActivity implements View.OnClickListener {
+public class ConversationActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     public static final String TAB_ID_SKIN = "TAB_ID_SKIN";
     public static final String TAB_ID_RESPIRATORY = "TAB_ID_RESPIRATORY";
@@ -76,6 +77,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         tabHost.setup();
 
         pager = (ViewPager)findViewById(R.id.pager);
+        pager.addOnPageChangeListener(this);
         mAdapter = new TabsAdapter(this, getSupportFragmentManager(), tabHost, pager);
 
         // Fragment Params Settings & add Fragment to TAB
@@ -130,11 +132,26 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    // Custom Interfaces
     public interface OnBackKeyPressedListener {
         public void onBackPressed();
     }
     private OnBackKeyPressedListener mOnBackKeyPressedListener;
-
     public void setOnBackKeyPressedListener(OnBackKeyPressedListener listener) {
         mOnBackKeyPressedListener = listener;
     }

@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +37,12 @@ public class ConversationFragment extends Fragment implements ConversationActivi
     public static final String TYPE_CARDIOVASCULAR = "TYPE_CARDIOVASCULAR";
     public static final String TYPE_NEUROLOGICAL = "TYPE_NEUROLOGICAL";
 
-    private String type;
+    private static final String MODE_LIST = "MODE_LIST";
+    private static final String MODE_RESULT = "MODE_RESULT";
+
+
+    private String type;    // fragment type
+    private String mode;    // list or result mode
 
     // VIEW
     ListView listView;
@@ -66,6 +72,11 @@ public class ConversationFragment extends Fragment implements ConversationActivi
         }
     }
 
+    @Override
+    public void onPause() {
+        selectedItems.clear();
+        super.onPause();
+    }
 
     List<ConversationListItem> selectedItems = new ArrayList<>();
 
@@ -75,6 +86,9 @@ public class ConversationFragment extends Fragment implements ConversationActivi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_conversation, container, false);
 
+        // mode setting
+        mode = MODE_LIST;
+
         confirmBtn = (Button) view.findViewById(R.id.btn_confirm);
         confirmBtn.setVisibility(View.GONE);
 
@@ -83,40 +97,6 @@ public class ConversationFragment extends Fragment implements ConversationActivi
         listView.setAdapter(mAdapter);
         headerView = new ConversationHeaderView(getContext());
         listView.addHeaderView(headerView);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                int clickedPosition = position - listView.getHeaderViewsCount();
-                if (clickedPosition >= 0) {
-                    if (mAdapter.getItemIsSelected(clickedPosition)) {
-                        // 선택되있다면 >> 선택 해제
-                        mAdapter.setItemSelect(clickedPosition, false);
-                        selectedItems.remove(mAdapter.getItem(clickedPosition));
-                    } else {
-                        // 선택되있지 않다면 >> 선택
-                        mAdapter.setItemSelect(clickedPosition, true);
-                        selectedItems.add((ConversationListItem) mAdapter.getItem(clickedPosition));
-                    }
-
-                    // Confirm Btn Visibility setting
-                    if (selectedItems.size() == 0) {
-                        // 선택된 아이템들이 없다면
-                        Animation animDisappearToBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.disappear_to_bottom);
-                        confirmBtn.setAnimation(animDisappearToBottom);
-                        confirmBtn.setVisibility(View.GONE);
-                    }
-                    else {
-                        // 선택된 아이템들이 있다면
-                        if (confirmBtn.getVisibility() != View.VISIBLE) {
-                            confirmBtn.setVisibility(View.VISIBLE);
-                            Animation animAppearFromBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.appear_from_bottom);
-                            confirmBtn.setAnimation(animAppearFromBottom);
-                        }
-                    }
-                }
-            }
-        });
 
         switch (type) {
 
@@ -179,8 +159,68 @@ public class ConversationFragment extends Fragment implements ConversationActivi
                 break;
         }
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                if (mode.equals(MODE_LIST)) {
+                    int clickedPosition = position - listView.getHeaderViewsCount();
+                    if (clickedPosition >= 0) {
+                        if (mAdapter.getItemIsSelected(clickedPosition)) {
+                            // 선택되있다면 >> 선택 해제
+                            mAdapter.setItemSelect(clickedPosition, false);
+                            selectedItems.remove(mAdapter.getItem(clickedPosition));
+                        } else {
+                            // 선택되있지 않다면 >> 선택
+                            mAdapter.setItemSelect(clickedPosition, true);
+                            selectedItems.add((ConversationListItem) mAdapter.getItem(clickedPosition));
+                        }
+
+                        // Confirm Btn Visibility setting
+                        if (selectedItems.size() == 0) {
+                            // 선택된 아이템들이 없다면
+                            Animation animDisappearToBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.disappear_to_bottom);
+                            confirmBtn.setAnimation(animDisappearToBottom);
+                            confirmBtn.setVisibility(View.GONE);
+                        } else {
+                            // 선택된 아이템들이 있다면
+                            if (confirmBtn.getVisibility() != View.VISIBLE) {
+                                confirmBtn.setVisibility(View.VISIBLE);
+                                Animation animAppearFromBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.appear_from_bottom);
+                                confirmBtn.setAnimation(animAppearFromBottom);
+                            }
+                        }
+                    }
+
+                    listView.smoothScrollToPosition(position);
+
+                }
+            }
+        });
+
+
+        // Click Confirm Button
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // mode settings
+                mode = MODE_RESULT;
+
+                if (selectedItems.size() != 0) {
+                    mAdapter.setSelectedItems(selectedItems);
+                    listView.removeHeaderView(headerView);
+                    Animation animDisappearToBottom = AnimationUtils.loadAnimation(getActivity(), R.anim.disappear_to_bottom);
+                    confirmBtn.setAnimation(animDisappearToBottom);
+                    confirmBtn.setVisibility(View.GONE);
+                }
+            }
+        });
+
         return view;
     }
+
+
+
 
 
     @Override

@@ -123,6 +123,11 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
         return info.fragment;
     }
 
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
     /* TabChange Listener */
     /**
      * setOnTabChangeListener

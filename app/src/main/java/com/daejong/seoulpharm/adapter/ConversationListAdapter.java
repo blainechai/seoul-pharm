@@ -36,6 +36,16 @@ public class ConversationListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void clearAllItems() {
+        items.clear();
+        notifyDataSetChanged();
+    }
+
+    public void setSelectedItems(List<ConversationListItem> selectedItems) {
+        this.items = selectedItems;
+        notifyDataSetChanged();
+    }
+
     public boolean getItemIsSelected(int position) {
         return items.get(position).isSelected();
     }
@@ -72,6 +82,12 @@ public class ConversationListAdapter extends BaseAdapter {
     private void setViewSelected(ConversationItemView view, boolean isSelected) {
         if (isSelected) {
             view.findViewById(R.id.list_item).setBackgroundResource(R.drawable.list_shadow_selected);
+        } else {
+            view.findViewById(R.id.list_item).setBackgroundResource(R.drawable.list_shadow);
+        }
+        /*
+        if (isSelected) {
+            view.findViewById(R.id.list_item).setBackgroundResource(R.drawable.list_shadow_selected);
             ((TextView)view.findViewById(R.id.symptom_text_foreign)).setTextColor(view.getResources().getColor(R.color.color_white));
             TextView textKorView = (TextView)view.findViewById(R.id.symptom_text_kor);
             textKorView.setTextColor(view.getResources().getColor(R.color.color_white));
@@ -81,6 +97,7 @@ public class ConversationListAdapter extends BaseAdapter {
             TextView textKorView = (TextView)view.findViewById(R.id.symptom_text_kor);
             textKorView.setTextColor(view.getResources().getColor(R.color.color_nav_drawer_font));
         }
+        */
     }
 
 /*
