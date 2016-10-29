@@ -29,6 +29,13 @@ public class ConversationListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void setAllItemsNonSelected() {
+        for (ConversationListItem item : items) {
+            item.setSelected(false);
+        }
+        notifyDataSetChanged();
+    }
+
     public boolean getItemIsSelected(int position) {
         return items.get(position).isSelected();
     }

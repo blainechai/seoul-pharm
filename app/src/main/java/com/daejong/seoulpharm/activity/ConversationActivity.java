@@ -129,4 +129,22 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
+
+    public interface OnBackKeyPressedListener {
+        public void onBackPressed();
+    }
+    private OnBackKeyPressedListener mOnBackKeyPressedListener;
+
+    public void setOnBackKeyPressedListener(OnBackKeyPressedListener listener) {
+        mOnBackKeyPressedListener = listener;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mOnBackKeyPressedListener != null) {
+            mOnBackKeyPressedListener.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

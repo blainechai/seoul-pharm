@@ -46,6 +46,7 @@ import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
 import com.nhn.android.maps.overlay.NMapPOIdata;
+import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapCalloutOverlay;
 import com.nhn.android.mapviewer.overlay.NMapMyLocationOverlay;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
@@ -68,6 +69,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     TextView currentRefreshView;
     NMapView nMapView;    // NAVER MAP VIEW
     TextView detailNameView;
+    TextView detailAvailableLanguageView;
     TextView detailAddressView;
     TextView detailTelephoneView;
     ImageView detailBookmarkBtn;
@@ -144,6 +146,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         currentRefreshView = (TextView) findViewById(R.id.current_refresh_view);
         // detail panel
         detailNameView = (TextView) findViewById(R.id.text_title);
+        detailAvailableLanguageView = (TextView) findViewById(R.id.text_available_language);
         detailTelephoneView = (TextView) findViewById(R.id.text_telephone);
         detailAddressView = (TextView) findViewById(R.id.text_address);
         detailBookmarkBtn = (ImageView) findViewById(R.id.btn_bookmark);
@@ -255,8 +258,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // SET TEXTS
         detailNameView.setText(item.getNameKor());
+        detailAvailableLanguageView.setText("| 외국어 가능 약국 |   "+item.getAvailLanKor());
         detailAddressView.setText(item.getAddressKor());
-        detailTelephoneView.setText(item.getTel());
+        detailTelephoneView.setText("Tel )  "+item.getTel());
 
         // SET CLICK EVENT LISTENER
         detailCallBtn.setOnClickListener(new View.OnClickListener() {
@@ -327,19 +331,20 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         nMapOverlayManager.clearCalloutOverlay();
 
         // 오버래이에 표시하기 위한 마커 이미지의 id값 생성
-        int markerId = NMapPOIflagType.PIN;
+        int pharmMarkerId = NMapPOIflagType.PIN_PHARM;
+        int currentMarkerId = NMapPOIflagType.PIN_CURRENT_POS;
 
         // 표시할 위치 데이터를 지정한다. -- 마지막 인자가 오버래이를 인식하기 위한 id값
         NMapPOIdata poiDatas = new NMapPOIdata(pharmList.size()+1, nMapViewerResourceProvider);
 
         poiDatas.beginPOIdata(pharmList.size()+1);
         // 현재 위치 등록
-        poiDatas.addPOIitem(currentPos.getLongitude(), currentPos.getLatitude(), "현재위치", markerId, 0);  // PIN 바꾸기
+        poiDatas.addPOIitem(currentPos.getLongitude(), currentPos.getLatitude(), "현재위치", currentMarkerId, 0);  // PIN 바꾸기
         for (PharmItem item : pharmList) {
             double latitude = Double.parseDouble(item.getLatitude());
             double longtitude = Double.parseDouble(item.getLongtitude());
 //            Log.d(" LIST ADDED !! ","LAT : "+latitude + "  /  LNG : "+longtitude);
-            poiDatas.addPOIitem(longtitude, latitude, item.getNameKor(), markerId, 0);
+            poiDatas.addPOIitem(longtitude, latitude, item.getMainKey(), pharmMarkerId, 0);
         }
         poiDatas.endPOIdata();
 
@@ -541,19 +546,18 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // 클릭된 약국의 상세정보를 띄우기
         PharmItem clickedItem;
-        clickedItem = db.getPharmItemByName(nMapOverlayItem.getTitle());
-        if (!nMapOverlayItem.getTitle().equals("현재위치")) {
+        clickedItem = db.getPharmItemByKey(nMapOverlayItem.getTitle());
+        if (!nMapOverlayItem.getTitle().equals("현재위치") && currentMode.equals(MODE_MAP_DETAIL)) {
             setDetailPanels(clickedItem);
             // 지도의 중심을 선택한 위치로 이동
             double lat = Double.parseDouble(clickedItem.getLatitude());
             double lng = Double.parseDouble(clickedItem.getLongtitude());
-            Log.d(" !!! CLICKED POI !!! ", "LATITUDE : " + lat +  " / LONGTITUDE : " +lng);
+//            Log.d(" !!! CLICKED POI !!! ", "LATITUDE : " + lat +  " / LONGTITUDE : " +lng);
             nMapController.animateTo(new NGeoPoint(lng, lat));
         }
 
-        /** TODO : 말풍선 띄우기!
-         *
-         */
+        // 말풍선 띄우기
+
 
        return null;
     }
