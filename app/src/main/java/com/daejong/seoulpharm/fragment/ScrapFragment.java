@@ -19,6 +19,9 @@ import com.daejong.seoulpharm.model.PharmItem;
 
 public class ScrapFragment extends Fragment {
 
+    /** show Scrapped Datas
+     */
+
     // FRAGMENT TYPE
     public static final String KEY_FRAGMENT_TYPE = "KEY_FRAGMENT_TYPE";
     public static final String TYPE_PHARMS = "TYPE_PHARMS";
@@ -73,8 +76,6 @@ public class ScrapFragment extends Fragment {
                 for (PharmItem item : db.getScrappedPharms()) {
                     mPharmListAdapter.addScrappedPharm(item);
                 }
-
-
 
                 break;
             case TYPE_COMPONENT :

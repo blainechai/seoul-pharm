@@ -17,14 +17,26 @@ public class PharmDB {
         /** TODO : DB COLUMN 추가!!
          */
         public static final String TABLE_NAME = "PHARM_TABLE";
+
         public static final String COLUMN_MAIN_KEY = "MAIN_KEY";
+
         public static final String COLUMN_NAME_KOR = "NAME_KOR";
-        public static final String COLUMN_ADD_KOR_ROAD = "ADD_KOR_ROAD";
+        public static final String COLUMN_NAME_ENG = "NAME_ENG";
+        public static final String COLUMN_NAME_CHI = "NAME_CHI";
+
+        public static final String COLUMN_ADDRESS_KOR = "ADDRESS_KOR";
+        public static final String COLUMN_ADDRESS_ENG = "ADDRESS_ENG";
+
         public static final String COLUMN_H_KOR_CITY = "H_KOR_CITY";
         public static final String COLUMN_H_KOR_GU = "H_KOR_GU";
         public static final String COLUMN_H_KOR_DONG = "H_KOR_DONG";
+
         public static final String COLUMN_TEL = "TEL";
-        public static final String COLUMN_AVAIL_LAN = "AVAIL_LAN";
+
+        public static final String COLUMN_AVAIL_LAN_KOR = "AVAIL_LAN_KOR";
+        public static final String COLUMN_AVAIL_LAN_ENG = "AVAIL_LAN_ENG";
+        public static final String COLUMN_AVAIL_LAN_CHI = "AVAIL_LAN_CHI";
+
         public static final String COLUMN_LATITUDE = "LATITUDE";
         public static final String COLUMN_LONGTITUDE = "LONGTITUDE";
 

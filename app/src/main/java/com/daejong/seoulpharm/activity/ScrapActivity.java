@@ -13,13 +13,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
-import com.daejong.seoulpharm.adapter.ScrapTabsAdapter;
-import com.daejong.seoulpharm.db.DBHelper;
+import com.daejong.seoulpharm.adapter.TabsAdapter;
 import com.daejong.seoulpharm.fragment.ScrapFragment;
-import com.daejong.seoulpharm.model.PharmItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ScrapActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,9 +25,12 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
     Button toolbarBtn;
     Button languageButton;
 
+    // Tab
     TabHost tabHost;
+
+    // etc...
     ViewPager pager;
-    ScrapTabsAdapter mAdapter;
+    TabsAdapter mAdapter;
 
     private static final String TAB_ID_PHARMS = "TAB_ID_PHARMS";
     private static final String TAB_ID_COMPONENT = "TAB_ID_COMPONENT";
@@ -65,9 +63,9 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         tabHost.setup();
 
         pager = (ViewPager)findViewById(R.id.pager);
-        mAdapter = new ScrapTabsAdapter(this, getSupportFragmentManager(), tabHost, pager);
+        mAdapter = new TabsAdapter(this, getSupportFragmentManager(), tabHost, pager);
 
-        // Fragment Settings
+        // Fragment Params Settings
         Bundle pharmBundle = new Bundle();
         pharmBundle.putString(ScrapFragment.KEY_FRAGMENT_TYPE, ScrapFragment.TYPE_PHARMS);
         Bundle componentBundle = new Bundle();
@@ -76,6 +74,7 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         // Add Fragment to TAB
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_PHARMS).setIndicator("약국"), ScrapFragment.class, pharmBundle);
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_COMPONENT).setIndicator("의약품"), ScrapFragment.class, componentBundle);
+
 
     }
 
@@ -121,7 +120,7 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    /*
+
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
@@ -131,5 +130,6 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
             super.onBackPressed();
         }
     }
-    */
+
+
 }

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Hyunwoo on 2016. 10. 28..
  */
-public class ScrapPharmListAdpater extends BaseAdapter {
+public class ScrapPharmListAdpater extends BaseAdapter implements ScrapPharmItemView.OnDeleteButtonClickListener {
 
     List<PharmItem> pharmItems = new ArrayList<>();
 
@@ -46,6 +46,17 @@ public class ScrapPharmListAdpater extends BaseAdapter {
             view = new ScrapPharmItemView(parent.getContext());
         }
         view.setScrappedPharmItemView(pharmItems.get(position));
+        view.setOnDeleteButtonClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onDeleteButtonClicked(String deleteKey) {
+        for (int pos=0; pos<pharmItems.size(); pos++) {
+            if (pharmItems.get(pos).getMainKey().equals(deleteKey)) {
+                pharmItems.remove(pos);
+                notifyDataSetChanged();
+            }
+        }
     }
 }

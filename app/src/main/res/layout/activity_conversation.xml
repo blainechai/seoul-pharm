@@ -13,36 +13,84 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Toolbar -->
         <android.support.v7.widget.Toolbar
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#76a6f0"
             android:minHeight="?attr/actionBarSize"
-            android:title="의사소통"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+            <Button
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/ic_hamburger"
+                android:id="@+id/nav_hamburger_btn" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_title"
+                android:textColor="@color/color_white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="의사소통" />
+
+            <!--
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_width="match_parent"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+             -->
+            <Button
+                android:id="@+id/btn_language"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </android.support.v7.widget.Toolbar>
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@+id/main_toolbar"
-            android:id="@+id/container">
 
-            <ListView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/main_toolbar">
+
+            <TabHost
+                android:id="@android:id/tabhost"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="9dp"
-                android:paddingBottom="9dp"
-                android:divider="@null"
-                android:id="@+id/conversation_list" />
+                android:layout_height="match_parent" >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-        </RelativeLayout>
+                    <FrameLayout
+                        android:id="@android:id/tabcontent"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp">
+                    </FrameLayout>
+
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:showDividers="none" >
+                    </TabWidget>
+
+                    <android.support.v4.view.ViewPager
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="9"
+                        android:id="@+id/pager" />
+
+                </LinearLayout>
+            </TabHost>
+
+        </LinearLayout>
+
     </RelativeLayout>
 
     <include layout="@layout/navigation_drawer" />

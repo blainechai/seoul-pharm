@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:paddingLeft="9dp"
-    android:paddingRight="9dp"
-    android:paddingTop="3dp"
-    android:paddingBottom="3dp"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/list_item"
-    android:background='#efefef'
+    android:background='@drawable/list_shadow'
     android:foreground="?android:attr/selectableItemBackground"
     android:gravity="center_vertical">
 
@@ -16,21 +20,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:background="@drawable/round_rectangle_shape">
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_conversation_plusicon" />
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/symptom_text_foreign"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="부위 및 증상명"
+            android:layout_weight="1"
+            android:text="Symptom"
             android:textColor="#76a6f0"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:id="@+id/symptom_text" />
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/symptom_text_kor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Symptom"
+            android:textColor="@color/color_nav_drawer_font"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+
     </LinearLayout>
 
 
