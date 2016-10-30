@@ -1,9 +1,11 @@
 package com.daejong.seoulpharm.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Hyunwoo on 2016. 10. 29..
  */
-public class ConversationListItem {
+public class ConversationListItem implements Serializable{
 
     public static final String LAN_KOR = "LAN_KOR";
     public static final String LAN_ENG = "LAN_ENG";

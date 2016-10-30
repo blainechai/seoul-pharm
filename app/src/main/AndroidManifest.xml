@@ -16,25 +16,32 @@
         android:icon="@drawable/ic_app_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".activity.SplashActivity"
-            android:screenOrientation="portrait" >
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ComponentActivity"
+        <activity
+            android:name=".activity.ComponentActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.DasanCallActivity"
+        <activity
+            android:name=".activity.DasanCallActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ConversationActivity"
+        <activity
+            android:name=".activity.ConversationActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ScrapActivity"
+        <activity
+            android:name=".activity.ScrapActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.ConversationResultActivity"></activity>
     </application>
 
 </manifest>

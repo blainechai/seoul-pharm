@@ -26,6 +26,7 @@ public class LanguageSelector {
     private String languages[] = {LANGUAGE_KOREAN, LANGUAGE_ENGLISH, LANGUAGE_CHINESE};
     private int index = 0;
 
+    // Image resource
     private int currentLanguage = R.drawable.btn_kor;
 
     public void setCurrentLanguage(int id) {
