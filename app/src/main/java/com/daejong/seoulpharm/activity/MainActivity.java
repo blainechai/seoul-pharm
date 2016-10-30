@@ -699,6 +699,13 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                             ((TextView) findViewById(R.id.nav_drawer_dasan_call_text)).setText("다산콜센터");
                             ((TextView) findViewById(R.id.nav_drawer_star_text)).setText("스크랩");
                             ((TextView) findViewById(R.id.nav_drawer_tutorial_text)).setText("튜토리얼");
+
+                            ((TextView) findViewById(R.id.btn_component)).setText("약 성분 확인");
+                            ((TextView) findViewById(R.id.btn_conversation)).setText("증상설");
+                            ((TextView) findViewById(R.id.btn_scrap)).setText("스크랩");
+                            ((TextView) findViewById(R.id.btn_dasan)).setText("다산콜센터");
+
+
                             break;
 
                         case R.drawable.btn_eng:
@@ -709,6 +716,12 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                             ((TextView) findViewById(R.id.nav_drawer_dasan_call_text)).setText("Dasan Call Center");
                             ((TextView) findViewById(R.id.nav_drawer_star_text)).setText("Bookmarks");
                             ((TextView) findViewById(R.id.nav_drawer_tutorial_text)).setText("Tutorial");
+
+                            ((TextView) findViewById(R.id.btn_component)).setText("Drug Information");
+                            ((TextView) findViewById(R.id.btn_conversation)).setText("Translate Symptoms");
+                            ((TextView) findViewById(R.id.btn_scrap)).setText("Bookmarks");
+                            ((TextView) findViewById(R.id.btn_dasan)).setText("Dasan Call Center");
+
                             break;
 
                         case R.drawable.btn_china:
@@ -718,7 +731,14 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                             ((TextView) findViewById(R.id.nav_drawer_component_text)).setText("确认药品成分");
                             ((TextView) findViewById(R.id.nav_drawer_dasan_call_text)).setText("首尔茶山热线");
                             ((TextView) findViewById(R.id.nav_drawer_star_text)).setText("检索书签");
+
                             ((TextView) findViewById(R.id.nav_drawer_tutorial_text)).setText("教程");
+                            ((TextView) findViewById(R.id.btn_component)).setText("说明症状");
+                            ((TextView) findViewById(R.id.btn_conversation)).setText("说明症状");
+                            ((TextView) findViewById(R.id.btn_scrap)).setText("检索书签");
+                            ((TextView) findViewById(R.id.btn_dasan)).setText("首尔茶山热线");
+
+
                             break;
                     }
             }

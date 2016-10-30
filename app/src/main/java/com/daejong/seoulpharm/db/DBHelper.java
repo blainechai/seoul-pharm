@@ -341,7 +341,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.clear();
 
-        values.put(PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY, medicineInfo.getItemSeq());
+        values.put(PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY, medicineInfo.getBarcode());
         values.put(PharmDB.ScrappedComponentTable.COLUMN_COMPANY_NAME, medicineInfo.getCompany());
         values.put(PharmDB.ScrappedComponentTable.COLUMN_MEDICINE_NAME, medicineInfo.getName());
         values.put(PharmDB.ScrappedComponentTable.COLUMN_IMAGE_URL, medicineInfo.getImageSrc());
@@ -394,7 +394,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     item.setName(c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_MEDICINE_NAME)));
                     item.setCompany(c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_COMPANY_NAME)));
                     item.setImageSrc(c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_IMAGE_URL)));
-                    item.setItemSeq(c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY)));
+                    item.setBarcode(c.getString(c.getColumnIndex(PharmDB.ScrappedComponentTable.COLUMN_COMPONENT_KEY)));
                     list.add(item);
 
                 } while (c.moveToNext());

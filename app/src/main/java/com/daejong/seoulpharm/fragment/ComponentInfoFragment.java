@@ -82,7 +82,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         medicineInfo = (MedicineInfo) getArguments().getSerializable("medicineInfo");
 
         dbHelper = new DBHelper(getActivity());
-        if (dbHelper.searchMedicine(medicineInfo.getItemSeq())) {
+        if (dbHelper.searchMedicine(medicineInfo.getBarcode())) {
             bookmarkImageView.setImageResource(R.drawable.ic_map_btn_bookmark_on);
             isBookmarkChecked = true;
         } else {
@@ -123,7 +123,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                     isBookmarkChecked = !isBookmarkChecked;
                 } else {
                     bookmarkImageView.setImageResource(R.drawable.ic_map_btn_bookmark_off);
-                    dbHelper.deleteMedicineScrapped(medicineInfo.getItemSeq());
+                    dbHelper.deleteMedicineScrapped(medicineInfo.getBarcode());
                     isBookmarkChecked = !isBookmarkChecked;
                 }
                 break;
