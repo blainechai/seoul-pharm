@@ -1,10 +1,8 @@
 package com.daejong.seoulpharm.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.MedicineInfo;
-import com.daejong.seoulpharm.model.PharmItem;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -38,7 +35,7 @@ public class ScrapMedicineItemView extends FrameLayout {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.view_scrap_medicine_info_list_item, this);
+        inflate(getContext(), R.layout.view_scrap_medicine_list_item, this);
 
         // VIEW INITIALIZE
         medicineImage = (ImageView) findViewById(R.id.medicine_image_view);
