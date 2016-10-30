@@ -21,6 +21,7 @@ import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.adapter.TabsAdapter;
 import com.daejong.seoulpharm.fragment.ConversationFragment;
 import com.daejong.seoulpharm.view.ConversationCustomTabView;
+import com.daejong.seoulpharm.widget.NotoTextView;
 
 public class ConversationActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, ConversationCustomTabView.OnTabClickedListener {
 
@@ -37,7 +38,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     // TOOLBAR
     DrawerLayout drawerLayout;
     Toolbar toolbar;
-    TextView toolbarTitle;
+    NotoTextView toolbarTitle;
     Button toolbarBtn;
     Button languageButton;
 
@@ -50,9 +51,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
     TabsAdapter mAdapter;
 
 
-    //ListView conversationListView;
-    //ConversationListAdapter mAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +61,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = (NotoTextView) findViewById(R.id.toolbar_title);
         languageButton = (Button) findViewById(R.id.spinner);
         toolbarBtn.setOnClickListener(this);
 

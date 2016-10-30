@@ -145,7 +145,7 @@ public class ConversationFragment extends Fragment {
                 mAdapter.add(new ConversationListItem("편두통", "Migrate", "偏头痛"));
                 mAdapter.add(new ConversationListItem("지끈거림", "Throbing", "岑岑"));
                 mAdapter.add(new ConversationListItem("불안증", "Anxiety", "焦虑症"));
-                mAdapter.add(new ConversationListItem("공황장애", "Panic disorder", "惊恐症"));
+                mAdapter.add(new ConversationListItem("공황장애", "Panic\ndisorder", "惊恐症"));
 
                 break;
         }
@@ -200,6 +200,14 @@ public class ConversationFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectedItems.clear();
+        mAdapter.setAllItemsNonSelected();
+        confirmBtn.setVisibility(View.GONE);
     }
 
     /*

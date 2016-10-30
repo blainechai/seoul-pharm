@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" /><!--Make sure image is present in Drawable folder-->
 
-    <TextView
+    <com.daejong.seoulpharm.widget.NotoTextView
         android:id="@+id/language_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

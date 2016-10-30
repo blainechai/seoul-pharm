@@ -1,12 +1,16 @@
 package com.daejong.seoulpharm.activity;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.model.ConversationListItem;
+import com.daejong.seoulpharm.view.ConversationResultView;
 
 import java.util.List;
 
@@ -14,7 +18,7 @@ public class ConversationResultActivity extends AppCompatActivity {
 
     public static final String PARAM_ITEMS_KEY = "PARAM_ITEMS_KEY";
 
-    TextView tv;
+    LinearLayout selectedContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +29,18 @@ public class ConversationResultActivity extends AppCompatActivity {
         Intent intent = getIntent();
         List<ConversationListItem> items = (List<ConversationListItem>) intent.getSerializableExtra(PARAM_ITEMS_KEY);
 
-        tv = (TextView) findViewById(R.id.text);
-        String testtt = "";
+        selectedContainer = (LinearLayout) findViewById(R.id.selectedContainer);
+        ConversationResultView view = null;
         for (ConversationListItem item : items) {
-            testtt += (item.getContentKor()+" ");
+            String kor = item.getContentKor();
+            String foreign = item.getContentEng();
+
+            view = new ConversationResultView(this);
+            view.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            view.setTextViews(kor , foreign);
+
+            selectedContainer.addView(view);
         }
-        tv.setText(testtt);
+
     }
 }

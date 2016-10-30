@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.MedicineInfo;
+import com.daejong.seoulpharm.widget.NotoTextView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -25,8 +26,8 @@ public class ScrapMedicineItemView extends FrameLayout {
     MedicineInfo item;
 
     ImageView medicineImage;
-    TextView medicineTitleView;
-    TextView medicineCompanyView;
+    NotoTextView medicineTitleView;
+    NotoTextView medicineCompanyView;
     ImageView deleteScrapBtn;
 
     public ScrapMedicineItemView(Context context) {
@@ -39,8 +40,8 @@ public class ScrapMedicineItemView extends FrameLayout {
 
         // VIEW INITIALIZE
         medicineImage = (ImageView) findViewById(R.id.medicine_image_view);
-        medicineTitleView = (TextView) findViewById(R.id.scarp_medicine_name);
-        medicineCompanyView = (TextView) findViewById(R.id.scrap_company);
+        medicineTitleView = (NotoTextView) findViewById(R.id.scarp_medicine_name);
+        medicineCompanyView = (NotoTextView) findViewById(R.id.scrap_company);
 
         deleteScrapBtn = (ImageView) findViewById(R.id.btn_bookmark_delete);
 

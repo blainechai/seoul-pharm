@@ -18,13 +18,14 @@ import android.widget.TextView;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.adapter.TabsAdapter;
 import com.daejong.seoulpharm.fragment.ScrapFragment;
+import com.daejong.seoulpharm.widget.NotoTextView;
 
 public class ScrapActivity extends AppCompatActivity implements View.OnClickListener {
 
     // TOOLBAR
     DrawerLayout drawerLayout;
     Toolbar toolbar;
-    TextView toolbarTitle;
+    NotoTextView toolbarTitle;
     Button toolbarBtn;
     Button languageButton;
 
@@ -47,7 +48,7 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = (NotoTextView) findViewById(R.id.toolbar_title);
         languageButton = (Button) findViewById(R.id.spinner);
         toolbarBtn.setOnClickListener(this);
 

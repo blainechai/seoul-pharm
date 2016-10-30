@@ -13,16 +13,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="80dp"
+            android:paddingBottom="80dp"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
             android:background="@color/color_white"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/text"
+            <com.daejong.seoulpharm.widget.NotoTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="약사님 저는 지금 "/>
-
-
-
+                android:gravity="left"
+                android:textColor="@color/color_black"
+                android:textSize="30sp"
+                android:text="약사님, 저는 " />
+            <LinearLayout
+                android:id="@+id/selectedContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="36dp"
+                android:orientation="vertical" />
+            <com.daejong.seoulpharm.widget.NotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:gravity="left"
+                android:textSize="30sp"
+                android:text="가 있습니다. " />
+            <com.daejong.seoulpharm.widget.NotoTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:gravity="left"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:textSize="30sp"
+                android:text="약을 처방해주세요." />
         </LinearLayout>
     </ScrollView>
 

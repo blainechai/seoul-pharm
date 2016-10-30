@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
+import com.daejong.seoulpharm.widget.NotoTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,9 @@ public class ConversationCustomTabView extends FrameLayout implements View.OnCli
     int currentTabPos = 0;
 
     LinearLayout tabsContainer;
-    TextView preTabTextView;
-    TextView currentTabTextView;
-    TextView postTabTextView;
+    NotoTextView preTabTextView;
+    NotoTextView currentTabTextView;
+    NotoTextView postTabTextView;
 
     public ConversationCustomTabView(Context context) {
         super(context);
@@ -42,9 +43,9 @@ public class ConversationCustomTabView extends FrameLayout implements View.OnCli
         inflate(getContext(), R.layout.view_custom_tab, this);
 
         tabsContainer = (LinearLayout) findViewById(R.id.tabs_container);
-        preTabTextView = (TextView) findViewById(R.id.pre_tab_text);
-        currentTabTextView = (TextView) findViewById(R.id.current_tab_text);
-        postTabTextView = (TextView) findViewById(R.id.post_tab_text);
+        preTabTextView = (NotoTextView) findViewById(R.id.pre_tab_text);
+        currentTabTextView = (NotoTextView) findViewById(R.id.current_tab_text);
+        postTabTextView = (NotoTextView) findViewById(R.id.post_tab_text);
 
         preTabTextView.setOnClickListener(this);
         postTabTextView.setOnClickListener(this);
