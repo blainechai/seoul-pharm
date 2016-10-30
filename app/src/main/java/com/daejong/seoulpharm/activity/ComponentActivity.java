@@ -24,7 +24,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     Toolbar toolbar;
     Button toolbarBtn;
     TextView toolbarTitle;
-    public DrawerLayout drawerLayout;
+    DrawerLayout drawerLayout;
     Button languageButton;
 
 
@@ -60,8 +60,6 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
 //        LanguageSpinnerAdapter languageSpinnerAdapter=new LanguageSpinnerAdapter(getApplicationContext(),language);
 //        spin.setAdapter(languageSpinnerAdapter);
 //        spin.getSelectedItem();
-
-
 
 
         getFragmentManager().beginTransaction().replace(R.id.container, new ComponentScannerFragment()).commit();
@@ -139,16 +137,11 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
-    }
-
-    public DrawerLayout getDrawerLayout() {
-        return this.drawerLayout;
     }
 }

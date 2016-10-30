@@ -74,9 +74,13 @@ public class NetworkManager {
     }
 
     // google translator
-    public static final String TRANSLATION_URL = "https://www.googleapis.com/language/translate/v2?key=AIzaSyDAjhx7PrL2slXLmN30c7eOCvcrgKhHmlc";
+    public static final String TRANSLATION_URL = "https://www.googleapis.com/language/translate/v2";
     public void getTranslation(Context context, String source, String target, ArrayList<String> components, final OnResultListener<String> listener) {
         RequestParams params = new RequestParams();
+        params.add("q", components.get(4));
+        params.add("source",source);
+        params.add("target",target);
+        params.add("key", "AIzaSyDAjhx7PrL2slXLmN30c7eOCvcrgKhHmlc");
 //        &source=ko&q=이부루&target=en
 
 //        JsonElement jelement = new JsonParser().parse(jsonLine);
@@ -88,11 +92,11 @@ public class NetworkManager {
 //        return result;
 
         String query = "";
-        for(String component :components){
-            query +="&q="+component;
-        }
+//        for(String component :components){
+//            query +="&q="+component;
+//        }
 
-        client.get(context, TRANSLATION_URL + "&source=" + source + "&target=" + target + query, params, new TextHttpResponseHandler() {
+        client.post(context, TRANSLATION_URL, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 listener.onFail(statusCode, responseString);

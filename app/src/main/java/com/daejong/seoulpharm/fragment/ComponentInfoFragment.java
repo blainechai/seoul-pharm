@@ -4,11 +4,10 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
-import com.daejong.seoulpharm.activity.MainActivity;
 import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.MedicineInfo;
 import com.daejong.seoulpharm.util.LanguageSelector;
@@ -46,12 +44,15 @@ import cz.msebera.android.httpclient.Header;
 public class ComponentInfoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     String[] titles = {"제조사", "성분목록", "효능", "용법용량", "사용상 주의사항"};
+    String[] engTitles = {"Manufacturer", "Ingredients", "Effects", "Dosage", "Warnings"};
+    String[] chTitles = {"生产者", "原料", "药效", "用法与用量", "使用注意事项"};
 
     ImageView imageView;
     LinearLayout resultContainer;
     Button languageButton;
     MedicineInfo medicineInfo;
     MedicineInfo enMedicineInfo = new MedicineInfo();
+    MedicineInfo chMedicineInfo = new MedicineInfo();
     ImageView bookmarkImageView;
 
     DBHelper dbHelper;
@@ -163,6 +164,75 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
     }
 
     public void getEngInfo() {
+        resultContainer.removeAllViews();
+        ArrayList<String> targets = new ArrayList<>();
+        String component = "";
+        ArrayList<String> components = medicineInfo.getComponents();
+        for (int i = 0; i < components.size(); i++) {
+            if (i == 0) {
+                component += medicineInfo.getComponents().get(i);
+            } else {
+                component += "\n" + medicineInfo.getComponents().get(i);
+            }
+        }
+        targets.add(medicineInfo.getCompany());
+        targets.add(component);
+        targets.add(medicineInfo.getEffect());
+        targets.add(medicineInfo.getUsage());
+        targets.add(medicineInfo.getCaution());
+        NetworkManager.getInstance().getTranslation(getActivity(), "ko", "en", targets, new NetworkManager.OnResultListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+Log.d("!!!!!!!!!!", ""+result);
+                JsonElement jsonElement = new JsonParser().parse(result);
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                jsonObject = jsonObject.getAsJsonObject("data");
+                JsonArray jsonArray = jsonObject.getAsJsonArray("translations");
+
+
+
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[0]);
+                ((TextView) contentView.findViewById(R.id.text_title)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "NotoSansKR-Medium-Hestia.otf"));
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(0).getAsJsonObject().get("translatedText").getAsString());
+                resultContainer.addView(contentView);
+
+                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[1]);
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(1).getAsJsonObject().get("translatedText").getAsString());
+                resultContainer.addView(contentView);
+
+                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[2]);
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(2).getAsJsonObject().get("translatedText").getAsString());
+                resultContainer.addView(contentView);
+
+                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[3]);
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(3).getAsJsonObject().get("translatedText").getAsString());
+                resultContainer.addView(contentView);
+
+                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[4]);
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(4).getAsJsonObject().get("translatedText").getAsString());
+                resultContainer.addView(contentView);
+            }
+
+            @Override
+            public void onFail(int code, String response) {
+                Log.d("!!!!!!!!!!", ""+response);
+            }
+        });
+    }
+
+    public void getChInfo() {
+
+    }
+
+    public void getEngInfoFromWeb() {
         ArrayList<String> components = medicineInfo.getComponents();
         enMedicineInfo.setComponents(new ArrayList<String>());
         NetworkManager.getInstance().getTranslation(getActivity(), "ko", "en", components, new NetworkManager.OnResultListener<String>() {
@@ -218,6 +288,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                                 LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                                 LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
                                 ((TextView) contentView.findViewById(R.id.text_title)).setText("Overview");
+                                ((TextView) contentView.findViewById(R.id.text_title)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "NotoSansKR-Medium-Hestia.otf"));
                                 ((TextView) contentView.findViewById(R.id.text_content)).setText(document.select(".contentBox p").text());
                                 resultContainer.addView(contentView);
 
@@ -250,13 +321,14 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         //set list item
         resultContainer.removeAllViews();
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
 
         ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[0]);
+        ((TextView) contentView.findViewById(R.id.text_title)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "NotoSansKR-Medium-Hestia.otf"));
         ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getCompany());
         resultContainer.addView(contentView);
 
-        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
         ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[1]);
         String component = "";
         ArrayList<String> components = medicineInfo.getComponents();
@@ -268,17 +340,17 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         ((TextView) contentView.findViewById(R.id.text_content)).setText(component);
         resultContainer.addView(contentView);
 
-        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
         ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[2]);
         ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getEffect());
         resultContainer.addView(contentView);
 
-        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
         ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[3]);
         ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getUsage());
         resultContainer.addView(contentView);
 
-        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
         ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[4]);
         ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getCaution());
         resultContainer.addView(contentView);
@@ -292,14 +364,35 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                 languageButton.setBackgroundResource(id);
                 switch (id) {
                     case R.drawable.btn_kor:
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_main_text)).setText("메인페이지");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_map_text)).setText("약국찾기");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_conversation_text)).setText("증상설명");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_component_text)).setText("약 성분 확인");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("다산콜센터");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("스크랩");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("튜토리얼");
                         getKoreanInfo();
                         break;
 
                     case R.drawable.btn_eng:
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_main_text)).setText("Main");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_map_text)).setText("Search Pharmacies");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_conversation_text)).setText("Translate Symptoms");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_component_text)).setText("Drug Information");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("Dasan Call Center");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("Bookmarks");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("Tutorial");
                         getEngInfo();
                         break;
 
                     case R.drawable.btn_china:
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_main_text)).setText("主页");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_map_text)).setText("寻找药店");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_conversation_text)).setText("说明症状");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_component_text)).setText("确认药品成分");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("首尔茶山热线");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("检索书签");
+                        ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("教程");
 
                         break;
                 }
