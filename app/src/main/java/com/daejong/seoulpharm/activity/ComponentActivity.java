@@ -24,9 +24,14 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     Toolbar toolbar;
     Button toolbarBtn;
     TextView toolbarTitle;
-    DrawerLayout drawerLayout;
+    public DrawerLayout drawerLayout;
     Button languageButton;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,6 +138,8 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     }
@@ -141,7 +148,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     public void onNothingSelected(AdapterView<?> arg0) {
     }
 
-
-
-
+    public DrawerLayout getDrawerLayout() {
+        return this.drawerLayout;
+    }
 }

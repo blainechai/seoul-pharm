@@ -109,6 +109,8 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
     @Override
     public void onResume() {
         super.onResume();
+        setOnLanguageChangeListener();
+        LanguageSelector.getInstance().syncLanguage();
     }
 
     @Override
@@ -286,7 +288,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
     void setOnLanguageChangeListener() {
         LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener = new LanguageSelector.OnLanguageChangeListener() {
             @Override
-            public void setViewContentsLanguage(int id) {
+            public void setViewContentsByLanguage(int id) {
                 languageButton.setBackgroundResource(id);
                 switch (id) {
                     case R.drawable.btn_kor:
@@ -305,4 +307,6 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         };
         LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);
     }
+
+
 }

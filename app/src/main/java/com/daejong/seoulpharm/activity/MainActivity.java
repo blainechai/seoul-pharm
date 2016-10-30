@@ -113,7 +113,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         //init language spinner
         languageButton = (Button) findViewById(R.id.spinner);
-
         languageButton.setOnClickListener(this);
 
         // containers initialize
@@ -149,9 +148,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         findViewById(R.id.nav_drawer_conversation_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
-//        languageButton.setOnClickListener(this);
-//        languageButton.setText(LanguageSelector.getInstance().getCurrentLanguage());
-        Log.d("language!!!!!!!", "" + LanguageSelector.getInstance().getCurrentLanguage());
 
         // setting EventListener in this activity
         findViewById(R.id.current_refresh_view).setOnClickListener(this);
@@ -165,6 +161,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         detailCallBtn.setOnClickListener(this);
 
         setOnLanguageChangeListener();
+        LanguageSelector.getInstance().syncLanguage();
     }
 
 
@@ -633,6 +630,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     @Override
     protected void onResume() {
         super.onResume();
+        setOnLanguageChangeListener();
+        LanguageSelector.getInstance().syncLanguage();
         registerLocationListener();
     }
 
@@ -676,21 +675,39 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     void setOnLanguageChangeListener(){
         LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener = new LanguageSelector.OnLanguageChangeListener() {
             @Override
-            public void setViewContentsLanguage(int id) {
+            public void setViewContentsByLanguage(int id) {
                 languageButton.setBackgroundResource(id);
-                switch (id) {
-                    case R.drawable.btn_kor:
+                    switch (id) {
+                        case R.drawable.btn_kor:
+                            ((TextView) findViewById(R.id.nav_drawer_main_text)).setText("메인페이지");
+                            ((TextView) findViewById(R.id.nav_drawer_map_text)).setText("약국찾기");
+                            ((TextView) findViewById(R.id.nav_drawer_conversation_text)).setText("증상설명");
+                            ((TextView) findViewById(R.id.nav_drawer_component_text)).setText("약 성분 확인");
+                            ((TextView) findViewById(R.id.nav_drawer_dasan_call_text)).setText("다산콜센터");
+                            ((TextView) findViewById(R.id.nav_drawer_star_text)).setText("스크랩");
+                            ((TextView) findViewById(R.id.nav_drawer_tutorial_text)).setText("튜토리얼");
+                            break;
 
-                        break;
+                        case R.drawable.btn_eng:
+                            ((TextView) findViewById(R.id.nav_drawer_main_text)).setText("Main");
+                            ((TextView) findViewById(R.id.nav_drawer_map_text)).setText("Search Pharmacies");
+                            ((TextView) findViewById(R.id.nav_drawer_conversation_text)).setText("Translate Symptoms");
+                            ((TextView) findViewById(R.id.nav_drawer_component_text)).setText("Drug Information");
+                            ((TextView) findViewById(R.id.nav_drawer_dasan_call_text)).setText("Dasan Call Center");
+                            ((TextView) findViewById(R.id.nav_drawer_star_text)).setText("Bookmarks");
+                            ((TextView) findViewById(R.id.nav_drawer_tutorial_text)).setText("Tutorial");
+                            break;
 
-                    case R.drawable.btn_eng:
-
-                        break;
-
-                    case R.drawable.btn_china:
-
-                        break;
-                }
+                        case R.drawable.btn_china:
+                            ((TextView) findViewById(R.id.nav_drawer_main_text)).setText("主页");
+                            ((TextView) findViewById(R.id.nav_drawer_map_text)).setText("寻找药店");
+                            ((TextView) findViewById(R.id.nav_drawer_conversation_text)).setText("说明症状");
+                            ((TextView) findViewById(R.id.nav_drawer_component_text)).setText("确认药品成分");
+                            ((TextView) findViewById(R.id.nav_drawer_dasan_call_text)).setText("首尔茶山热线");
+                            ((TextView) findViewById(R.id.nav_drawer_star_text)).setText("检索书签");
+                            ((TextView) findViewById(R.id.nav_drawer_tutorial_text)).setText("教程");
+                            break;
+                    }
             }
         };
         LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);

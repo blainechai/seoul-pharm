@@ -30,12 +30,12 @@ public class LanguageSelector {
     }
 
     public void syncLanguage() {
-        mListener.setViewContentsLanguage(currentLanguage);
+        mListener.setViewContentsByLanguage(currentLanguage);
     }
 
 
     public interface OnLanguageChangeListener {
-        public void setViewContentsLanguage(int backgroundId);
+        public void setViewContentsByLanguage(int backgroundId);
     }
 
     public void changeLanguage(int id){
