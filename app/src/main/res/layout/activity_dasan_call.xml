@@ -82,7 +82,7 @@
                             android:gravity="center"
                             android:textSize="20sp"
                             android:textStyle="bold"
-                            android:text="수화기 아이콘을\n눌러주세요."/>
+                            android:text="@string/dasan_kor_plz_touch_icon"/>
                     </LinearLayout>
                     <com.daejong.seoulpharm.widget.NotoTextView
                         android:id="@+id/text_need_help"
@@ -93,7 +93,7 @@
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:textColor="@color/colorPrimary"
-                        android:text="도움이 필요하신가요? 상담을 받아보세요."/>
+                        android:text="@string/dasan_kor_need_help"/>
                     <com.daejong.seoulpharm.widget.NotoTextView
                         android:id="@+id/text_description"
                         android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
                         android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:textSize="18sp"
-                        android:text="1. 아이콘을 눌러 다산콜센터(120)에 연결합니다.\n2. 9번을 눌러 외국어 상담 서비스를 요청합니다.\n3. 영어는 1번, 중국어는 2번, 일어는 3번,\n베트남어는 4번, 몽골어는 5번을 눌러주세요." />
+                        android:text="@string/dasan_kor_description" />
                     <com.daejong.seoulpharm.widget.NotoTextView
                         android:id="@+id/text_available_time"
                         android:layout_width="wrap_content"
@@ -110,7 +110,7 @@
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:textStyle="bold"
                         android:textSize="20sp"
-                        android:text="외국어 상담 서비스 시간은\n월~금 09:00-19:00 입니다." />
+                        android:text="@string/dasan_kor_available_time" />
                 </LinearLayout>
 
             </ScrollView>
