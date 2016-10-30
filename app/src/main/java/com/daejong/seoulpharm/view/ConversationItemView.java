@@ -6,14 +6,15 @@ import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.model.ConversationListItem;
+import com.daejong.seoulpharm.widget.NotoTextView;
 
 /**
  * Created by Hyunwoo on 2016. 10. 22..
  */
 public class ConversationItemView extends FrameLayout {
 
-    TextView symptomForeignView;
-    TextView symptomKoreanView;
+    NotoTextView symptomForeignView;
+    NotoTextView symptomKoreanView;
 
     public ConversationItemView(Context context) {
         super(context);
@@ -22,8 +23,8 @@ public class ConversationItemView extends FrameLayout {
 
     private void init() {
         inflate(getContext(), R.layout.view_conversation_list_item, this);
-        symptomKoreanView = (TextView) findViewById(R.id.symptom_text_kor);
-        symptomForeignView = (TextView) findViewById(R.id.symptom_text_foreign);
+        symptomKoreanView = (NotoTextView) findViewById(R.id.symptom_text_kor);
+        symptomForeignView = (NotoTextView) findViewById(R.id.symptom_text_foreign);
     }
 
     public void setSymptomItem (ConversationListItem item) {

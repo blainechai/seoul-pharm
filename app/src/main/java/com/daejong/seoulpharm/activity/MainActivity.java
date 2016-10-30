@@ -39,6 +39,7 @@ import com.daejong.seoulpharm.navermap.NMapViewerResourceProvider;
 import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.util.NetworkManager;
 import com.daejong.seoulpharm.R;
+import com.daejong.seoulpharm.widget.NotoTextView;
 import com.nhn.android.maps.NMapActivity;
 import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapLocationManager;
@@ -61,18 +62,19 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     // TOOLBAR
     DrawerLayout drawerLayout;
     Toolbar toolbar;
-    TextView toolbarTitle;
+    NotoTextView toolbarTitle;
     Button toolbarBtn;
     Button languageButton;
 
     // VIEWS
-    TextView currentAddressView;
-    TextView currentRefreshView;
+    NotoTextView currentAddressView;
+    NotoTextView currentRefreshView;
+
     NMapView nMapView;    // NAVER MAP VIEW
-    TextView detailNameView;
-    TextView detailAvailableLanguageView;
-    TextView detailAddressView;
-    TextView detailTelephoneView;
+    NotoTextView detailNameView;
+    NotoTextView detailAvailableLanguageView;
+    NotoTextView detailAddressView;
+    NotoTextView detailTelephoneView;
     ImageView detailBookmarkBtn;
     ImageView detailCallBtn;
 
@@ -109,7 +111,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = (NotoTextView) findViewById(R.id.toolbar_title);
 
         //init language spinner
         languageButton = (Button) findViewById(R.id.spinner);
@@ -122,13 +124,13 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // Views initialize
         nMapView = (NMapView) findViewById(R.id.mapView);
-        currentAddressView = (TextView) findViewById(R.id.current_address_view);
-        currentRefreshView = (TextView) findViewById(R.id.current_refresh_view);
+        currentAddressView = (NotoTextView) findViewById(R.id.current_address_view);
+        currentRefreshView = (NotoTextView) findViewById(R.id.current_refresh_view);
         // detail panel
-        detailNameView = (TextView) findViewById(R.id.text_title);
-        detailAvailableLanguageView = (TextView) findViewById(R.id.text_available_language);
-        detailTelephoneView = (TextView) findViewById(R.id.text_telephone);
-        detailAddressView = (TextView) findViewById(R.id.text_address);
+        detailNameView = (NotoTextView) findViewById(R.id.text_title);
+        detailAvailableLanguageView = (NotoTextView) findViewById(R.id.text_available_language);
+        detailTelephoneView = (NotoTextView) findViewById(R.id.text_telephone);
+        detailAddressView = (NotoTextView) findViewById(R.id.text_address);
         detailBookmarkBtn = (ImageView) findViewById(R.id.btn_bookmark);
         detailCallBtn = (ImageView) findViewById(R.id.btn_call);
 

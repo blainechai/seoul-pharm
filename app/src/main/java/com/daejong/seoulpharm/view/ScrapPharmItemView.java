@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.PharmItem;
+import com.daejong.seoulpharm.widget.NotoTextView;
 
 /**
  * Created by Hyunwoo on 2016. 10. 28..
@@ -19,9 +20,9 @@ public class ScrapPharmItemView extends FrameLayout {
 
     PharmItem item;
 
-    TextView pharmTitleView;
-    TextView pharmTelView;
-    TextView pharmAddressView;
+    NotoTextView pharmTitleView;
+    NotoTextView pharmTelView;
+    NotoTextView pharmAddressView;
     ImageView callBtn;
     ImageView deleteScrapBtn;
 
@@ -34,9 +35,9 @@ public class ScrapPharmItemView extends FrameLayout {
         inflate(getContext(), R.layout.view_scrap_pharm_list_item, this);
 
         // VIEW INITIALIZE
-        pharmTitleView = (TextView) findViewById(R.id.scrap_pharm_title);
-        pharmTelView = (TextView) findViewById(R.id.scrap_pharm_tel);
-        pharmAddressView = (TextView) findViewById(R.id.scrap_pharm_address);
+        pharmTitleView = (NotoTextView) findViewById(R.id.scrap_pharm_title);
+        pharmTelView = (NotoTextView) findViewById(R.id.scrap_pharm_tel);
+        pharmAddressView = (NotoTextView) findViewById(R.id.scrap_pharm_address);
 
         callBtn = (ImageView) findViewById(R.id.btn_call);
         deleteScrapBtn = (ImageView) findViewById(R.id.btn_bookmark_delete);

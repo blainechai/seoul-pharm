@@ -18,12 +18,13 @@ import android.widget.Toast;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.fragment.ComponentScannerFragment;
 import com.daejong.seoulpharm.util.LanguageSelector;
+import com.daejong.seoulpharm.widget.NotoTextView;
 
 public class ComponentActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Toolbar toolbar;
     Button toolbarBtn;
-    TextView toolbarTitle;
+    NotoTextView toolbarTitle;
     DrawerLayout drawerLayout;
     Button languageButton;
 
@@ -36,7 +37,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         toolbar = (Toolbar) findViewById(R.id.component_toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = (NotoTextView) findViewById(R.id.toolbar_title);
 
         toolbarBtn.setOnClickListener(this);
         // Nav Buttons Setting

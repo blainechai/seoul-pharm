@@ -35,11 +35,6 @@ public class ConversationListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void clearAllItems() {
-        items.clear();
-        notifyDataSetChanged();
-    }
-
     public void setSelectedItems(List<ConversationListItem> selectedItems) {
         this.items = selectedItems;
         notifyDataSetChanged();

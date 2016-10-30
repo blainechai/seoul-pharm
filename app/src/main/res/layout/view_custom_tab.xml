@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-        <TextView
+        <com.daejong.seoulpharm.widget.NotoTextView
             android:id="@+id/pre_tab_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -25,7 +25,7 @@
             android:textSize="15sp"
             android:text="PREV_TAB"/>
 
-        <TextView
+        <com.daejong.seoulpharm.widget.NotoTextView
             android:id="@+id/current_tab_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -40,7 +40,7 @@
             android:textStyle="bold"
             android:text="CURRENT_TAB"/>
 
-        <TextView
+        <com.daejong.seoulpharm.widget.NotoTextView
             android:id="@+id/post_tab_text"
             android:layout_width="0dp"
             android:layout_height="match_parent"
