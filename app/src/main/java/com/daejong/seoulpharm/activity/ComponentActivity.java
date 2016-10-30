@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.fragment.ComponentScannerFragment;
 import com.daejong.seoulpharm.util.LanguageSelector;
-import com.daejong.seoulpharm.widget.NotoTextView;
 
 public class ComponentActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -28,6 +27,11 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     DrawerLayout drawerLayout;
     Button languageButton;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +138,8 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
     }
@@ -141,8 +147,6 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
     }
-
-
 
 
 }
