@@ -35,7 +35,7 @@
                 android:textColor="@color/color_white"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="의사소통" />
+                android:text="다산콜센터" />
 
             <Button
                 android:id="@+id/spinner"
@@ -51,6 +51,69 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/main_toolbar"
             android:id="@+id/container">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/list_shadow_selected"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:padding="40dp"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+                        <ImageView
+                            android:id="@+id/btn_dasan_call"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_dasan_btn_call"/>
+                        <com.daejong.seoulpharm.widget.NotoTextView
+                            android:id="@+id/text_plz_touch_icon"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:text="@string/dasan_kor_plz_touch_icon"/>
+                    </LinearLayout>
+                    <com.daejong.seoulpharm.widget.NotoTextView
+                        android:id="@+id/text_need_help"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/dasan_kor_need_help"/>
+                    <com.daejong.seoulpharm.widget.NotoTextView
+                        android:id="@+id/text_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:textSize="18sp"
+                        android:text="@string/dasan_kor_description" />
+                    <com.daejong.seoulpharm.widget.NotoTextView
+                        android:id="@+id/text_available_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="@string/dasan_kor_available_time" />
+                </LinearLayout>
+
+            </ScrollView>
 
         </RelativeLayout>
     </RelativeLayout>

@@ -128,9 +128,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/list_shadow_selected"
-                        android:textColor="@color/colorPrimary"
-                        android:text="뒤로가기"/>
+                        android:background="@drawable/ic_main_go_main" />
                 </RelativeLayout>
 
                 <!-- MAP DETAIL PANEL -->
