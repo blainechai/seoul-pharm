@@ -48,7 +48,7 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        languageButton = (Button) findViewById(R.id.btn_language);
+        languageButton = (Button) findViewById(R.id.spinner);
         toolbarBtn.setOnClickListener(this);
 
         // setting EventListener Nav Buttons

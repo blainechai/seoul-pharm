@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.model.MedicineInfo;
+import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.util.NetworkManager;
 import com.google.zxing.Result;
 
@@ -32,6 +34,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ComponentScannerFragment extends Fragment implements View.OnClickListener, ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
 
+    Button languageButton;
+
     public ComponentScannerFragment() {
         // Required empty public constructor
     }
@@ -42,7 +46,8 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_component_scanner, container, false);
         mScannerView = (ZXingScannerView) view.findViewById(R.id.scanner_view);
-
+        languageButton = (Button) getActivity().findViewById(R.id.spinner);
+        setOnLanguageChangeListener();
         return view;
     }
 
@@ -173,5 +178,29 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                 Log.d("REQTESTTTT", "error code:" + code + "\n" + responseString);
             }
         });
+    }
+
+    //set about language
+    void setOnLanguageChangeListener() {
+        LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener = new LanguageSelector.OnLanguageChangeListener() {
+            @Override
+            public void setViewContentsLanguage(int id) {
+                languageButton.setBackgroundResource(id);
+                switch (id) {
+                    case R.drawable.btn_kor:
+
+                        break;
+
+                    case R.drawable.btn_eng:
+
+                        break;
+
+                    case R.drawable.btn_china:
+
+                        break;
+                }
+            }
+        };
+        LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);
     }
 }

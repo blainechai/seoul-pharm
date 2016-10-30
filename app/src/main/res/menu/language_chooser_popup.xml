@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
-        android:title="kor"
+        android:id="@+id/menu_item_kor"
+        android:title="KOR"
         android:visible="true" />
     <item
+        android:id="@+id/menu_item_eng"
         android:title="ENG"
         android:visible="true" />
     <item
-        android:title="中文"
+        android:id="@+id/menu_item_china"
+        android:title="汉语"
         android:visible="true" />
 </menu>

@@ -5,8 +5,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
+import com.daejong.seoulpharm.activity.MainActivity;
 import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.MedicineInfo;
 import com.daejong.seoulpharm.util.LanguageSelector;
@@ -43,7 +46,6 @@ import cz.msebera.android.httpclient.Header;
 public class ComponentInfoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     String[] titles = {"제조사", "성분목록", "효능", "용법용량", "사용상 주의사항"};
-    String[] language = {"한국어", "中国语", "ENG"};
 
     ImageView imageView;
     LinearLayout resultContainer;
@@ -74,6 +76,8 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         resultContainer = (LinearLayout) view.findViewById(R.id.container);
         imageView = (ImageView) view.findViewById(R.id.pharm_image_view);
         bookmarkImageView = (ImageView) view.findViewById(R.id.btn_bookmark);
+        languageButton = (Button) getActivity().findViewById(R.id.spinner);
+
         medicineInfo = (MedicineInfo) getArguments().getSerializable("medicineInfo");
 
         dbHelper = new DBHelper(getActivity());
@@ -93,77 +97,9 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         companyTextView.setText(medicineInfo.getCompany());
         nameTextView.setText(medicineInfo.getName());
 
-        //get image
+        setOnLanguageChangeListener();
 
-        //set list item
-
-        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, container, false);
-        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[0]);
-        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getCompany());
-        resultContainer.addView(contentView);
-
-        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, container, false);
-        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[1]);
-        String component = "";
-        ArrayList<String> components = medicineInfo.getComponents();
-        for (int i = 0; i < components.size(); i++) {
-            if (i == components.size() - 1) component += components.get(i);
-            else component += components.get(i) + "\n";
-
-        }
-        ((TextView) contentView.findViewById(R.id.text_content)).setText(component);
-        resultContainer.addView(contentView);
-
-        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, container, false);
-        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[2]);
-        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getEffect());
-        resultContainer.addView(contentView);
-
-        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, container, false);
-        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[3]);
-        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getUsage());
-        resultContainer.addView(contentView);
-
-        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, container, false);
-        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[4]);
-        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getCaution());
-        resultContainer.addView(contentView);
-
-        //set custom spinner
-//        Spinner spin = (Spinner) getActivity().findViewById(R.id.spinner);
-//        spin.setOnItemSelectedListener(this);
-//        LanguageSpinnerAdapter languageSpinnerAdapter = new LanguageSpinnerAdapter(getActivity(), language);
-//        spin.setAdapter(languageSpinnerAdapter);
-
-        languageButton = (Button) getActivity().findViewById(R.id.btn_language);
-
-
-        LanguageSelector.getInstance().setOnLanguageChangeListener(new LanguageSelector.OnLanguageChangeListener() {
-            @Override
-            public void setViewContentsLanguage(int currentLanguage) {
-                switch (currentLanguage) {
-                    case R.drawable.btn_kor:
-//                toolbarTitle.setText();
-                        languageButton.setText("KOR");
-
-                        break;
-
-                    case R.drawable.btn_eng:
-                        languageButton.setText("ENG");
-                        resultContainer.removeAllViews();
-                        getEngInfo(medicineInfo);
-
-                        break;
-
-                    case R.drawable.btn_china:
-//                toolbarTitle.setText();
-                        languageButton.setText("CHI");
-
-                        break;
-                }
-            }
-        });
-
+        //setList item
         LanguageSelector.getInstance().syncLanguage();
 
         return view;
@@ -189,6 +125,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                     isBookmarkChecked = !isBookmarkChecked;
                 }
                 break;
+
         }
     }
 
@@ -217,14 +154,13 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getActivity(), language[position], Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
     }
 
-    public void getEngInfo(MedicineInfo medicineInfo) {
+    public void getEngInfo() {
         ArrayList<String> components = medicineInfo.getComponents();
         enMedicineInfo.setComponents(new ArrayList<String>());
         NetworkManager.getInstance().getTranslation(getActivity(), "ko", "en", components, new NetworkManager.OnResultListener<String>() {
@@ -275,6 +211,8 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
                                 Toast.makeText(getActivity(), document.select(".contentBox p").text(), Toast.LENGTH_SHORT).show();
 
+                                resultContainer.removeAllViews();
+
                                 LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                                 LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
                                 ((TextView) contentView.findViewById(R.id.text_title)).setText("Overview");
@@ -304,5 +242,67 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
             }
         });
 
+    }
+
+    void getKoreanInfo() {
+        //set list item
+        resultContainer.removeAllViews();
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+
+        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[0]);
+        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getCompany());
+        resultContainer.addView(contentView);
+
+        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[1]);
+        String component = "";
+        ArrayList<String> components = medicineInfo.getComponents();
+        for (int i = 0; i < components.size(); i++) {
+            if (i == components.size() - 1) component += components.get(i);
+            else component += components.get(i) + "\n";
+
+        }
+        ((TextView) contentView.findViewById(R.id.text_content)).setText(component);
+        resultContainer.addView(contentView);
+
+        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[2]);
+        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getEffect());
+        resultContainer.addView(contentView);
+
+        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[3]);
+        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getUsage());
+        resultContainer.addView(contentView);
+
+        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, (ViewGroup) getView().getParent(), false);
+        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[4]);
+        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getCaution());
+        resultContainer.addView(contentView);
+    }
+
+    //set about language
+    void setOnLanguageChangeListener() {
+        LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener = new LanguageSelector.OnLanguageChangeListener() {
+            @Override
+            public void setViewContentsLanguage(int id) {
+                languageButton.setBackgroundResource(id);
+                switch (id) {
+                    case R.drawable.btn_kor:
+                        getKoreanInfo();
+                        break;
+
+                    case R.drawable.btn_eng:
+                        getEngInfo();
+                        break;
+
+                    case R.drawable.btn_china:
+
+                        break;
+                }
+            }
+        };
+        LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);
     }
 }

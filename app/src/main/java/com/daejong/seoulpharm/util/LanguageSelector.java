@@ -19,13 +19,6 @@ public class LanguageSelector {
     private LanguageSelector() {
     }
 
-    public static final String LANGUAGE_KOREAN = "MODE_KOREAN";
-    public static final String LANGUAGE_CHINESE = "MODE_CHINESE";
-    public static final String LANGUAGE_ENGLISH = "MODE_ENGLISH";
-
-    private String languages[] = {LANGUAGE_KOREAN, LANGUAGE_ENGLISH, LANGUAGE_CHINESE};
-    private int index = 0;
-
     private int currentLanguage = R.drawable.btn_kor;
 
     public void setCurrentLanguage(int id) {
@@ -36,12 +29,6 @@ public class LanguageSelector {
         return currentLanguage;
     }
 
-    public void changeLanguage() {
-//        index = (index + 1) % 3;
-//        currentLanguage = languages[index];
-        mListener.setViewContentsLanguage(currentLanguage);
-    }
-
     public void syncLanguage() {
         mListener.setViewContentsLanguage(currentLanguage);
     }
@@ -49,6 +36,12 @@ public class LanguageSelector {
 
     public interface OnLanguageChangeListener {
         public void setViewContentsLanguage(int backgroundId);
+    }
+
+    public void changeLanguage(int id){
+        if(currentLanguage == id) return;
+        setCurrentLanguage(id);
+        syncLanguage();
     }
 
     private OnLanguageChangeListener mListener;

@@ -22,12 +22,12 @@
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <Button
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:background="@drawable/ic_hamburger"
                 android:id="@+id/nav_hamburger_btn" />
 
-            <TextView
+            <com.daejong.seoulpharm.widget.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -37,18 +37,14 @@
                 android:textStyle="bold"
                 android:text="스크랩" />
 
-            <!--
-            <Spinner
+            <Button
                 android:id="@+id/spinner"
                 android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-             -->
-            <Button
-                android:id="@+id/btn_language"
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:background="@drawable/btn_kor"
+                android:layout_marginRight="16dp"/>
+
         </android.support.v7.widget.Toolbar>
 
 

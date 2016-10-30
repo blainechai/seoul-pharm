@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -25,9 +27,6 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
     DrawerLayout drawerLayout;
     Button languageButton;
 
-    public static LanguageSelector.OnLanguageChangeListener onLanguageChangeListener;
-
-    String[] language = {"한국어", "中国语", "ENG"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +47,15 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
 
 
-        Button languageButton = (Button) findViewById(R.id.btn_language);
+        Button languageButton = (Button) findViewById(R.id.spinner);
         languageButton.setOnClickListener(this);
-        languageButton.setText(LanguageSelector.getInstance().getCurrentLanguage());
 
 //        Spinner spin = (Spinner) findViewById(R.id.spinner);
 //        spin.setOnItemSelectedListener(this);
 //        LanguageSpinnerAdapter languageSpinnerAdapter=new LanguageSpinnerAdapter(getApplicationContext(),language);
 //        spin.setAdapter(languageSpinnerAdapter);
 //        spin.getSelectedItem();
+
 
 
 
@@ -106,18 +105,43 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(ComponentActivity.this, ConversationActivity.class));
                 break;
 
-            case R.id.btn_language:
-                LanguageSelector.getInstance().changeLanguage();
+            case R.id.spinner:
+                PopupMenu pum = new PopupMenu(this, findViewById(R.id.spinner));
+                getMenuInflater().inflate(R.menu.language_chooser_popup, pum.getMenu());
+                pum.show();
+                pum.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // TODO Auto-generated method stub
+                        switch (item.getItemId()) {//눌러진 MenuItem의 Item Id를 얻어와 식별
+                            case R.id.menu_item_kor:
+                                LanguageSelector.getInstance().changeLanguage(R.drawable.btn_kor);
+                                break;
+
+                            case R.id.menu_item_eng:
+                                LanguageSelector.getInstance().changeLanguage(R.drawable.btn_eng);
+                                break;
+
+                            case R.id.menu_item_china:
+                                LanguageSelector.getInstance().changeLanguage(R.drawable.btn_china);
+                                break;
+                        }
+                        return false;
+                    }
+                });
                 break;
         }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getApplicationContext(), language[position], Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
     }
+
+
+
+
 }

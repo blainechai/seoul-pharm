@@ -21,6 +21,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -99,31 +100,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     List<PharmItem> pharmList;
 
 
-    LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener = new LanguageSelector.OnLanguageChangeListener() {
-        @Override
-        public void setViewContentsLanguage(int id) {
-            switch (id) {
-                case R.drawable.btn_kor:
-//                toolbarTitle.setText();
-                    languageButton.setText("KOR");
-                    languageButton.setBackgroundResource(R.drawable.btn_kor);
-                    break;
-
-                case R.drawable.btn_eng:
-//                toolbarTitle.setText();
-                    languageButton.setText("ENG");
-                    languageButton.setBackgroundResource(R.drawable.btn_eng);
-                    break;
-
-                case R.drawable.btn_china:
-//                toolbarTitle.setText();
-                    languageButton.setText("CHI");
-                    languageButton.setBackgroundResource(R.drawable.btn_china);
-                    break;
-            }
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,16 +110,11 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+
+        //init language spinner
         languageButton = (Button) findViewById(R.id.spinner);
-//        languageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                PopupMenu pum = new PopupMenu(getApplicationContext(), findViewById(R.id.spinner));
-//                pum.inflate(R.menu.language_chooser_popup);
-//                pum.show();
-//
-//            }
-//        });
+
+        languageButton.setOnClickListener(this);
 
         // containers initialize
         btnContainer = (LinearLayout) findViewById(R.id.panel_buttons);
@@ -178,8 +149,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         findViewById(R.id.nav_drawer_conversation_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
-        languageButton.setOnClickListener(this);
-        languageButton.setText(LanguageSelector.getInstance().getCurrentLanguage());
+//        languageButton.setOnClickListener(this);
+//        languageButton.setText(LanguageSelector.getInstance().getCurrentLanguage());
+        Log.d("language!!!!!!!", "" + LanguageSelector.getInstance().getCurrentLanguage());
 
         // setting EventListener in this activity
         findViewById(R.id.current_refresh_view).setOnClickListener(this);
@@ -192,7 +164,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         detailBookmarkBtn.setOnClickListener(this);
         detailCallBtn.setOnClickListener(this);
 
-        LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);
+        setOnLanguageChangeListener();
     }
 
 
@@ -630,13 +602,31 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 startActivity(new Intent(MainActivity.this, ConversationActivity.class));
                 break;
 
-            // LANGUAGE SETTING BUTTON IN TOOLBAR
-            case R.id.btn_language:
-                LanguageSelector.getInstance().changeLanguage();
-                // changeLanguageInViews();
+            case R.id.spinner:
+                PopupMenu pum = new PopupMenu(MainActivity.this, findViewById(R.id.spinner));
+                getMenuInflater().inflate(R.menu.language_chooser_popup, pum.getMenu());
+                pum.show();
+                pum.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // TODO Auto-generated method stub
+                        switch (item.getItemId()) {//눌러진 MenuItem의 Item Id를 얻어와 식별
+                            case R.id.menu_item_kor:
+                                LanguageSelector.getInstance().changeLanguage(R.drawable.btn_kor);
+                                break;
+
+                            case R.id.menu_item_eng:
+                                LanguageSelector.getInstance().changeLanguage(R.drawable.btn_eng);
+                                break;
+
+                            case R.id.menu_item_china:
+                                LanguageSelector.getInstance().changeLanguage(R.drawable.btn_china);
+                                break;
+                        }
+                        return false;
+                    }
+                });
                 break;
-
-
         }
     }
 
@@ -679,5 +669,30 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+
+    //set about language
+    void setOnLanguageChangeListener(){
+        LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener = new LanguageSelector.OnLanguageChangeListener() {
+            @Override
+            public void setViewContentsLanguage(int id) {
+                languageButton.setBackgroundResource(id);
+                switch (id) {
+                    case R.drawable.btn_kor:
+
+                        break;
+
+                    case R.drawable.btn_eng:
+
+                        break;
+
+                    case R.drawable.btn_china:
+
+                        break;
+                }
+            }
+        };
+        LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);
     }
 }
