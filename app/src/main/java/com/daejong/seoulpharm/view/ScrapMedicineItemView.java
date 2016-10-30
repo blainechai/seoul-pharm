@@ -53,7 +53,7 @@ public class ScrapMedicineItemView extends FrameLayout {
                 db.deleteMedicineScrapped(item.getItemSeq());
 
                 // Delete item in Adapter
-                mOnDeleteButtonClickListener.onDeleteButtonClicked(item.getItemSeq());
+                mOnDeleteButtonClickListener.onDeleteButtonClicked(item.getBarcode());
             }
         });
 
@@ -72,9 +72,7 @@ public class ScrapMedicineItemView extends FrameLayout {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Bitmap image = BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length);
-                Log.d("***********", item.getImageSrc());
                 medicineImage.setImageBitmap(image);
-//                resultContainer.addView(imageView);
             }
 
             @Override

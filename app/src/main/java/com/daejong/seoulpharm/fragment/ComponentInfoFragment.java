@@ -82,7 +82,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         medicineInfo = (MedicineInfo) getArguments().getSerializable("medicineInfo");
 
         dbHelper = new DBHelper(getActivity());
-        if (dbHelper.searchMedicine(medicineInfo.getItemSeq())) {
+        if (dbHelper.searchMedicine(medicineInfo.getBarcode())) {
             bookmarkImageView.setImageResource(R.drawable.ic_map_btn_bookmark_on);
             isBookmarkChecked = true;
         } else {
@@ -123,7 +123,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                     isBookmarkChecked = !isBookmarkChecked;
                 } else {
                     bookmarkImageView.setImageResource(R.drawable.ic_map_btn_bookmark_off);
-                    dbHelper.deleteMedicineScrapped(medicineInfo.getItemSeq());
+                    dbHelper.deleteMedicineScrapped(medicineInfo.getBarcode());
                     isBookmarkChecked = !isBookmarkChecked;
                 }
                 break;
@@ -182,8 +182,6 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         NetworkManager.getInstance().getTranslation(getActivity(), "ko", "en", targets, new NetworkManager.OnResultListener<String>() {
             @Override
             public void onSuccess(String result) {
-//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                Log.d("!!!!!!!!!!", "" + result);
                 JsonElement jsonElement = new JsonParser().parse(result);
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
                 jsonObject = jsonObject.getAsJsonObject("data");
@@ -194,22 +192,22 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
                 ((TextView) contentView.findViewById(R.id.text_title)).setText(engTitles[0]);
                 ((TextView) contentView.findViewById(R.id.text_title)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "NotoSansKR-Medium-Hestia.otf"));
-                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(0).getAsJsonObject().get("translatedText").getAsString());
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(replaceMark(jsonArray.get(0).getAsJsonObject().get("translatedText").getAsString()));
                 resultContainer.addView(contentView);
 
                 contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
                 ((TextView) contentView.findViewById(R.id.text_title)).setText(engTitles[1]);
-                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(1).getAsJsonObject().get("translatedText").getAsString());
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(replaceMark(jsonArray.get(1).getAsJsonObject().get("translatedText").getAsString()));
                 resultContainer.addView(contentView);
 
                 contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
                 ((TextView) contentView.findViewById(R.id.text_title)).setText(engTitles[2]);
-                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(2).getAsJsonObject().get("translatedText").getAsString());
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(replaceMark(jsonArray.get(2).getAsJsonObject().get("translatedText").getAsString()));
                 resultContainer.addView(contentView);
 
                 contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
                 ((TextView) contentView.findViewById(R.id.text_title)).setText(engTitles[3]);
-                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(3).getAsJsonObject().get("translatedText").getAsString());
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(replaceMark(jsonArray.get(3).getAsJsonObject().get("translatedText").getAsString()));
                 resultContainer.addView(contentView);
 
 //                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
@@ -220,7 +218,6 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
             @Override
             public void onFail(int code, String response) {
-                Log.d("!!!!!!!!!!", "" + response);
             }
         });
     }
@@ -245,8 +242,6 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         NetworkManager.getInstance().getTranslation(getActivity(), "ko", "zh-CN", targets, new NetworkManager.OnResultListener<String>() {
             @Override
             public void onSuccess(String result) {
-//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                Log.d("!!!!!!!!!!", "" + result);
                 JsonElement jsonElement = new JsonParser().parse(result);
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
                 jsonObject = jsonObject.getAsJsonObject("data");
@@ -257,22 +252,22 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
                 ((TextView) contentView.findViewById(R.id.text_title)).setText(chTitles[0]);
                 ((TextView) contentView.findViewById(R.id.text_title)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "NotoSansKR-Medium-Hestia.otf"));
-                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(0).getAsJsonObject().get("translatedText").getAsString());
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(replaceMark(jsonArray.get(0).getAsJsonObject().get("translatedText").getAsString()));
                 resultContainer.addView(contentView);
 
                 contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
                 ((TextView) contentView.findViewById(R.id.text_title)).setText(chTitles[1]);
-                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(1).getAsJsonObject().get("translatedText").getAsString());
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(replaceMark(jsonArray.get(1).getAsJsonObject().get("translatedText").getAsString()));
                 resultContainer.addView(contentView);
 
                 contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
                 ((TextView) contentView.findViewById(R.id.text_title)).setText(chTitles[2]);
-                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(2).getAsJsonObject().get("translatedText").getAsString());
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(replaceMark(jsonArray.get(2).getAsJsonObject().get("translatedText").getAsString()));
                 resultContainer.addView(contentView);
 
                 contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
                 ((TextView) contentView.findViewById(R.id.text_title)).setText(chTitles[3]);
-                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(3).getAsJsonObject().get("translatedText").getAsString());
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(replaceMark(jsonArray.get(3).getAsJsonObject().get("translatedText").getAsString()));
                 resultContainer.addView(contentView);
 
 //                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
@@ -283,7 +278,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
             @Override
             public void onFail(int code, String response) {
-                Log.d("!!!!!!!!!!", "" + response);
+//                Log.d("!!!!!!!!!!", "" + response);
             }
         });
     }
@@ -304,7 +299,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
                 for (JsonElement jEle : jsonArray) {
                     enMedicineInfo.getComponents().add(jEle.getAsJsonObject().get("translatedText").getAsString());
-                    Log.d("component", jEle.getAsJsonObject().get("translatedText").getAsString());
+//                    Log.d("component", jEle.getAsJsonObject().get("translatedText").getAsString());
                 }
                 String query = "";
                 for (int i = 0; i < enMedicineInfo.getComponents().size(); i++) {
@@ -316,20 +311,20 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                 }
                 AsyncHttpClient client = new AsyncHttpClient();
                 query = "https://www.drugs.com/search.php?searchterm=" + query.replaceAll(" \\([^\\)]+\\)", "").replaceAll(" ", "+");
-                Log.d("DRUGS.com", query);
+//                Log.d("DRUGS.com", query);
                 client.get(query, null, new TextHttpResponseHandler() {
 
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, String responseBody) {
                         Document document = Jsoup.parse(responseBody);
-                        Log.d("target!!", "" + document.select(".snippet.search-result").get(0).select("a").attr("href"));
+//                        Log.d("target!!", "" + document.select(".snippet.search-result").get(0).select("a").attr("href"));
                         document.select(".snippet.search-result").get(0).select("a").attr("href");
 
                         Toast.makeText(getActivity(), document.select(".snippet.search-result").get(0).select("a").attr("href"), Toast.LENGTH_SHORT).show();
 
                         String url = document.select(".snippet.search-result").get(0).select("a").attr("href");
                         AsyncHttpClient client = new AsyncHttpClient();
-                        Log.d("DRUGS.com", url);
+//                        Log.d("DRUGS.com", url);
                         client.get(url, null, new TextHttpResponseHandler() {
 
                             @Override
@@ -428,6 +423,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("다산콜센터");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("스크랩");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("튜토리얼");
+                        ((TextView) getActivity().findViewById(R.id.toolbar_title)).setText("약 성분 확인");
                         getKoreanInfo();
                         break;
 
@@ -439,6 +435,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("Dasan Call Center");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("Bookmarks");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("Tutorial");
+                        ((TextView) getActivity().findViewById(R.id.toolbar_title)).setText("Drug Information");
                         getEngInfo();
                         break;
 
@@ -450,6 +447,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("首尔茶山热线");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("检索书签");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("教程");
+                        ((TextView) getActivity().findViewById(R.id.toolbar_title)).setText("确认药物成分");
                         getChInfo();
                         break;
                 }
