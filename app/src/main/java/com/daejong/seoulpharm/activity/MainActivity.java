@@ -154,6 +154,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         findViewById(R.id.nav_drawer_conversation_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_tutorial).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_dasan_call_btn).setOnClickListener(this);
 
         // setting EventListener in this activity
         findViewById(R.id.current_refresh_view).setOnClickListener(this);
@@ -261,6 +263,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 startActivity(intent);
             }
         });
+
         detailBookmarkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -595,6 +598,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 drawerLayout.closeDrawers();
                 changeMode(MODE_MAP_DETAIL);
                 break;
+            case R.id.nav_drawer_dasan_call_btn:
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(MainActivity.this, DasanCallActivity.class));
+                break;
             case R.id.nav_drawer_component_btn:
                 drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this, ComponentActivity.class));
@@ -610,6 +617,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             case R.id.nav_drawer_conversation_btn:
                 drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this, ConversationActivity.class));
+                break;
+            case R.id.nav_drawer_tutorial :
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(MainActivity.this, TutorialActivity.class));
                 break;
 
             case R.id.spinner:
