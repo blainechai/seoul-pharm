@@ -166,7 +166,7 @@ public class NMapViewerResourceProvider extends NMapResourceProvider implements
             new ResourceIdsOnMap(NMapPOIflagType.SPOT, R.drawable.ic_pin_01, R.drawable.ic_pin_02),
 
             new ResourceIdsOnMap(NMapPOIflagType.PIN_CURRENT_POS, R.drawable.ic_map_current_pos_pin, R.drawable.ic_map_current_pos_pin),
-            new ResourceIdsOnMap(NMapPOIflagType.PIN_PHARM, R.drawable.ic_conversation_plusicon, R.drawable.ic_conversation_plusicon),
+            new ResourceIdsOnMap(NMapPOIflagType.PIN_PHARM, R.drawable.ic_map_pharm_pos_pin, R.drawable.ic_map_pharm_pos_pin),
 
             // Direction POI icons: From, To
             new ResourceIdsOnMap(NMapPOIflagType.FROM, R.drawable.ic_map_start, R.drawable.ic_map_start_over),

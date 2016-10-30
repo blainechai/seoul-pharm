@@ -18,7 +18,7 @@ public class LanguageSelector {
 
     private LanguageSelector() {
     }
-
+    
     private int currentLanguage = R.drawable.btn_kor;
 
     public void setCurrentLanguage(int id) {

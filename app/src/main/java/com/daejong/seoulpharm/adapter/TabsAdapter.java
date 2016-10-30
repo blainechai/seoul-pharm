@@ -15,9 +15,9 @@ import android.widget.TabWidget;
 import java.util.ArrayList;
 
 /**
- * Created by Hyunwoo on 2016. 10. 28..
+ * Created by multimedia on 2016-05-11.
  */
-public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener{
     /**
      * TabHost와 Pager를 연동하여 관리할 수 있도록 만든 class.
      */
@@ -35,7 +35,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
         private final Bundle args;
         private Fragment fragment;
 
-        TabInfo(String _tag, Class<?> _class, Bundle _args) {
+        TabInfo (String _tag, Class<?> _class, Bundle _args) {
             tag = _tag;
             clss = _class;
             args = _args;
@@ -59,7 +59,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
     }
 
     /* Constructor */
-    public TabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
+    public TabsAdapter (FragmentActivity activity, TabHost tabHost, ViewPager pager) {
         this(activity, activity.getSupportFragmentManager(), tabHost, pager);
     }
 
@@ -81,7 +81,6 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
             info.fragment = mFragmentManager.getFragment(savedInstanceState, keyfield);
         }
     }
-
     /* 메모리 부족 종료시 tab의 정보를 저장 */
     public void onSaveInstanceState(Bundle outState) {
         for (TabInfo info : mTabs) {
@@ -92,10 +91,8 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
         }
     }
 
-    /**
-     * addTab()
+    /** addTab()
      * TabsAdapter에 addTab 을 해 주면 TabInfo를 하나 생성 후 TabHost에 추가한 다음 notifyDataSetChanged()로 PagerAdapter를 다시 구동해준다.
-     *
      * @param tabSpec
      * @param clss
      * @param args
@@ -123,18 +120,11 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
         return info.fragment;
     }
 
-    @Override
-    public int getItemPosition(Object object) {
-        return POSITION_NONE;
-    }
-
     /* TabChange Listener */
-    /**
-     * setOnTabChangeListener
+    /** setOnTabChangeListener
      * TabsAdapter가 TabHost의 OnTabChangeListener를 받아서 처리하므로 OnTabChangeListener를 등록하여 처리해 주도록 한다.
      */
     TabHost.OnTabChangeListener mTabChangeListener;
-
     public void setOnTabChangedListener(TabHost.OnTabChangeListener listener) {
         mTabChangeListener = listener;
     }
@@ -163,7 +153,6 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
 
     /* PageChange Listener */
     ViewPager.OnPageChangeListener mPageChangeListener;
-
     public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
         mPageChangeListener = listener;
     }
@@ -183,15 +172,17 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
         widget.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         mTabHost.setCurrentTab(position);
         widget.setDescendantFocusability(oldFocusability);
-        if (mPageChangeListener != null) {
+        if(mPageChangeListener!= null) {
             mPageChangeListener.onPageSelected(position);
         }
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (mPageChangeListener != null) {
+        if(mPageChangeListener != null) {
             mPageChangeListener.onPageScrollStateChanged(state);
         }
     }
+
+
 }

@@ -15,18 +15,24 @@ import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.adapter.TabsAdapter;
 import com.daejong.seoulpharm.fragment.ConversationFragment;
+import com.daejong.seoulpharm.view.ConversationCustomTabView;
 
-public class ConversationActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class ConversationActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener, ConversationCustomTabView.OnTabClickedListener {
 
     public static final String TAB_ID_SKIN = "TAB_ID_SKIN";
     public static final String TAB_ID_RESPIRATORY = "TAB_ID_RESPIRATORY";
     public static final String TAB_ID_GASTROINTESTINAL = "TAB_ID_GASTROINTESTINAL";
     public static final String TAB_ID_CARDIOVASCULAR = "TAB_ID_CARDIOVASCULAR";
     public static final String TAB_ID_NEUROLOGICAL = "TAB_ID_NEUROLOGICAL";
+
+    private String[] tabTextsKor = {"피부", "호흡",  "소화", "심혈", "신경"};
+    private String[] tabTextsEng = {"Skin", "Respiratory", "Gastrointestinal", "Cardiovascular", "Neurological"};
+    private String[] tabTextsChi = {"皮肤","呼吸","胃肠道","心血管", "神经学"};
 
     // TOOLBAR
     DrawerLayout drawerLayout;
@@ -37,6 +43,7 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     // Tab
     TabHost tabHost;
+    ConversationCustomTabView customTabView;
 
     // etc...
     ViewPager pager;
@@ -72,6 +79,13 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         // TAB Settings
         tabHost = (TabHost) findViewById(android.R.id.tabhost);
         tabHost.setup();
+        customTabView = (ConversationCustomTabView) findViewById(R.id.customTab);
+        // add Tab Text into custom TextView... (Language setting에서도 고칠 것)
+        for (String tab : tabTextsEng) {
+            customTabView.addTab(tab);
+        }
+        customTabView.setCurrentTab(0);
+        customTabView.setOnTabClcickedListener(this);
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.addOnPageChangeListener(this);
@@ -91,15 +105,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_CARDIOVASCULAR).setIndicator("심혈"), ConversationFragment.class, tabParams[3]);
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_NEUROLOGICAL).setIndicator("신경"), ConversationFragment.class, tabParams[4]);
 
-        //set tab font
-        TabWidget tw = (TabWidget) tabHost.findViewById(android.R.id.tabs);
-        for (int i = 0; i < tw.getChildCount(); ++i) {
-            final View tabView = tw.getChildTabViewAt(i);
-            final TextView tv = (TextView) tabView.findViewById(android.R.id.title);
-            tv.setTextSize(16);
-            tv.setTextColor(Color.parseColor("#5f5f5f"));
-            tv.setTypeface(Typeface.createFromAsset(this.getAssets(),"NotoSansKR-Regular-Hestia.otf"));
-        }
     }
 
     @Override
@@ -140,29 +145,30 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onPageSelected(int position) {
-        mAdapter.notifyDataSetChanged();
+        customTabView.setCurrentTab(position);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
     }
 
-    // Custom Interfaces
-    public interface OnBackKeyPressedListener {
-        public void onBackPressed();
+    // Tab Btn Clicked
+    @Override
+    public void onPreTabBtnClicked(int preTabPosition) {
+        customTabView.setCurrentTab(preTabPosition);
+        pager.setCurrentItem(preTabPosition , true);
     }
 
-    private OnBackKeyPressedListener mOnBackKeyPressedListener;
-
-    public void setOnBackKeyPressedListener(OnBackKeyPressedListener listener) {
-        mOnBackKeyPressedListener = listener;
+    @Override
+    public void onPostTabBtnClicked(int postTabPosition) {
+        customTabView.setCurrentTab(postTabPosition);
+        pager.setCurrentItem(postTabPosition , true);
     }
 
     @Override
     public void onBackPressed() {
-        if (mOnBackKeyPressedListener != null) {
-            mOnBackKeyPressedListener.onBackPressed();
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawers();
         } else {
             super.onBackPressed();
         }
