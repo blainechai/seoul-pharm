@@ -1,5 +1,7 @@
 package com.daejong.seoulpharm.util;
 
+import com.daejong.seoulpharm.R;
+
 /**
  * Created by Hyunwoo on 2016. 10. 28..
  */
@@ -24,19 +26,19 @@ public class LanguageSelector {
     private String languages[] = {LANGUAGE_KOREAN, LANGUAGE_ENGLISH, LANGUAGE_CHINESE};
     private int index = 0;
 
-    private String currentLanguage = LANGUAGE_KOREAN;
+    private int currentLanguage = R.drawable.btn_kor;
 
-    public void setCurrentLanguage(String currentLanguage) {
-        this.currentLanguage = currentLanguage;
+    public void setCurrentLanguage(int id) {
+        this.currentLanguage = id;
     }
 
-    public String getCurrentLanguage() {
+    public int getCurrentLanguage() {
         return currentLanguage;
     }
 
     public void changeLanguage() {
-        index = (index + 1) % 3;
-        currentLanguage = languages[index];
+//        index = (index + 1) % 3;
+//        currentLanguage = languages[index];
         mListener.setViewContentsLanguage(currentLanguage);
     }
 
@@ -46,7 +48,7 @@ public class LanguageSelector {
 
 
     public interface OnLanguageChangeListener {
-        public void setViewContentsLanguage(String currentLanguage);
+        public void setViewContentsLanguage(int backgroundId);
     }
 
     private OnLanguageChangeListener mListener;

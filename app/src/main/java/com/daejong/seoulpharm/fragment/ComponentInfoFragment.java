@@ -140,22 +140,22 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
         LanguageSelector.getInstance().setOnLanguageChangeListener(new LanguageSelector.OnLanguageChangeListener() {
             @Override
-            public void setViewContentsLanguage(String currentLanguage) {
+            public void setViewContentsLanguage(int currentLanguage) {
                 switch (currentLanguage) {
-                    case LanguageSelector.LANGUAGE_KOREAN:
+                    case R.drawable.btn_kor:
 //                toolbarTitle.setText();
                         languageButton.setText("KOR");
 
                         break;
 
-                    case LanguageSelector.LANGUAGE_ENGLISH:
+                    case R.drawable.btn_eng:
                         languageButton.setText("ENG");
                         resultContainer.removeAllViews();
                         getEngInfo(medicineInfo);
 
                         break;
 
-                    case LanguageSelector.LANGUAGE_CHINESE:
+                    case R.drawable.btn_china:
 //                toolbarTitle.setText();
                         languageButton.setText("CHI");
 

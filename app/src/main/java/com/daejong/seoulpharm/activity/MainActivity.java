@@ -17,6 +17,7 @@ import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -98,26 +99,26 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     List<PharmItem> pharmList;
 
 
-    LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener= new LanguageSelector.OnLanguageChangeListener() {
+    LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener = new LanguageSelector.OnLanguageChangeListener() {
         @Override
-        public void setViewContentsLanguage(String currentLanguage) {
-            switch (currentLanguage) {
-                case LanguageSelector.LANGUAGE_KOREAN :
+        public void setViewContentsLanguage(int id) {
+            switch (id) {
+                case R.drawable.btn_kor:
 //                toolbarTitle.setText();
                     languageButton.setText("KOR");
-
+                    languageButton.setBackgroundResource(R.drawable.btn_kor);
                     break;
 
-                case LanguageSelector.LANGUAGE_ENGLISH :
+                case R.drawable.btn_eng:
 //                toolbarTitle.setText();
                     languageButton.setText("ENG");
-
+                    languageButton.setBackgroundResource(R.drawable.btn_eng);
                     break;
 
-                case LanguageSelector.LANGUAGE_CHINESE :
+                case R.drawable.btn_china:
 //                toolbarTitle.setText();
                     languageButton.setText("CHI");
-
+                    languageButton.setBackgroundResource(R.drawable.btn_china);
                     break;
             }
         }
@@ -133,7 +134,16 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbarBtn = (Button) findViewById(R.id.nav_hamburger_btn);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        languageButton = (Button) findViewById(R.id.btn_language);
+        languageButton = (Button) findViewById(R.id.spinner);
+//        languageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PopupMenu pum = new PopupMenu(getApplicationContext(), findViewById(R.id.spinner));
+//                pum.inflate(R.menu.language_chooser_popup);
+//                pum.show();
+//
+//            }
+//        });
 
         // containers initialize
         btnContainer = (LinearLayout) findViewById(R.id.panel_buttons);
@@ -193,9 +203,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     private static final String TITLE_MAIN = "Seoul Pharm";
 
     private String currentMode = MODE_MAIN;
+
     private void changeMode(String mode) {
         switch (mode) {
-            case MODE_MAP_DETAIL :
+            case MODE_MAP_DETAIL:
                 // set toolbar title
                 toolbarTitle.setText(TITLE_MAP_DETAIL);
 
@@ -212,7 +223,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
                 break;
 
-            case MODE_MAIN :
+            case MODE_MAIN:
                 // set toolbar title
                 toolbarTitle.setText(TITLE_MAIN);
 
@@ -235,6 +246,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
     // MAP DETAIL PANEL
     boolean isBookmarked;
+
     private void setDetailPanels(final PharmItem item) {
 
         // SET VISIBILITY AND ANIMATION
@@ -255,9 +267,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // SET TEXTS
         detailNameView.setText(item.getNameKor());
-        detailAvailableLanguageView.setText("| 외국어 가능 약국 |   "+item.getAvailLanKor());
+        detailAvailableLanguageView.setText("| 외국어 가능 약국 |   " + item.getAvailLanKor());
         detailAddressView.setText(item.getAddressKor());
-        detailTelephoneView.setText("Tel )  "+item.getTel());
+        detailTelephoneView.setText("Tel )  " + item.getTel());
 
         // SET CLICK EVENT LISTENER
         detailCallBtn.setOnClickListener(new View.OnClickListener() {
@@ -332,9 +344,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         int currentMarkerId = NMapPOIflagType.PIN_CURRENT_POS;
 
         // 표시할 위치 데이터를 지정한다. -- 마지막 인자가 오버래이를 인식하기 위한 id값
-        NMapPOIdata poiDatas = new NMapPOIdata(pharmList.size()+1, nMapViewerResourceProvider);
+        NMapPOIdata poiDatas = new NMapPOIdata(pharmList.size() + 1, nMapViewerResourceProvider);
 
-        poiDatas.beginPOIdata(pharmList.size()+1);
+        poiDatas.beginPOIdata(pharmList.size() + 1);
         // 현재 위치 등록
         poiDatas.addPOIitem(currentPos.getLongitude(), currentPos.getLatitude(), "현재위치", currentMarkerId, 0);  // PIN 바꾸기
         for (PharmItem item : pharmList) {
@@ -357,10 +369,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
     @TargetApi(23)
     private void registerLocationListener() {
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission( MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return  ;
+        if (Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
         }
         try {
             mLM = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -416,7 +428,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case MESSAGE_TIMEOUT_LOCATION_UPDATE :
+                case MESSAGE_TIMEOUT_LOCATION_UPDATE:
                     Toast.makeText(MainActivity.this, "Timeout location update", Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -434,7 +446,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
             @Override
             public void onFail(int code, String response) {
-                Toast.makeText(MainActivity.this, "ERROR get current address code:"+code+"\n"+response, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "ERROR get current address code:" + code + "\n" + response, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -465,7 +477,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         public void onStatusChanged(String provider, int status, Bundle extras) {
             // Provider의 상태 변경시 호출. status는 LocationProvider에 정의되어있음
             switch (status) {
-                case LocationProvider.AVAILABLE :
+                case LocationProvider.AVAILABLE:
                     Toast.makeText(MainActivity.this, "위치정보 기능을 사용할 수 있습니다", Toast.LENGTH_SHORT).show();
                     break;
                 case LocationProvider.OUT_OF_SERVICE:
@@ -489,35 +501,41 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     };
 
 
-
     // Naver Map implement methods
     @Override
     public void onMapInitHandler(NMapView nMapView, NMapError nMapError) {
     }
+
     @Override
     public void onMapCenterChange(NMapView nMapView, NGeoPoint nGeoPoint) {
         // 맵 중심이 변경됬을 때 중심 좌표의 주소 재검색
-        Log.d("POS CHANGED", "latitude : "+nGeoPoint.getLatitude()+", longtitude : "+nGeoPoint.getLongitude());
+        Log.d("POS CHANGED", "latitude : " + nGeoPoint.getLatitude() + ", longtitude : " + nGeoPoint.getLongitude());
         findLocationAddress(nGeoPoint);
 
         // 주소가 변경되었다면 약국 다시 뿌리기
 
     }
+
     @Override
     public void onMapCenterChangeFine(NMapView nMapView) {
     }
+
     @Override
     public void onZoomLevelChange(NMapView nMapView, int i) {
     }
+
     @Override
     public void onAnimationStateChange(NMapView nMapView, int i, int i1) {
     }
+
     @Override
     public void onLongPress(NMapView nMapView, MotionEvent motionEvent) {
     }
+
     @Override
     public void onLongPressCanceled(NMapView nMapView) {
     }
+
     @Override
     public void onTouchDown(NMapView nMapView, MotionEvent motionEvent) {
         Log.d("MAP TOUCH DOWN", "CLICKED");
@@ -526,12 +544,15 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             changeMode(MODE_MAP_DETAIL);
         }
     }
+
     @Override
     public void onTouchUp(NMapView nMapView, MotionEvent motionEvent) {
     }
+
     @Override
     public void onScroll(NMapView nMapView, MotionEvent motionEvent, MotionEvent motionEvent1) {
     }
+
     @Override
     public void onSingleTapUp(NMapView nMapView, MotionEvent motionEvent) {
     }
@@ -556,7 +577,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         // 말풍선 띄우기
 
 
-       return null;
+        return null;
     }
 
 
@@ -566,26 +587,26 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         switch (view.getId()) {
 
             // MAP REFRESH
-            case R.id.current_refresh_view :
+            case R.id.current_refresh_view:
                 registerLocationListener();
                 break;
 
             // MAIN BUTTONS
-            case R.id.btn_map :
+            case R.id.btn_map:
                 changeMode(MODE_MAP_DETAIL);
                 break;
-            case R.id.btn_conversation :
+            case R.id.btn_conversation:
                 startActivity(new Intent(MainActivity.this, ConversationActivity.class));
                 break;
-            case R.id.btn_component :
+            case R.id.btn_component:
                 startActivity(new Intent(MainActivity.this, ComponentActivity.class));
                 break;
-            case R.id.btn_scrap :
+            case R.id.btn_scrap:
                 startActivity(new Intent(MainActivity.this, ScrapActivity.class));
                 break;
 
             // NAVIGATION DRAWER BUTTONS
-            case R.id.nav_hamburger_btn :
+            case R.id.nav_hamburger_btn:
                 drawerLayout.openDrawer(Gravity.LEFT);
                 break;
             case R.id.nav_drawer_map_btn:
@@ -610,7 +631,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 break;
 
             // LANGUAGE SETTING BUTTON IN TOOLBAR
-            case R.id.btn_language :
+            case R.id.btn_language:
                 LanguageSelector.getInstance().changeLanguage();
                 // changeLanguageInViews();
                 break;
@@ -630,7 +651,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         super.onStop();
         unRegisterLocationListener();
     }
-
 
 
     @Override
