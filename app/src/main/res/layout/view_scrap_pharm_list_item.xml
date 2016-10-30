@@ -21,14 +21,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
-            <TextView
+            <com.daejong.seoulpharm.widget.NotoTextView
                 android:id="@+id/scrap_pharm_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:text="약국 이름"/>
-            <TextView
+            <com.daejong.seoulpharm.widget.NotoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -50,13 +50,13 @@
                 android:adjustViewBounds="true" />
         </LinearLayout>
 
-        <TextView
+        <com.daejong.seoulpharm.widget.NotoTextView
             android:id="@+id/scrap_pharm_tel"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
+        <com.daejong.seoulpharm.widget.NotoTextView
             android:id="@+id/scrap_pharm_address"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"

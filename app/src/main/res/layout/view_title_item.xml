@@ -19,7 +19,7 @@
             android:layout_margin="6dp"
             android:src="@drawable/ic_component_line" />
 
-        <TextView
+        <com.daejong.seoulpharm.widget.NotoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -37,7 +37,7 @@
         android:background="#d7d7d7"
         android:orientation="vertical">
 
-        <TextView
+        <com.daejong.seoulpharm.widget.NotoTextView
             android:id="@+id/text_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

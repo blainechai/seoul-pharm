@@ -164,12 +164,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // setting EventListener Nav Buttons
         findViewById(R.id.nav_drawer_component_btn).setOnClickListener(this);
-        findViewById(R.id.nav_drawer_config_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_main_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_conversation_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
-        findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
         languageButton.setOnClickListener(this);
         languageButton.setText(LanguageSelector.getInstance().getCurrentLanguage());
 
@@ -590,9 +588,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             case R.id.nav_hamburger_btn :
                 drawerLayout.openDrawer(Gravity.LEFT);
                 break;
-            case R.id.nav_drawer_tutorial_btn:
-//                startActivity(new Intent(MainActivity.this, MapActivity.class));
-                break;
             case R.id.nav_drawer_map_btn:
                 drawerLayout.closeDrawers();
                 changeMode(MODE_MAP_DETAIL);
@@ -604,9 +599,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             case R.id.nav_drawer_star_btn:
                 drawerLayout.closeDrawers();
                 startActivity(new Intent(MainActivity.this, ScrapActivity.class));
-                break;
-            case R.id.nav_drawer_config_btn:
-//                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_main_btn:
                 drawerLayout.closeDrawers();

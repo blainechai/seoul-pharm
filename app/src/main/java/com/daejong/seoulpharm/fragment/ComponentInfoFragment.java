@@ -83,8 +83,8 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         } else {
             isBookmarkChecked = false;
         }
-
         bookmarkImageView.setOnClickListener(this);
+        setImage(medicineInfo, imageView);
 
         // set text around image
         TextView companyTextView = (TextView) view.findViewById(R.id.pharm_maker);
@@ -94,7 +94,6 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         nameTextView.setText(medicineInfo.getName());
 
         //get image
-        setImage(medicineInfo, imageView);
 
         //set list item
 

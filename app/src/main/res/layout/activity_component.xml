@@ -29,7 +29,7 @@
                 android:background="@drawable/ic_hamburger"
                 android:id="@+id/nav_hamburger_btn" />
 
-            <TextView
+            <com.daejong.seoulpharm.widget.NotoTextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

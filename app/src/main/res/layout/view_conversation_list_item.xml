@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <TextView
+        <com.daejong.seoulpharm.widget.NotoTextView
             android:id="@+id/symptom_text_foreign"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
+        <com.daejong.seoulpharm.widget.NotoTextView
             android:id="@+id/symptom_text_kor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

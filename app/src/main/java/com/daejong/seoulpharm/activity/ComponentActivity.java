@@ -42,12 +42,10 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         toolbarBtn.setOnClickListener(this);
         // Nav Buttons Setting
         findViewById(R.id.nav_drawer_component_btn).setOnClickListener(this);
-        findViewById(R.id.nav_drawer_config_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_main_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_conversation_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
-        findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
 
 
         Button languageButton = (Button) findViewById(R.id.btn_language);
@@ -88,9 +86,6 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
                 drawerLayout.closeDrawers();
                 finish();
                 break;
-            case R.id.nav_drawer_tutorial_btn:
-//                startActivity(new Intent(MainActivity.this, MapActivity.class));
-                break;
             case R.id.nav_drawer_map_btn:
                 drawerLayout.closeDrawers();
                 finish();
@@ -104,9 +99,6 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
                 drawerLayout.closeDrawers();
                 startActivity(new Intent(ComponentActivity.this, ScrapActivity.class));
                 finish();
-                break;
-            case R.id.nav_drawer_config_btn:
-//                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_conversation_btn:
                 drawerLayout.closeDrawers();

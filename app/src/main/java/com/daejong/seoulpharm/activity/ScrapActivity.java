@@ -1,6 +1,8 @@
 package com.daejong.seoulpharm.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
@@ -50,19 +53,17 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
 
         // setting EventListener Nav Buttons
         findViewById(R.id.nav_drawer_component_btn).setOnClickListener(this);
-        findViewById(R.id.nav_drawer_config_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_main_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_conversation_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
-        findViewById(R.id.nav_drawer_tutorial_btn).setOnClickListener(this);
         languageButton.setOnClickListener(this);
 
         // TAB Settings
         tabHost = (TabHost) findViewById(android.R.id.tabhost);
         tabHost.setup();
 
-        pager = (ViewPager)findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         mAdapter = new TabsAdapter(this, getSupportFragmentManager(), tabHost, pager);
 
         // Fragment Params Settings
@@ -75,11 +76,20 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_PHARMS).setIndicator("약국"), ScrapFragment.class, pharmBundle);
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_COMPONENT).setIndicator("의약품"), ScrapFragment.class, componentBundle);
 
-
+        //set tab font
+        TabWidget tw = (TabWidget) tabHost.findViewById(android.R.id.tabs);
+        for (int i = 0; i < tw.getChildCount(); ++i) {
+            final View tabView = tw.getChildTabViewAt(i);
+            final TextView tv = (TextView) tabView.findViewById(android.R.id.title);
+            tv.setTextSize(16);
+            tv.setTextColor(Color.parseColor("#5f5f5f"));
+            tv.setTypeface(Typeface.createFromAsset(this.getAssets(), "NotoSansKR-Regular-Hestia.otf"));
+        }
     }
 
 
-    /** TODO : NAVIGATION DRAWER BUTTON CLICK EVENT 처리
+    /**
+     * TODO : NAVIGATION DRAWER BUTTON CLICK EVENT 처리
      */
 
     @Override
@@ -87,11 +97,8 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
 
             // NAVIGATION DRAWER BUTTONS
-            case R.id.nav_hamburger_btn :
+            case R.id.nav_hamburger_btn:
                 drawerLayout.openDrawer(Gravity.LEFT);
-                break;
-            case R.id.nav_drawer_tutorial_btn:
-//                startActivity(new Intent(MainActivity.this, MapActivity.class));
                 break;
             case R.id.nav_drawer_map_btn:
                 drawerLayout.closeDrawers();
@@ -115,9 +122,6 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
             case R.id.nav_drawer_main_btn:
                 drawerLayout.closeDrawers();
                 finish();
-                break;
-            case R.id.nav_drawer_config_btn:
-                drawerLayout.closeDrawers();
                 break;
         }
     }
