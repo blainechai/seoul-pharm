@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.fragment.ComponentScannerFragment;
 import com.daejong.seoulpharm.util.LanguageSelector;
+import com.daejong.seoulpharm.widget.NotoTextView;
 
 public class ComponentActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 

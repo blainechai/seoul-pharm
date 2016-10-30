@@ -77,6 +77,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     NotoTextView detailTelephoneView;
     ImageView detailBookmarkBtn;
     ImageView detailCallBtn;
+    Button goMainBtn;
 
     // CONTAINERS
     LinearLayout btnContainer;
@@ -123,6 +124,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // Views initialize
         nMapView = (NMapView) findViewById(R.id.mapView);
+        goMainBtn = (Button) findViewById(R.id.goMainBtn);
+        goMainBtn.setOnClickListener(this);
+
         currentAddressView = (NotoTextView) findViewById(R.id.current_address_view);
         currentRefreshView = (NotoTextView) findViewById(R.id.current_refresh_view);
         // detail panel
@@ -153,7 +157,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
         // setting EventListener in this activity
         findViewById(R.id.current_refresh_view).setOnClickListener(this);
-        findViewById(R.id.btn_map).setOnClickListener(this);
+        findViewById(R.id.btn_dasan).setOnClickListener(this);
         findViewById(R.id.btn_conversation).setOnClickListener(this);
         findViewById(R.id.btn_component).setOnClickListener(this);
         findViewById(R.id.btn_scrap).setOnClickListener(this);
@@ -161,6 +165,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         // setting EventListener in Detail Panel
         detailBookmarkBtn.setOnClickListener(this);
         detailCallBtn.setOnClickListener(this);
+
+        changeMode(MODE_MAIN);
 
         setOnLanguageChangeListener();
         LanguageSelector.getInstance().syncLanguage();
@@ -183,6 +189,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
                 // container gone
                 btnContainer.setVisibility(View.GONE);
+                goMainBtn.setVisibility(View.VISIBLE);
                 // mapDetailContainer.setVisibility(View.VISIBLE);
 
                 // animation
@@ -201,6 +208,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 // container visible
                 btnContainer.setVisibility(View.VISIBLE);
                 mapDetailContainer.setVisibility(View.GONE);
+                goMainBtn.setVisibility(View.GONE);
 
                 // animation
                 Animation animAppearFromBottom = AnimationUtils.loadAnimation(MainActivity.this, R.anim.appear_from_bottom);
@@ -531,12 +539,15 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     // Overlay Click event callback
     @Override
     public NMapCalloutOverlay onCreateCalloutOverlay(NMapOverlay nMapOverlay, NMapOverlayItem nMapOverlayItem, Rect rect) {
-
+        if (!currentMode.equals(MODE_MAP_DETAIL)) {
+            changeMode(MODE_MAP_DETAIL);
+        }
 
         // 클릭된 약국의 상세정보를 띄우기
         PharmItem clickedItem;
         clickedItem = db.getPharmItemByKey(nMapOverlayItem.getTitle());
-        if (!nMapOverlayItem.getTitle().equals("현재위치") && currentMode.equals(MODE_MAP_DETAIL)) {
+
+        if (!nMapOverlayItem.getTitle().equals("현재위치")) {
             setDetailPanels(clickedItem);
             // 지도의 중심을 선택한 위치로 이동
             double lat = Double.parseDouble(clickedItem.getLatitude());
@@ -544,9 +555,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 //            Log.d(" !!! CLICKED POI !!! ", "LATITUDE : " + lat +  " / LONGTITUDE : " +lng);
             nMapController.animateTo(new NGeoPoint(lng, lat));
         }
-
-        // 말풍선 띄우기
-
 
         return null;
     }
@@ -561,10 +569,13 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             case R.id.current_refresh_view:
                 registerLocationListener();
                 break;
+            case R.id.goMainBtn :
+                changeMode(MODE_MAIN);
+                break;
 
             // MAIN BUTTONS
-            case R.id.btn_map:
-                changeMode(MODE_MAP_DETAIL);
+            case R.id.btn_dasan:
+                startActivity(new Intent(MainActivity.this, DasanCallActivity.class));
                 break;
             case R.id.btn_conversation:
                 startActivity(new Intent(MainActivity.this, ConversationActivity.class));

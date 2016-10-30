@@ -41,7 +41,8 @@
         <activity
             android:name=".activity.ScrapActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.ConversationResultActivity"></activity>
+        <activity android:name=".activity.ConversationResultActivity" />
+        <activity android:name=".activity.TutorialActivity" />
     </application>
 
 </manifest>
