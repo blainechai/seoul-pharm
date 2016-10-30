@@ -101,7 +101,6 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         setOnLanguageChangeListener();
 
         //setList item
-        LanguageSelector.getInstance().syncLanguage();
 
         return view;
     }
@@ -179,58 +178,116 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
         targets.add(component);
         targets.add(medicineInfo.getEffect());
         targets.add(medicineInfo.getUsage());
-        targets.add(medicineInfo.getCaution());
+//        targets.add(medicineInfo.getCaution());
         NetworkManager.getInstance().getTranslation(getActivity(), "ko", "en", targets, new NetworkManager.OnResultListener<String>() {
             @Override
             public void onSuccess(String result) {
 //                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-Log.d("!!!!!!!!!!", ""+result);
+                Log.d("!!!!!!!!!!", "" + result);
                 JsonElement jsonElement = new JsonParser().parse(result);
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
                 jsonObject = jsonObject.getAsJsonObject("data");
                 JsonArray jsonArray = jsonObject.getAsJsonArray("translations");
 
-
-
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
 
-                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[0]);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(engTitles[0]);
                 ((TextView) contentView.findViewById(R.id.text_title)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "NotoSansKR-Medium-Hestia.otf"));
                 ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(0).getAsJsonObject().get("translatedText").getAsString());
                 resultContainer.addView(contentView);
 
                 contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
-                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[1]);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(engTitles[1]);
                 ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(1).getAsJsonObject().get("translatedText").getAsString());
                 resultContainer.addView(contentView);
 
                 contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
-                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[2]);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(engTitles[2]);
                 ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(2).getAsJsonObject().get("translatedText").getAsString());
                 resultContainer.addView(contentView);
 
                 contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
-                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[3]);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(engTitles[3]);
                 ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(3).getAsJsonObject().get("translatedText").getAsString());
                 resultContainer.addView(contentView);
 
-                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
-                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[4]);
-                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(4).getAsJsonObject().get("translatedText").getAsString());
-                resultContainer.addView(contentView);
+//                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+//                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[4]);
+//                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(4).getAsJsonObject().get("translatedText").getAsString());
+//                resultContainer.addView(contentView);
             }
 
             @Override
             public void onFail(int code, String response) {
-                Log.d("!!!!!!!!!!", ""+response);
+                Log.d("!!!!!!!!!!", "" + response);
             }
         });
     }
 
     public void getChInfo() {
+        resultContainer.removeAllViews();
+        ArrayList<String> targets = new ArrayList<>();
+        String component = "";
+        ArrayList<String> components = medicineInfo.getComponents();
+        for (int i = 0; i < components.size(); i++) {
+            if (i == 0) {
+                component += medicineInfo.getComponents().get(i);
+            } else {
+                component += "\n" + medicineInfo.getComponents().get(i);
+            }
+        }
+        targets.add(medicineInfo.getCompany());
+        targets.add(component);
+        targets.add(medicineInfo.getEffect());
+        targets.add(medicineInfo.getUsage());
+//        targets.add(medicineInfo.getCaution());
+        NetworkManager.getInstance().getTranslation(getActivity(), "ko", "zh-CN", targets, new NetworkManager.OnResultListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+//                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                Log.d("!!!!!!!!!!", "" + result);
+                JsonElement jsonElement = new JsonParser().parse(result);
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                jsonObject = jsonObject.getAsJsonObject("data");
+                JsonArray jsonArray = jsonObject.getAsJsonArray("translations");
 
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                LinearLayout contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(chTitles[0]);
+                ((TextView) contentView.findViewById(R.id.text_title)).setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "NotoSansKR-Medium-Hestia.otf"));
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(0).getAsJsonObject().get("translatedText").getAsString());
+                resultContainer.addView(contentView);
+
+                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(chTitles[1]);
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(1).getAsJsonObject().get("translatedText").getAsString());
+                resultContainer.addView(contentView);
+
+                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(chTitles[2]);
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(2).getAsJsonObject().get("translatedText").getAsString());
+                resultContainer.addView(contentView);
+
+                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+                ((TextView) contentView.findViewById(R.id.text_title)).setText(chTitles[3]);
+                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(3).getAsJsonObject().get("translatedText").getAsString());
+                resultContainer.addView(contentView);
+
+//                contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+//                ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[4]);
+//                ((TextView) contentView.findViewById(R.id.text_content)).setText(jsonArray.get(4).getAsJsonObject().get("translatedText").getAsString());
+//                resultContainer.addView(contentView);
+            }
+
+            @Override
+            public void onFail(int code, String response) {
+                Log.d("!!!!!!!!!!", "" + response);
+            }
+        });
     }
+
 
     public void getEngInfoFromWeb() {
         ArrayList<String> components = medicineInfo.getComponents();
@@ -350,10 +407,10 @@ Log.d("!!!!!!!!!!", ""+result);
         ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getUsage());
         resultContainer.addView(contentView);
 
-        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
-        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[4]);
-        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getCaution());
-        resultContainer.addView(contentView);
+//        contentView = (LinearLayout) inflater.inflate(R.layout.view_title_item, null, false);
+//        ((TextView) contentView.findViewById(R.id.text_title)).setText(titles[4]);
+//        ((TextView) contentView.findViewById(R.id.text_content)).setText(medicineInfo.getCaution());
+//        resultContainer.addView(contentView);
     }
 
     //set about language
@@ -393,7 +450,7 @@ Log.d("!!!!!!!!!!", ""+result);
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("首尔茶山热线");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("检索书签");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("教程");
-
+                        getChInfo();
                         break;
                 }
             }
@@ -401,5 +458,7 @@ Log.d("!!!!!!!!!!", ""+result);
         LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);
     }
 
-
+    String replaceMark(String str) {
+        return str.replaceAll("&nbsp;", " ").replaceAll("&lt;", "<").replaceAll("&gt;", ">").replaceAll("&amp;", "&").replaceAll("&quot;", "\"");
+    }
 }

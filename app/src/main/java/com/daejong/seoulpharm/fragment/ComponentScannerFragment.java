@@ -156,7 +156,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                         Toast.makeText(getActivity(), "Server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.drawable.btn_china:
-                        Toast.makeText(getActivity(), "ㄴㅇㄹㅇㄴㄹ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -169,9 +169,9 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
             @Override
             public void onSuccess(String result, MedicineInfo medicineInfo) {
                 Document document = Jsoup.parse(result, "http://drug.mfds.go.kr/html/bxsSearchDrugProduct.jsp");
-                medicineInfo.setEffect(document.select("#A_EE_DOC").get(0).parent().select(">div").text());
-                medicineInfo.setUsage(document.select("#A_UD_DOC").get(0).parent().select(">div").text());
-                medicineInfo.setCaution(document.select("#A_NB_DOC").get(0).parent().select(">div").text());
+                medicineInfo.setEffect(replaceMark(document.select("#A_EE_DOC").get(0).parent().select(">div").text()));
+                medicineInfo.setUsage(replaceMark(document.select("#A_UD_DOC").get(0).parent().select(">div").text()));
+                medicineInfo.setCaution(replaceMark(document.select("#A_NB_DOC").get(0).parent().select(">div").text()));
                 String imgSrc;
                 if (document.select(".txc-image").size() > 0) {
                     imgSrc = document.select(".txc-image").first().absUrl("src");
