@@ -221,6 +221,8 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("다산콜센터");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("스크랩");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("튜토리얼");
+                        ((TextView) getActivity().findViewById(R.id.toolbar_title)).setText("약 성분 확인");
+                        Toast.makeText(getActivity(),"정보를 확인하고자 하는 의약품의 바코드 혹은 QR코드를 스캔해주세요.",Toast.LENGTH_LONG).show();
                         break;
 
                     case R.drawable.btn_eng:
@@ -231,6 +233,8 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("Dasan Call Center");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("Bookmarks");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("Tutorial");
+                        ((TextView) getActivity().findViewById(R.id.toolbar_title)).setText("Drug Information");
+                        Toast.makeText(getActivity(),"Please scan the bar or QR code of the drug that you want to find information about.",Toast.LENGTH_LONG).show();
                         break;
 
                     case R.drawable.btn_china:
@@ -241,6 +245,8 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_dasan_call_text)).setText("首尔茶山热线");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("检索书签");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("教程");
+                        ((TextView) getActivity().findViewById(R.id.toolbar_title)).setText("确认药物成分");
+                        Toast.makeText(getActivity(),"请扫描您想要确认信息商品的条形码或二维码。",Toast.LENGTH_LONG).show();
                         break;
                 }
             }
