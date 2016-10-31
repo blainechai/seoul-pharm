@@ -73,6 +73,8 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.nav_drawer_conversation_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_tutorial).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_dasan_call_btn).setOnClickListener(this);
         languageButton.setOnClickListener(this);
 
         // TAB Settings
@@ -137,12 +139,20 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.nav_drawer_star_btn:
                 drawerLayout.closeDrawers();
-                startActivity(new Intent(ScrapActivity.this, ScrapActivity.class));
-                finish();
                 break;
             case R.id.nav_drawer_conversation_btn:
                 drawerLayout.closeDrawers();
                 startActivity(new Intent(ScrapActivity.this, ConversationActivity.class));
+                finish();
+                break;
+            case R.id.nav_drawer_dasan_call_btn :
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(ScrapActivity.this, DasanCallActivity.class));
+                finish();
+                break;
+            case R.id.nav_drawer_tutorial :
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(ScrapActivity.this, TutorialActivity.class));
                 finish();
                 break;
             case R.id.nav_drawer_main_btn:
@@ -178,8 +188,15 @@ public class ScrapActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setOnLanguageChangeListener();
+        LanguageSelector.getInstance().syncLanguage();
+    }
+
     //set about language
-    void setOnLanguageChangeListener(){
+    public void setOnLanguageChangeListener(){
         LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener = new LanguageSelector.OnLanguageChangeListener() {
             @Override
             public void setViewContentsByLanguage(int id) {

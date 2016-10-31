@@ -166,8 +166,6 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.nav_drawer_component_btn:
                 drawerLayout.closeDrawers();
-                startActivity(new Intent(ComponentActivity.this, ComponentActivity.class));
-                finish();
                 break;
             case R.id.nav_drawer_star_btn:
                 drawerLayout.closeDrawers();

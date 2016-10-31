@@ -135,7 +135,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.nav_drawer_map_btn:
                 drawerLayout.closeDrawers();
-                startActivity(new Intent(ConversationActivity.this, MainActivity.class));
                 finish();
                 break;
             case R.id.nav_drawer_dasan_call_btn:

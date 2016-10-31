@@ -115,13 +115,13 @@ public class DasanCallActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.nav_drawer_component_btn:
                 drawerLayout.closeDrawers();
-                finish();
                 startActivity(new Intent(DasanCallActivity.this, ComponentActivity.class));
+                finish();
                 break;
             case R.id.nav_drawer_star_btn:
                 drawerLayout.closeDrawers();
-                finish();
                 startActivity(new Intent(DasanCallActivity.this, ScrapActivity.class));
+                finish();
                 break;
             case R.id.nav_drawer_main_btn:
                 drawerLayout.closeDrawers();
@@ -129,13 +129,13 @@ public class DasanCallActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.nav_drawer_conversation_btn:
                 drawerLayout.closeDrawers();
-                finish();
                 startActivity(new Intent(DasanCallActivity.this, ConversationActivity.class));
+                finish();
                 break;
             case R.id.nav_drawer_tutorial:
                 drawerLayout.closeDrawers();
-                finish();
                 startActivity(new Intent(DasanCallActivity.this, TutorialActivity.class));
+                finish();
                 break;
 
             // language selector
