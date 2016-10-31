@@ -23,6 +23,7 @@ public class ScrapPharmItemView extends FrameLayout {
     NotoTextView pharmTitleView;
     NotoTextView pharmTelView;
     NotoTextView pharmAddressView;
+    NotoTextView pharmAvailableLanguageView;
     ImageView callBtn;
     ImageView deleteScrapBtn;
 
@@ -38,6 +39,7 @@ public class ScrapPharmItemView extends FrameLayout {
         pharmTitleView = (NotoTextView) findViewById(R.id.scrap_pharm_title);
         pharmTelView = (NotoTextView) findViewById(R.id.scrap_pharm_tel);
         pharmAddressView = (NotoTextView) findViewById(R.id.scrap_pharm_address);
+        pharmAvailableLanguageView = (NotoTextView) findViewById(R.id.scrap_pharm_available_language);
 
         callBtn = (ImageView) findViewById(R.id.btn_call);
         deleteScrapBtn = (ImageView) findViewById(R.id.btn_bookmark_delete);
@@ -64,6 +66,27 @@ public class ScrapPharmItemView extends FrameLayout {
             }
         });
 
+    }
+
+    public void initItemViewsLanguage (int currentLanguage, PharmItem item) {
+        switch (currentLanguage) {
+            case R.drawable.btn_kor :
+                pharmTitleView.setText(item.getNameKor());
+                pharmAvailableLanguageView.setText("| 외국어 가능 약국 |   "+item.getAvailLanKor());
+                pharmAddressView.setText(item.getAddressKor());
+                break;
+            case R.drawable.btn_eng :
+                pharmTitleView.setText(item.getNameEng());
+                pharmAvailableLanguageView.setText("| Available language |   "+item.getAvailLanEng());
+                pharmAddressView.setText(item.getAddressEng());
+                break;
+            case R.drawable.btn_china :
+                pharmTitleView.setText(item.getNameChi());
+                pharmAvailableLanguageView.setText("| 可以讲外语的药店 |   "+item.getAvailLanChi());
+                pharmAddressView.setText(item.getAddressEng());
+                break;
+        }
+        pharmTelView.setText(item.getTel());
     }
 
     public void setScrappedPharmItemView (PharmItem item) {

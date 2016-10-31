@@ -23,18 +23,12 @@
             android:gravity="center_vertical">
             <com.daejong.seoulpharm.widget.NotoTextView
                 android:id="@+id/scrap_pharm_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:text="약국 이름"/>
-            <com.daejong.seoulpharm.widget.NotoTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginLeft="8dp"
-                android:textColor="#9DBFF4"
-                android:text="| 외국어 가능 약국" />
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="약국 이름"/>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
@@ -49,6 +43,14 @@
                 android:src="@drawable/ic_scrap_delete"
                 android:adjustViewBounds="true" />
         </LinearLayout>
+
+        <com.daejong.seoulpharm.widget.NotoTextView
+            android:id="@+id/scrap_pharm_available_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#9DBFF4"
+            android:text="| 외국어 가능 약국 |" />
 
         <com.daejong.seoulpharm.widget.NotoTextView
             android:id="@+id/scrap_pharm_tel"

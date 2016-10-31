@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.daejong.seoulpharm.model.PharmItem;
+import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.view.ScrapPharmItemView;
 
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class ScrapPharmListAdapter extends BaseAdapter implements ScrapPharmItem
             view = new ScrapPharmItemView(parent.getContext());
         }
         view.setScrappedPharmItemView(pharmItems.get(position));
+        int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+        view.initItemViewsLanguage(currentLanguage, pharmItems.get(position));
         view.setOnDeleteButtonClickListener(this);
         return view;
     }

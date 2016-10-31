@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.activity.ComponentActivity;
+import com.daejong.seoulpharm.activity.ScrapActivity;
 import com.daejong.seoulpharm.adapter.ScrapComponentListAdapter;
 import com.daejong.seoulpharm.adapter.ScrapPharmListAdapter;
 import com.daejong.seoulpharm.db.DBHelper;
@@ -80,6 +81,13 @@ public class ScrapFragment extends Fragment {
                     mPharmListAdapter.addScrappedPharm(item);
                 }
 
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                        mListener.onScrappedPharmItemClicked((PharmItem) mPharmListAdapter.getItem(position));
+                    }
+                });
+
                 break;
             case TYPE_COMPONENT:
                 // 의약품,성분 스크랩 목록
@@ -98,7 +106,18 @@ public class ScrapFragment extends Fragment {
                 break;
         }
 
+        this.setOnScrappedPharmListItemClickListener((ScrapActivity)getActivity());
+
         return view;
+    }
+
+
+    public interface OnScrappedPharmListItemClickListener {
+        public void onScrappedPharmItemClicked(PharmItem item);
+    }
+    OnScrappedPharmListItemClickListener mListener;
+    public void setOnScrappedPharmListItemClickListener(OnScrappedPharmListItemClickListener listener) {
+        mListener = listener;
     }
 
 }

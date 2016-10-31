@@ -1,10 +1,12 @@
 package com.daejong.seoulpharm.model;
 
 
+import java.io.Serializable;
+
 /**
  * Created by Hyunwoo on 2016. 10. 1..
  */
-public class PharmItem {
+public class PharmItem implements Serializable {
 
     private String mainKey;
 

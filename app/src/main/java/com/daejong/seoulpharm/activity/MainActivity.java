@@ -59,6 +59,8 @@ import java.util.List;
 
 public class MainActivity extends NMapActivity implements View.OnClickListener, NMapView.OnMapStateChangeListener, NMapView.OnMapViewTouchEventListener, NMapOverlayManager.OnCalloutOverlayListener {
 
+    private static final int REQ_MAP_CODE = 0;
+
     // TOOLBAR
     DrawerLayout drawerLayout;
     Toolbar toolbar;
@@ -390,6 +392,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
             // 위치 정보 등록
             mLM.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, mListener, null);
+            mLM.removeUpdates(mListener);
 
             // Timeout 측정 시작
             Message msg = mHandler.obtainMessage(MESSAGE_TIMEOUT_LOCATION_UPDATE);
@@ -449,6 +452,9 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             // 새로 fix된 위치정보가 있을 시 타임아웃 핸들러 끄기
             mHandler.removeMessages(MESSAGE_TIMEOUT_LOCATION_UPDATE);
 
+            // Location이 변경되었으면 LocationListener 종료 (최초 한번만 위치를 찾도록)
+            unRegisterLocationListener();
+
             // 현재 위치 저장
             currentPos = new NGeoPoint(location.getLongitude(), location.getLatitude());
 
@@ -458,8 +464,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
             // 주소 TextView를 현재 주소로
             findLocationAddress(currentPos);
 
-            // Location이 변경되었으면 LocationListener 종료 (최초 한번만 위치를 찾도록)
-            unRegisterLocationListener();
         }
 
         @Override
@@ -594,7 +598,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 startActivity(new Intent(MainActivity.this, ComponentActivity.class));
                 break;
             case R.id.btn_scrap:
-                startActivity(new Intent(MainActivity.this, ScrapActivity.class));
+                startActivityForResult(new Intent(MainActivity.this, ScrapActivity.class), REQ_MAP_CODE);
                 break;
 
             // NAVIGATION DRAWER BUTTONS
@@ -667,8 +671,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         unRegisterLocationListener();
     }
 
@@ -698,7 +702,18 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        switch (resultCode) {
+            case ScrapActivity.RESULT_CODE :
+                PharmItem selectedItem = (PharmItem) data.getSerializableExtra(ScrapActivity.KEY_RESULT_DATA);
+                changeMode(MODE_MAP_DETAIL);
+                double longtitude = Double.parseDouble(selectedItem.getLongtitude());
+                double latitude = Double.parseDouble(selectedItem.getLatitude());
+                nMapController.animateTo(new NGeoPoint(longtitude, latitude));
+                setDetailPanels(selectedItem);
+                break;
+            default:
+                break;
+        }
     }
 
 
@@ -768,7 +783,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 toolbarTitle.setText("약국 찾기");
                 currentRefreshView.setText("위치 재설정");
                 ((TextView) findViewById(R.id.btn_component)).setText("약 성분 확인");
-                ((TextView) findViewById(R.id.btn_conversation)).setText("증상설");
+                ((TextView) findViewById(R.id.btn_conversation)).setText("증상설명");
                 ((TextView) findViewById(R.id.btn_scrap)).setText("스크랩");
                 ((TextView) findViewById(R.id.btn_dasan)).setText("다산콜센터");
                 break;

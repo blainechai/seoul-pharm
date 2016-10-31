@@ -12,12 +12,14 @@ import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 
+import com.daejong.seoulpharm.util.OnLanguageChangeHandler;
+
 import java.util.ArrayList;
 
 /**
  * Created by multimedia on 2016-05-11.
  */
-public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener{
+public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener, OnLanguageChangeHandler {
     /**
      * TabHost와 Pager를 연동하여 관리할 수 있도록 만든 class.
      */
@@ -184,5 +186,19 @@ public class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabCh
         }
     }
 
+    boolean refreshFlag = false;
+    @Override
+    public int getItemPosition(Object object) {
+        if (refreshFlag) {
+            refreshFlag = false;
+            return POSITION_NONE;
+        }
+        return super.getItemPosition(object);
+    }
 
+    @Override
+    public void onLanguageChanged(int currentLanguage) {
+        refreshFlag = true;
+        notifyDataSetChanged();
+    }
 }
