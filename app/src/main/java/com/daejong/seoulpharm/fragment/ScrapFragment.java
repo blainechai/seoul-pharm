@@ -92,7 +92,6 @@ public class ScrapFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         startActivity(new Intent(getActivity(), ComponentActivity.class).putExtra("barcode", ((MedicineInfo) mComponentListAdapter.getItem(position)).getBarcode()));
-                        getActivity().finish();
                     }
                 });
 

@@ -149,7 +149,18 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+                switch (currentLanguage) {
+                    case R.drawable.btn_kor:
+                        Toast.makeText(getActivity(), "API 서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_eng:
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_china:
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
     }
@@ -218,6 +229,18 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
             @Override
             public void onFail(int code, String response) {
+                int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+                switch (currentLanguage) {
+                    case R.drawable.btn_kor:
+                        Toast.makeText(getActivity(), "API 서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_eng:
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_china:
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
     }
@@ -278,7 +301,18 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
             @Override
             public void onFail(int code, String response) {
-//                Log.d("!!!!!!!!!!", "" + response);
+                int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+                switch (currentLanguage) {
+                    case R.drawable.btn_kor:
+                        Toast.makeText(getActivity(), "API 서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_eng:
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_china:
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
     }
@@ -348,7 +382,18 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
                             @Override
                             public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-
+                                int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+                                switch (currentLanguage) {
+                                    case R.drawable.btn_kor:
+                                        Toast.makeText(getActivity(), "API 서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case R.drawable.btn_eng:
+                                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case R.drawable.btn_china:
+                                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
                             }
                         });
 
@@ -356,14 +401,36 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers, String responseBody, Throwable error) {
-
+                        int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+                        switch (currentLanguage) {
+                            case R.drawable.btn_kor:
+                                Toast.makeText(getActivity(), "API 서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.drawable.btn_eng:
+                                Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.drawable.btn_china:
+                                Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
                     }
                 });
             }
 
             @Override
             public void onFail(int code, String response) {
-
+                int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+                switch (currentLanguage) {
+                    case R.drawable.btn_kor:
+                        Toast.makeText(getActivity(), "API 서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_eng:
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_china:
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
 

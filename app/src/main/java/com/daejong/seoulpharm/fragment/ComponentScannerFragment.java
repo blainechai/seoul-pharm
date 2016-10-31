@@ -152,13 +152,13 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                 int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
                 switch (currentLanguage) {
                     case R.drawable.btn_kor:
-                        Toast.makeText(getActivity(), "서버가 혼잡한니다. 바코드, QR코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "API 서버가 혼잡한니다. 바코드, QR코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.drawable.btn_eng:
-                        Toast.makeText(getActivity(), "Server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.drawable.btn_china:
-                        Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -194,13 +194,13 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                 int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
                 switch (currentLanguage) {
                     case R.drawable.btn_kor:
-                        Toast.makeText(getActivity(), "서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "API 서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.drawable.btn_eng:
-                        Toast.makeText(getActivity(), "Server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.drawable.btn_china:
-                        Toast.makeText(getActivity(), "ㄴㅇㄹㅇㄴㄹ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -224,7 +224,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("스크랩");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("튜토리얼");
                         ((TextView) getActivity().findViewById(R.id.toolbar_title)).setText("약 성분 확인");
-                        Toast.makeText(getActivity(), "정보를 확인하고자 하는 의약품의 바코드 혹은 QR코드를 스캔해주세요.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "정보를 확인하고자 하는 의약품의 바코드 혹은 QR코드를 스캔해주세요.", Toast.LENGTH_SHORT).show();
                         break;
 
                     case R.drawable.btn_eng:
@@ -236,7 +236,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("Bookmarks");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("Tutorial");
                         ((TextView) getActivity().findViewById(R.id.toolbar_title)).setText("Drug Information");
-                        Toast.makeText(getActivity(), "Please scan the bar or QR code of the drug that you want to find information about.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Please scan the bar or QR code of the drug that you want to find information about.", Toast.LENGTH_SHORT).show();
                         break;
 
                     case R.drawable.btn_china:
@@ -248,7 +248,7 @@ public class ComponentScannerFragment extends Fragment implements View.OnClickLi
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_star_text)).setText("检索书签");
                         ((TextView) getActivity().findViewById(R.id.nav_drawer_tutorial_text)).setText("教程");
                         ((TextView) getActivity().findViewById(R.id.toolbar_title)).setText("确认药物成分");
-                        Toast.makeText(getActivity(), "请扫描您想要确认信息商品的条形码或二维码。", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "请扫描您想要确认信息商品的条形码或二维码。", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
