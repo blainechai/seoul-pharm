@@ -63,12 +63,12 @@ public class ConversationCustomTabView extends FrameLayout implements View.OnCli
         String postTabText = "";
 
         if (position == 0) {
-            postTabText = tabTexts.get(position+1);
-        } else if (position == (tabTexts.size()-1)) {
-            preTabText = tabTexts.get(position-1);
+            postTabText = tabTexts.get(position + 1);
+        } else if (position == (tabTexts.size() - 1)) {
+            preTabText = tabTexts.get(position - 1);
         } else {
-            preTabText = tabTexts.get(position-1);
-            postTabText = tabTexts.get(position+1);
+            preTabText = tabTexts.get(position - 1);
+            postTabText = tabTexts.get(position + 1);
         }
         currentTabText = tabTexts.get(position);
         currentTabPos = position;
@@ -85,12 +85,11 @@ public class ConversationCustomTabView extends FrameLayout implements View.OnCli
     }
 
 
-
     // CLICK EVENT
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.pre_tab_text :
+            case R.id.pre_tab_text:
                 if (currentTabPos > 0) {
                     // set Click event listener callback
                     mOnTabClcickedListener.onPreTabBtnClicked(currentTabPos - 1);
@@ -99,8 +98,8 @@ public class ConversationCustomTabView extends FrameLayout implements View.OnCli
                 }
                 break;
 
-            case R.id.post_tab_text :
-                if (currentTabPos < tabTexts.size()-1) {
+            case R.id.post_tab_text:
+                if (currentTabPos < tabTexts.size() - 1) {
                     // set Click event listener callback
                     mOnTabClcickedListener.onPostTabBtnClicked(currentTabPos + 1);
                     // move right animation
@@ -112,10 +111,13 @@ public class ConversationCustomTabView extends FrameLayout implements View.OnCli
 
     public interface OnTabClickedListener {
         public void onPreTabBtnClicked(int preTabPosition);
+
         public void onPostTabBtnClicked(int postTabPosition);
     }
+
     OnTabClickedListener mOnTabClcickedListener;
-    public void setOnTabClcickedListener (OnTabClickedListener onTabClickedListener) {
+
+    public void setOnTabClcickedListener(OnTabClickedListener onTabClickedListener) {
         mOnTabClcickedListener = onTabClickedListener;
     }
 

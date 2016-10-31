@@ -15,9 +15,11 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.daejong.seoulpharm.R;
+import com.daejong.seoulpharm.activity.ConversationActivity;
 import com.daejong.seoulpharm.activity.ConversationResultActivity;
 import com.daejong.seoulpharm.adapter.ConversationListAdapter;
 import com.daejong.seoulpharm.model.ConversationListItem;
+import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.view.ConversationHeaderView;
 
 import java.io.Serializable;
@@ -42,7 +44,7 @@ public class ConversationFragment extends Fragment {
     ConversationHeaderView headerView;
 
     Button confirmBtn;
-
+    Button languageButton;
 
     public ConversationFragment() {
         // Required empty public constructor
@@ -208,9 +210,10 @@ public class ConversationFragment extends Fragment {
         confirmBtn.setVisibility(View.GONE);
     }
 
-
+    /*
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+    */
 }

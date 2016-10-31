@@ -3,9 +3,11 @@ package com.daejong.seoulpharm.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.model.ConversationListItem;
+import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
  */
 public class ConversationListAdapter extends BaseAdapter {
 
-    List<ConversationListItem> items = new ArrayList<>();
+    public List<ConversationListItem> items = new ArrayList<>();
 
     public void add(ConversationListItem item) {
         items.add(item);
@@ -61,15 +63,23 @@ public class ConversationListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ConversationItemView view;
+        ConversationItemView view = null;
+
         if (convertView != null) {
             view = (ConversationItemView) convertView;
         } else {
             view = new ConversationItemView(parent.getContext());
         }
 
-        setViewSelected(view,items.get(position).isSelected());
-        view.setSymptomItem(items.get(position));
+        setViewSelected(view, items.get(position).isSelected());
+
+        if (LanguageSelector.getInstance().getCurrentLanguage() == R.drawable.btn_china) {
+            ((TextView) view.findViewById(R.id.symptom_text_foreign)).setText(items.get(position).getContentChi());
+            ((TextView) view.findViewById(R.id.symptom_text_kor)).setText(items.get(position).getContentKor());
+        } else {
+            ((TextView) view.findViewById(R.id.symptom_text_foreign)).setText(items.get(position).getContentEng());
+            ((TextView) view.findViewById(R.id.symptom_text_kor)).setText(items.get(position).getContentKor());
+        }
         return view;
     }
 
@@ -79,19 +89,6 @@ public class ConversationListAdapter extends BaseAdapter {
         } else {
             view.findViewById(R.id.list_item).setBackgroundResource(R.drawable.list_shadow);
         }
-        /*
-        if (isSelected) {
-            view.findViewById(R.id.list_item).setBackgroundResource(R.drawable.list_shadow_selected);
-            ((TextView)view.findViewById(R.id.symptom_text_foreign)).setTextColor(view.getResources().getColor(R.color.color_white));
-            TextView textKorView = (TextView)view.findViewById(R.id.symptom_text_kor);
-            textKorView.setTextColor(view.getResources().getColor(R.color.color_white));
-        } else {
-            view.findViewById(R.id.list_item).setBackgroundResource(R.drawable.list_shadow);
-            ((TextView)view.findViewById(R.id.symptom_text_foreign)).setTextColor(view.getResources().getColor(R.color.colorPrimary));
-            TextView textKorView = (TextView)view.findViewById(R.id.symptom_text_kor);
-            textKorView.setTextColor(view.getResources().getColor(R.color.color_nav_drawer_font));
-        }
-        */
     }
 
 /*

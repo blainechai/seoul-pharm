@@ -422,7 +422,7 @@ public class ComponentInfoFragment extends Fragment implements View.OnClickListe
                 int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
                 switch (currentLanguage) {
                     case R.drawable.btn_kor:
-                        Toast.makeText(getActivity(), "API 서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "API 서버가 혼잡합니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.drawable.btn_eng:
                         Toast.makeText(getActivity(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();

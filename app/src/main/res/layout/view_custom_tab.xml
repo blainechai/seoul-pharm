@@ -23,7 +23,6 @@
             android:gravity="left"
             android:foreground="?android:attr/selectableItemBackground"
             android:textColor="#AAAAAA"
-            android:textSize="15sp"
             android:text="PREV_TAB"/>
 
         <com.daejong.seoulpharm.widget.NotoTextView
@@ -39,7 +38,7 @@
             android:gravity="center"
             android:foreground="?android:attr/selectableItemBackground"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:text="CURRENT_TAB"/>
 
@@ -54,7 +53,6 @@
             android:gravity="right"
             android:foreground="?android:attr/selectableItemBackground"
             android:textColor="#AAAAAA"
-            android:textSize="15sp"
             android:text="POST_TAB"/>
     </LinearLayout>
     <!--

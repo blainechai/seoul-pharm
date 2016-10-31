@@ -1,6 +1,7 @@
 package com.daejong.seoulpharm.activity;
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
@@ -17,6 +18,7 @@ import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -368,17 +370,21 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         try {
             mLM = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-
             // 위치 정보 설정이 Enabled 상태인지 확인
             // Enabled 상태가 아니라면
-
             if (!mLM.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                 if (isFirst) {
                     isFirst = false;
-                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));        // 위치정보 설정으로 이동
+                    showLocationDlg();
                 } else {
-                    Toast.makeText(MainActivity.this, "위치 정보 설정이 꺼져 있습니다.", Toast.LENGTH_SHORT).show();
-                    finish();
+                    int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+                    if (currentLanguage == R.drawable.btn_kor) {
+                        Toast.makeText(MainActivity.this, "위치 정보 설정이 꺼져 있습니다.", Toast.LENGTH_SHORT).show();
+                    } else if (currentLanguage == R.drawable.btn_eng) {
+                        Toast.makeText(MainActivity.this, "Location setting is off.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "位置设置已关闭。", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 return;
             }
@@ -401,6 +407,31 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         } catch (SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showLocationDlg() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setIcon(R.drawable.ic_app_logo);
+        builder.setTitle("Seoul Pharm");
+        builder.setMessage(
+                "위치 정보 설정을 켜시겠습니까?\n\n"+
+                "Do you want to turn on location settings?\n\n" +
+                "您要开启位置资讯设定吗?"
+        );
+        builder.setPositiveButton("확인  YES  是", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));        // 위치정보 설정으로 이동
+            }
+        });
+        builder.setNegativeButton("취소  NO  没有", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dlg = builder.create();
+        dlg.show();
     }
 
     // ========== 현재 위치 정보 검색 해제 ========== //
@@ -641,7 +672,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 pum.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        // TODO Auto-generated method stub
                         switch (item.getItemId()) {//눌러진 MenuItem의 Item Id를 얻어와 식별
                             case R.id.menu_item_kor:
                                 LanguageSelector.getInstance().changeLanguage(R.drawable.btn_kor);

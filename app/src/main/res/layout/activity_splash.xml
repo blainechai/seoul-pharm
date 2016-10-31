@@ -11,4 +11,14 @@
         android:layout_height="match_parent"
         android:src="@drawable/ic_spash_logo"/>
 
+    <com.daejong.seoulpharm.widget.NotoTextView
+        android:id="@+id/notice_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="초기 DB를 설정중입니다."
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="120dp"/>
+
 </RelativeLayout>

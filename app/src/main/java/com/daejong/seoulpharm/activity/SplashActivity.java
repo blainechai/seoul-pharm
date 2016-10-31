@@ -2,20 +2,24 @@ package com.daejong.seoulpharm.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.PharmItem;
+import com.daejong.seoulpharm.widget.NotoTextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,13 +55,26 @@ public class SplashActivity extends AppCompatActivity {
     Runnable goToMainRunnable = new Runnable() {
         @Override
         public void run() {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish();
+            if (isFirstLaunched) {
+                startActivity(new Intent(SplashActivity.this, TutorialActivity.class));
+                finish();
+            } else {
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                finish();
+            }
             mHandler.removeCallbacks(goToMainRunnable);
         }
     };
 
     DBHelper db;
+
+    NotoTextView noticeTextView;
+
+    public static final String IS_FIRST_LAUNCHED = "IS_FIRST_LAUNCHED";
+    boolean isFirstLaunched;
+
+    SharedPreferences mPrefs;
+    SharedPreferences.Editor mEditor;
 
 
     @Override
@@ -71,6 +88,12 @@ public class SplashActivity extends AppCompatActivity {
             mHandler.sendEmptyMessage(MESSAGE_PERMISSION_CHECKED);
         }
 
+        // Check First Launched
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(SplashActivity.this);
+        isFirstLaunched = mPrefs.getBoolean("IS_FIRST_LAUNCHED", true);
+
+        noticeTextView = (NotoTextView) findViewById(R.id.notice_text);
+        noticeTextView.setText("");
     }
 
     /** 1. DB Initialize
@@ -80,6 +103,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final int DB_ROW_COUNT = 550;
     private boolean checkDBInitialized() {
         if (db.getPharmRowCount() != DB_ROW_COUNT) {
+            noticeTextView.setText("초기 DB를 설정중입니다.");
             InputStream inputStream = getResources().openRawResource(R.raw.seoul_pharm_data_complete);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -110,9 +134,10 @@ public class SplashActivity extends AppCompatActivity {
                     item.setLatitude(row[14]);
 
                     db.addPharmItem(item);
-                    Log.d("!!! DB Initializing !!!", "DATA : " + row[1]);
+//                    Log.d("!!! DB Initializing !!!", "DATA : " + row[1]);
                 }
                 mHandler.sendEmptyMessage(MESSAGE_DB_INITIALIZED);
+                noticeTextView.setText("");
                 return true;
             } catch (IOException ex) {
                 throw new RuntimeException("Error iv reading CSV file:" + ex);

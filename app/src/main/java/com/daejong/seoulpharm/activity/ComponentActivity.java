@@ -62,9 +62,11 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.nav_drawer_conversation_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_map_btn).setOnClickListener(this);
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_dasan_call_btn).setOnClickListener(this);
+        findViewById(R.id.nav_drawer_tutorial).setOnClickListener(this);
 
 
-        Button languageButton = (Button) findViewById(R.id.spinner);
+        languageButton = (Button) findViewById(R.id.spinner);
         languageButton.setOnClickListener(this);
 
 //        Spinner spin = (Spinner) findViewById(R.id.spinner);
@@ -174,10 +176,17 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.nav_drawer_conversation_btn:
                 drawerLayout.closeDrawers();
-                finish();
                 startActivity(new Intent(ComponentActivity.this, ConversationActivity.class));
+                finish();
                 break;
-
+            case R.id.nav_drawer_tutorial :
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(ComponentActivity.this, TutorialActivity.class));
+                break;
+            case R.id.nav_drawer_dasan_call_btn :
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(ComponentActivity.this, DasanCallActivity.class));
+                break;
             case R.id.spinner:
                 PopupMenu pum = new PopupMenu(this, findViewById(R.id.spinner));
                 getMenuInflater().inflate(R.menu.language_chooser_popup, pum.getMenu());

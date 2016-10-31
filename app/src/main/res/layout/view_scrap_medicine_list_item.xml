@@ -19,15 +19,17 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="57dp"
-                android:layout_height="57dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:id="@+id/medicine_image_view"
                 android:src="@drawable/ic_medicine_photo_background"
                 android:adjustViewBounds="true" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                android:layout_weight="1"
+                android:padding="@dimen/activity_vertical_margin"
                 android:orientation="vertical">
 
                 <com.daejong.seoulpharm.widget.NotoTextView
