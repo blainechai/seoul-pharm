@@ -27,9 +27,9 @@ public class ConversationItemView extends FrameLayout {
         symptomForeignView = (NotoTextView) findViewById(R.id.symptom_text_foreign);
     }
 
-    public void setSymptomItem (ConversationListItem item) {
+    public void setSymptomItem (ConversationListItem item, String foreignContent) {
         symptomKoreanView.setText(item.getContentKor());
-        symptomForeignView.setText(item.getContentEng());
+        symptomForeignView.setText(foreignContent);
     }
 
 }

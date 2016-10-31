@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.daejong.seoulpharm.R;
@@ -44,7 +47,8 @@ public class ConversationFragment extends Fragment {
     ConversationHeaderView headerView;
 
     Button confirmBtn;
-
+    Button languageButton;
+    ViewPager pager;
 
     public ConversationFragment() {
         // Required empty public constructor
@@ -88,68 +92,10 @@ public class ConversationFragment extends Fragment {
         listView.setAdapter(mAdapter);
         headerView = new ConversationHeaderView(getContext());
         listView.addHeaderView(headerView);
+        pager = (ViewPager) getActivity().findViewById(R.id.pager);
 
-        switch (type) {
-
-            case TYPE_SKIN :
-                headerView.setHeaderImage(R.drawable.ic_conversation_sample_1);
-                mAdapter.add(new ConversationListItem("베임", "Cut", "割破"));
-                mAdapter.add(new ConversationListItem("찰과상", "Abrasion", "擦破皮"));
-                mAdapter.add(new ConversationListItem("화상", "Burn", "火伤"));
-                mAdapter.add(new ConversationListItem("멍", "Bruise", "青肿"));
-                mAdapter.add(new ConversationListItem("부어오름", "Swelling", "肿"));
-                mAdapter.add(new ConversationListItem("두드러기", "Hives", "风疹块"));
-                mAdapter.add(new ConversationListItem("가려움", "Itching", "瘙痒"));
-                mAdapter.add(new ConversationListItem("발진", "Rash", "疹"));
-                mAdapter.add(new ConversationListItem("물집", "Blisters", "疱"));
-                mAdapter.add(new ConversationListItem("염증", "Inflammation", "炎症"));
-
-                break;
-
-            case TYPE_RESPIRATORY :
-                headerView.setHeaderImage(R.drawable.ic_conversation_sample_2);
-                mAdapter.add(new ConversationListItem("기침", "Cough", "感冒"));
-                mAdapter.add(new ConversationListItem("쌕쌕거림", "Wheezing", "喘息"));
-                mAdapter.add(new ConversationListItem("숨 참", "Shortness of breath", "气喘"));
-                mAdapter.add(new ConversationListItem("코감기", "Nasal congestion", "伤风"));
-                mAdapter.add(new ConversationListItem("재채기", "Sneezing", "喷嚏"));
-                mAdapter.add(new ConversationListItem("가슴 통증", "Chest pain", "胸痛"));
-                mAdapter.add(new ConversationListItem("호흡곤란", "Dyspnoea", "喉急"));
-
-                break;
-
-            case TYPE_GASTROINTESTINAL :
-                headerView.setHeaderImage(R.drawable.ic_conversation_sample_3);
-                mAdapter.add(new ConversationListItem("메스꺼움", "Nausea", "恶心"));
-                mAdapter.add(new ConversationListItem("소화불량", "Indigestion", "消化不良"));
-                mAdapter.add(new ConversationListItem("복통", "Stomach pain", "腹痛"));
-                mAdapter.add(new ConversationListItem("위 경련", "Stomach cramp", "胃痉挛"));
-                mAdapter.add(new ConversationListItem("구토", "Vomiting", "呕吐"));
-                mAdapter.add(new ConversationListItem("설사", "Diarrhea", "腹泻"));
-                mAdapter.add(new ConversationListItem("변비", "Constipation", "便秘"));
-
-                break;
-
-            case TYPE_CARDIOVASCULAR :
-                headerView.setHeaderImage(R.drawable.ic_conversation_sample_4);
-                mAdapter.add(new ConversationListItem("빈혈", "Anemia", "贫血"));
-                mAdapter.add(new ConversationListItem("어지럼증", "Dizziness", "眩晕症"));
-                mAdapter.add(new ConversationListItem("창백함", "Paleness", "苍白"));
-                mAdapter.add(new ConversationListItem("약한 맥박", "Weak pulse", "脉搏弱"));
-
-                break;
-
-            case TYPE_NEUROLOGICAL :
-                headerView.setHeaderImage(R.drawable.ic_conversation_sample_5);
-                mAdapter.add(new ConversationListItem("두통", "Headache", "头痛"));
-                mAdapter.add(new ConversationListItem("편두통", "Migrate", "偏头痛"));
-                mAdapter.add(new ConversationListItem("지끈거림", "Throbing", "岑岑"));
-                mAdapter.add(new ConversationListItem("불안증", "Anxiety", "焦虑症"));
-                mAdapter.add(new ConversationListItem("공황장애", "Panic\ndisorder", "惊恐症"));
-
-                break;
-        }
-
+        languageButton = (Button) getActivity().findViewById(R.id.spinner);
+        addItemToAdapter();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -187,7 +133,8 @@ public class ConversationFragment extends Fragment {
 
         });
 
-
+        setOnLanguageChangeListener();
+        LanguageSelector.getInstance().syncLanguage();
         // Click Confirm Button
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,4 +163,95 @@ public class ConversationFragment extends Fragment {
         super.onAttach(context);
     }
     */
+
+    void setOnLanguageChangeListener() {
+        LanguageSelector.OnLanguageChangeListener mOnLanguageChangeListener = new LanguageSelector.OnLanguageChangeListener() {
+            @Override
+            public void setViewContentsByLanguage(int id) {
+                languageButton.setBackgroundResource(id);
+                listView.setAdapter(mAdapter);
+                addItemToAdapter();
+                confirmBtn.setVisibility(View.VISIBLE);
+                switch (id) {
+                    case R.drawable.btn_kor:
+                        break;
+
+                    case R.drawable.btn_eng:
+
+                        break;
+
+                    case R.drawable.btn_china:
+
+                        break;
+                }
+
+                Log.e("$$$$$", "changed");
+            }
+        };
+        LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);
+    }
+
+    void addItemToAdapter() {
+        mAdapter.notifyDataSetChanged();
+        switch (type) {
+            case TYPE_SKIN:
+                headerView.setHeaderImage(R.drawable.ic_conversation_sample_1);
+                mAdapter.add(new ConversationListItem("베임", "Cut", "割破"));
+                mAdapter.add(new ConversationListItem("찰과상", "Abrasion", "擦破皮"));
+                mAdapter.add(new ConversationListItem("화상", "Burn", "火伤"));
+                mAdapter.add(new ConversationListItem("멍", "Bruise", "青肿"));
+                mAdapter.add(new ConversationListItem("부어오름", "Swelling", "肿"));
+                mAdapter.add(new ConversationListItem("두드러기", "Hives", "风疹块"));
+                mAdapter.add(new ConversationListItem("가려움", "Itching", "瘙痒"));
+                mAdapter.add(new ConversationListItem("발진", "Rash", "疹"));
+                mAdapter.add(new ConversationListItem("물집", "Blisters", "疱"));
+                mAdapter.add(new ConversationListItem("염증", "Inflammation", "炎症"));
+
+                break;
+
+            case TYPE_RESPIRATORY:
+                headerView.setHeaderImage(R.drawable.ic_conversation_sample_2);
+                mAdapter.add(new ConversationListItem("기침", "Cough", "感冒"));
+                mAdapter.add(new ConversationListItem("쌕쌕거림", "Wheezing", "喘息"));
+                mAdapter.add(new ConversationListItem("숨 참", "Shortness of breath", "气喘"));
+                mAdapter.add(new ConversationListItem("코감기", "Nasal congestion", "伤风"));
+                mAdapter.add(new ConversationListItem("재채기", "Sneezing", "喷嚏"));
+                mAdapter.add(new ConversationListItem("가슴 통증", "Chest pain", "胸痛"));
+                mAdapter.add(new ConversationListItem("호흡곤란", "Dyspnoea", "喉急"));
+
+                break;
+
+            case TYPE_GASTROINTESTINAL:
+                headerView.setHeaderImage(R.drawable.ic_conversation_sample_3);
+                mAdapter.add(new ConversationListItem("메스꺼움", "Nausea", "恶心"));
+                mAdapter.add(new ConversationListItem("소화불량", "Indigestion", "消化不良"));
+                mAdapter.add(new ConversationListItem("복통", "Stomach pain", "腹痛"));
+                mAdapter.add(new ConversationListItem("위 경련", "Stomach cramp", "胃痉挛"));
+                mAdapter.add(new ConversationListItem("구토", "Vomiting", "呕吐"));
+                mAdapter.add(new ConversationListItem("설사", "Diarrhea", "腹泻"));
+                mAdapter.add(new ConversationListItem("변비", "Constipation", "便秘"));
+
+                break;
+
+            case TYPE_CARDIOVASCULAR:
+                headerView.setHeaderImage(R.drawable.ic_conversation_sample_4);
+                mAdapter.add(new ConversationListItem("빈혈", "Anemia", "贫血"));
+                mAdapter.add(new ConversationListItem("어지럼증", "Dizziness", "眩晕症"));
+                mAdapter.add(new ConversationListItem("창백함", "Paleness", "苍白"));
+                mAdapter.add(new ConversationListItem("약한 맥박", "Weak pulse", "脉搏弱"));
+
+                break;
+
+            case TYPE_NEUROLOGICAL:
+                headerView.setHeaderImage(R.drawable.ic_conversation_sample_5);
+                mAdapter.add(new ConversationListItem("두통", "Headache", "头痛"));
+                mAdapter.add(new ConversationListItem("편두통", "Migrate", "偏头痛"));
+                mAdapter.add(new ConversationListItem("지끈거림", "Throbing", "岑岑"));
+                mAdapter.add(new ConversationListItem("불안증", "Anxiety", "焦虑症"));
+                mAdapter.add(new ConversationListItem("공황장애", "Panic\ndisorder", "惊恐症"));
+
+                break;
+        }
+        pager.destroyDrawingCache();
+    }
 }

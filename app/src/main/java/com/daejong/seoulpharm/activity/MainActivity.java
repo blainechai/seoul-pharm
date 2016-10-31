@@ -637,7 +637,6 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 pum.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        // TODO Auto-generated method stub
                         switch (item.getItemId()) {//눌러진 MenuItem의 Item Id를 얻어와 식별
                             case R.id.menu_item_kor:
                                 LanguageSelector.getInstance().changeLanguage(R.drawable.btn_kor);
@@ -768,7 +767,7 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                 toolbarTitle.setText("약국 찾기");
                 currentRefreshView.setText("위치 재설정");
                 ((TextView) findViewById(R.id.btn_component)).setText("약 성분 확인");
-                ((TextView) findViewById(R.id.btn_conversation)).setText("증상설");
+                ((TextView) findViewById(R.id.btn_conversation)).setText("증상설명");
                 ((TextView) findViewById(R.id.btn_scrap)).setText("스크랩");
                 ((TextView) findViewById(R.id.btn_dasan)).setText("다산콜센터");
                 break;

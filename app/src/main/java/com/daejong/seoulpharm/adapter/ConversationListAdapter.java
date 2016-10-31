@@ -3,9 +3,11 @@ package com.daejong.seoulpharm.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.model.ConversationListItem;
+import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.view.ConversationItemView;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
  */
 public class ConversationListAdapter extends BaseAdapter {
 
-    List<ConversationListItem> items = new ArrayList<>();
+    public List<ConversationListItem> items = new ArrayList<>();
 
     public void add(ConversationListItem item) {
         items.add(item);
@@ -61,15 +63,19 @@ public class ConversationListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ConversationItemView view;
-        if (convertView != null) {
-            view = (ConversationItemView) convertView;
-        } else {
-            view = new ConversationItemView(parent.getContext());
-        }
+        ConversationItemView view = new ConversationItemView(parent.getContext());
 
-        setViewSelected(view,items.get(position).isSelected());
-        view.setSymptomItem(items.get(position));
+        setViewSelected(view, items.get(position).isSelected());
+
+        if (LanguageSelector.getInstance().getCurrentLanguage() == R.drawable.btn_china) {
+//            view.setSymptomItem(items.get(position), items.get(position).getContentChi());
+            ((TextView) view.findViewById(R.id.symptom_text_foreign)).setText(items.get(position).getContentChi());
+            ((TextView) view.findViewById(R.id.symptom_text_kor)).setText(items.get(position).getContentKor());
+        } else {
+//            view.setSymptomItem(items.get(position), items.get(position).getContentEng());
+            ((TextView) view.findViewById(R.id.symptom_text_foreign)).setText(items.get(position).getContentEng());
+            ((TextView) view.findViewById(R.id.symptom_text_kor)).setText(items.get(position).getContentKor());
+        }
         return view;
     }
 

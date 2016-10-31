@@ -8,8 +8,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.adapter.TabsAdapter;
 import com.daejong.seoulpharm.fragment.ConversationFragment;
+import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.view.ConversationCustomTabView;
 import com.daejong.seoulpharm.widget.NotoTextView;
 
@@ -102,7 +105,6 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_GASTROINTESTINAL).setIndicator("소화"), ConversationFragment.class, tabParams[2]);
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_CARDIOVASCULAR).setIndicator("심혈"), ConversationFragment.class, tabParams[3]);
         mAdapter.addTab(tabHost.newTabSpec(TAB_ID_NEUROLOGICAL).setIndicator("신경"), ConversationFragment.class, tabParams[4]);
-
     }
 
     @Override
@@ -118,6 +120,11 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 startActivity(new Intent(ConversationActivity.this, MainActivity.class));
                 finish();
                 break;
+            case R.id.nav_drawer_dasan_call_btn:
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(ConversationActivity.this, DasanCallActivity.class));
+                finish();
+                break;
             case R.id.nav_drawer_component_btn:
                 drawerLayout.closeDrawers();
                 startActivity(new Intent(ConversationActivity.this, ComponentActivity.class));
@@ -125,6 +132,8 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.nav_drawer_star_btn:
                 drawerLayout.closeDrawers();
+                startActivity(new Intent(ConversationActivity.this, ScrapActivity.class));
+                finish();
                 break;
             case R.id.nav_drawer_conversation_btn:
                 drawerLayout.closeDrawers();
@@ -132,6 +141,38 @@ public class ConversationActivity extends AppCompatActivity implements View.OnCl
             case R.id.nav_drawer_main_btn:
                 drawerLayout.closeDrawers();
                 finish();
+                break;
+            case R.id.nav_drawer_tutorial :
+                drawerLayout.closeDrawers();
+                startActivity(new Intent(ConversationActivity.this, TutorialActivity.class));
+                break;
+
+            case R.id.spinner:
+                PopupMenu pum = new PopupMenu(ConversationActivity.this, findViewById(R.id.spinner));
+                getMenuInflater().inflate(R.menu.language_chooser_popup, pum.getMenu());
+                pum.show();
+                pum.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {//눌러진 MenuItem의 Item Id를 얻어와 식별
+                            case R.id.menu_item_kor:
+                                LanguageSelector.getInstance().changeLanguage(R.drawable.btn_kor);
+                                mAdapter.notifyDataSetChanged();
+                                break;
+
+                            case R.id.menu_item_eng:
+                                LanguageSelector.getInstance().changeLanguage(R.drawable.btn_eng);
+                                mAdapter.notifyDataSetChanged();
+                                break;
+
+                            case R.id.menu_item_china:
+                                LanguageSelector.getInstance().changeLanguage(R.drawable.btn_china);
+                                mAdapter.notifyDataSetChanged();
+                                break;
+                        }
+                        return false;
+                    }
+                });
                 break;
         }
     }

@@ -64,7 +64,7 @@ public class ComponentActivity extends AppCompatActivity implements View.OnClick
         findViewById(R.id.nav_drawer_star_btn).setOnClickListener(this);
 
 
-        Button languageButton = (Button) findViewById(R.id.spinner);
+        languageButton = (Button) findViewById(R.id.spinner);
         languageButton.setOnClickListener(this);
 
 //        Spinner spin = (Spinner) findViewById(R.id.spinner);
