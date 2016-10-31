@@ -16,7 +16,7 @@
     <string name="dasan_kor_available_time">외국어 상담 서비스 시간은\n월~금 09:00-19:00 입니다.</string>
 
     <string name="dasan_eng_plz_touch_icon">Please click the icon</string>
-    <string name="dasan_eng_need_help">Do you need help? Contact Dasan Call Center.</string>
+    <string name="dasan_eng_need_help">Do you need help?\nContact Dasan Call Center.</string>
     <string name="dasan_eng_description">1. Select the icon and connect to Dasan Call Center.\n2. Request a foreigner inquiry service by pressing ‘9’.\n3. Press ‘1’ for English, ‘2’ for Chinese, 3 for Japanese,\n‘4’ for Vietnamese and ‘5’ for Mongolian.</string>
     <string name="dasan_eng_available_time">Service hours are\nMonday thru Friday 09:00am - 07:00 pm,\nweekdays only.</string>
 
