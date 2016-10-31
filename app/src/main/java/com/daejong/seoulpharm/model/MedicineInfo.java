@@ -20,12 +20,13 @@ public class MedicineInfo implements Serializable{
     private String caution;
     private String itemSeq;
     private String imageSrc;
+    private String barcode;
 
 
     public MedicineInfo() {
     }
 
-    public MedicineInfo(String name, String company, ArrayList<String> components, String effect, String usage, String caution, String itemSeq, String imageSrc) {
+    public MedicineInfo(String name, String company, ArrayList<String> components, String effect, String usage, String caution, String itemSeq, String imageSrc, String barcode) {
         this.name = name;
         this.company = company;
         this.components = components;
@@ -34,6 +35,7 @@ public class MedicineInfo implements Serializable{
         this.caution = caution;
         this.itemSeq = itemSeq;
         this.imageSrc = imageSrc;
+        this.barcode = barcode;
     }
 
     public String getName() {
@@ -100,6 +102,14 @@ public class MedicineInfo implements Serializable{
         this.imageSrc = imageSrc;
     }
 
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
     @Override
     public String toString() {
         String rtn ="";
@@ -112,6 +122,7 @@ public class MedicineInfo implements Serializable{
         rtn+=this.itemSeq;
         return rtn;
     }
+
 
     public Drawable loadImageFromWebOperations() {
         try {

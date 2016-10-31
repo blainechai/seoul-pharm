@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.db.DBHelper;
 import com.daejong.seoulpharm.model.MedicineInfo;
+import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.widget.NotoTextView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -50,10 +52,10 @@ public class ScrapMedicineItemView extends FrameLayout {
             public void onClick(View view) {
                 // Delete item in DB
                 DBHelper db = new DBHelper(getContext());
-                db.deleteMedicineScrapped(item.getItemSeq());
+                db.deleteMedicineScrapped(item.getBarcode());
 
                 // Delete item in Adapter
-                mOnDeleteButtonClickListener.onDeleteButtonClicked(item.getItemSeq());
+                mOnDeleteButtonClickListener.onDeleteButtonClicked(item.getBarcode());
             }
         });
 
@@ -72,14 +74,23 @@ public class ScrapMedicineItemView extends FrameLayout {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Bitmap image = BitmapFactory.decodeByteArray(responseBody, 0, responseBody.length);
-                Log.d("***********", item.getImageSrc());
                 medicineImage.setImageBitmap(image);
-//                resultContainer.addView(imageView);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+                switch (currentLanguage) {
+                    case R.drawable.btn_kor:
+                        Toast.makeText(getContext(), "API 서버가 혼잡한니다. 바코드를 다시 스캔하여주세요.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_eng:
+                        Toast.makeText(getContext(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.drawable.btn_china:
+                        Toast.makeText(getContext(), "API server is busy. Please scan the barcode again.", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
     }

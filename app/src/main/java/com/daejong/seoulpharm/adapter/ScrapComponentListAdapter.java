@@ -54,7 +54,7 @@ public class ScrapComponentListAdapter extends BaseAdapter implements ScrapMedic
     @Override
     public void onDeleteButtonClicked(String deleteKey) {
         for (int pos = 0; pos < componentItems.size(); pos++) {
-            if (componentItems.get(pos).getItemSeq().equals(deleteKey)) {
+            if (componentItems.get(pos).getBarcode().equals(deleteKey)) {
                 componentItems.remove(pos);
                 notifyDataSetChanged();
             }

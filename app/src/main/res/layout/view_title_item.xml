@@ -16,14 +16,14 @@
             android:layout_width="2dp"
             android:layout_height="16dp"
             android:layout_gravity="center_vertical"
-            android:layout_margin="6dp"
+            android:layout_marginLeft="14dp"
             android:src="@drawable/ic_component_line" />
 
         <com.daejong.seoulpharm.widget.NotoTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="10dp"
             android:text="제조"
             android:textColor="#76a6f0"
             android:textSize="16sp"
