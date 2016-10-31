@@ -194,6 +194,12 @@ public class DasanCallActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setOnLanguageChangeListener();
+        LanguageSelector.getInstance().syncLanguage();
+    }
 
     //set about language
     void setOnLanguageChangeListener() {

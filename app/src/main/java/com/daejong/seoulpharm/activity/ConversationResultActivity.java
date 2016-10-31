@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.daejong.seoulpharm.R;
 import com.daejong.seoulpharm.model.ConversationListItem;
+import com.daejong.seoulpharm.util.LanguageSelector;
 import com.daejong.seoulpharm.view.ConversationResultView;
 
 import java.util.List;
@@ -33,7 +34,14 @@ public class ConversationResultActivity extends AppCompatActivity {
         ConversationResultView view = null;
         for (ConversationListItem item : items) {
             String kor = item.getContentKor();
-            String foreign = item.getContentEng();
+            String foreign = "";
+
+            int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+            if (currentLanguage == R.drawable.btn_china) {
+                foreign = item.getContentChi();
+            } else {
+                foreign = item.getContentEng();
+            }
 
             view = new ConversationResultView(this);
             view.setLayoutParams(new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));

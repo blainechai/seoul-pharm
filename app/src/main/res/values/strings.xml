@@ -23,6 +23,6 @@
     <string name="dasan_chi_plz_touch_icon">请点击图标</string>
     <string name="dasan_chi_need_help">需要帮助吗？请咨询</string>
     <string name="dasan_chi_description">1.按按钮，链接呼叫中心（120）\n2.按9，邀请外语咨询服务\n3.英语选1，中文选2，日语选3，\n越南语选4，蒙古语选5</string>
-    <string name="dasan_chi_available_time">外语咨询世界如下：\n周一到周五9:00-19:00</string>
+    <string name="dasan_chi_available_time">外语咨询世界如下：\n周一到周五 09:00-19:00</string>
 
 </resources>

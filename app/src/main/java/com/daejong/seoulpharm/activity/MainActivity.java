@@ -187,7 +187,14 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         switch (mode) {
             case MODE_MAP_DETAIL:
                 // set toolbar title
-                toolbarTitle.setText(TITLE_MAP_DETAIL);
+                int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+                if (currentLanguage == R.drawable.btn_kor) {
+                    toolbarTitle.setText("약국 찾기");
+                } else if (currentLanguage == R.drawable.btn_eng) {
+                    toolbarTitle.setText("Search Pharmacies");
+                } else {
+                    toolbarTitle.setText("寻找药店");
+                }
 
                 // container gone
                 btnContainer.setVisibility(View.GONE);
@@ -227,8 +234,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
 
     // MAP DETAIL PANEL
     boolean isBookmarked;
-
+    PharmItem selectedItem;
     private void setDetailPanels(final PharmItem item) {
+
+        selectedItem = item;
 
         // SET VISIBILITY AND ANIMATION
         if (mapDetailContainer.getVisibility() == View.GONE) {
@@ -247,10 +256,8 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         }
 
         // SET TEXTS
-        detailNameView.setText(item.getNameKor());
-        detailAvailableLanguageView.setText("| 외국어 가능 약국 |   " + item.getAvailLanKor());
-        detailAddressView.setText(item.getAddressKor());
-        detailTelephoneView.setText("Tel )  " + item.getTel());
+        int currentLanguage = LanguageSelector.getInstance().getCurrentLanguage();
+        initMapDetailPanelsLanguageText(currentLanguage, selectedItem);
 
         // SET CLICK EVENT LISTENER
         detailCallBtn.setOnClickListener(new View.OnClickListener() {
@@ -711,11 +718,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                             ((TextView) findViewById(R.id.nav_drawer_star_text)).setText("스크랩");
                             ((TextView) findViewById(R.id.nav_drawer_tutorial_text)).setText("튜토리얼");
 
-                            ((TextView) findViewById(R.id.btn_component)).setText("약 성분 확인");
-                            ((TextView) findViewById(R.id.btn_conversation)).setText("증상설");
-                            ((TextView) findViewById(R.id.btn_scrap)).setText("스크랩");
-                            ((TextView) findViewById(R.id.btn_dasan)).setText("다산콜센터");
-
+                            initMainViewsLanguageText(id);
+                            if (selectedItem != null) {
+                                initMapDetailPanelsLanguageText(id, selectedItem);
+                            }
 
                             break;
 
@@ -728,10 +734,10 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                             ((TextView) findViewById(R.id.nav_drawer_star_text)).setText("Bookmarks");
                             ((TextView) findViewById(R.id.nav_drawer_tutorial_text)).setText("Tutorial");
 
-                            ((TextView) findViewById(R.id.btn_component)).setText("Drug Information");
-                            ((TextView) findViewById(R.id.btn_conversation)).setText("Translate Symptoms");
-                            ((TextView) findViewById(R.id.btn_scrap)).setText("Bookmarks");
-                            ((TextView) findViewById(R.id.btn_dasan)).setText("Dasan Call Center");
+                            initMainViewsLanguageText(id);
+                            if (selectedItem != null) {
+                                initMapDetailPanelsLanguageText(id, selectedItem);
+                            }
 
                             break;
 
@@ -742,13 +748,12 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
                             ((TextView) findViewById(R.id.nav_drawer_component_text)).setText("确认药品成分");
                             ((TextView) findViewById(R.id.nav_drawer_dasan_call_text)).setText("首尔茶山热线");
                             ((TextView) findViewById(R.id.nav_drawer_star_text)).setText("检索书签");
-
                             ((TextView) findViewById(R.id.nav_drawer_tutorial_text)).setText("教程");
-                            ((TextView) findViewById(R.id.btn_component)).setText("说明症状");
-                            ((TextView) findViewById(R.id.btn_conversation)).setText("说明症状");
-                            ((TextView) findViewById(R.id.btn_scrap)).setText("检索书签");
-                            ((TextView) findViewById(R.id.btn_dasan)).setText("首尔茶山热线");
 
+                            initMainViewsLanguageText(id);
+                            if (selectedItem != null) {
+                                initMapDetailPanelsLanguageText(id, selectedItem);
+                            }
 
                             break;
                     }
@@ -756,4 +761,58 @@ public class MainActivity extends NMapActivity implements View.OnClickListener, 
         };
         LanguageSelector.getInstance().setOnLanguageChangeListener(mOnLanguageChangeListener);
     }
+
+    private void initMainViewsLanguageText(int currentLanguage) {
+        switch (currentLanguage) {
+            case R.drawable.btn_kor :
+                toolbarTitle.setText("약국 찾기");
+                currentRefreshView.setText("위치 재설정");
+                ((TextView) findViewById(R.id.btn_component)).setText("약 성분 확인");
+                ((TextView) findViewById(R.id.btn_conversation)).setText("증상설");
+                ((TextView) findViewById(R.id.btn_scrap)).setText("스크랩");
+                ((TextView) findViewById(R.id.btn_dasan)).setText("다산콜센터");
+                break;
+            case R.drawable.btn_eng :
+                toolbarTitle.setText("Search Pharmacies");
+                currentRefreshView.setText("Current location");
+                ((TextView) findViewById(R.id.btn_component)).setText("Drug Info");
+                ((TextView) findViewById(R.id.btn_conversation)).setText("Translate\nSymptoms");
+                ((TextView) findViewById(R.id.btn_scrap)).setText("Bookmarks");
+                ((TextView) findViewById(R.id.btn_dasan)).setText("Dasan\nCall Center");
+                break;
+            case R.drawable.btn_china :
+                toolbarTitle.setText("寻找药店");
+                currentRefreshView.setText("重设位置");
+                ((TextView) findViewById(R.id.btn_component)).setText("说明症状");
+                ((TextView) findViewById(R.id.btn_conversation)).setText("说明症状");
+                ((TextView) findViewById(R.id.btn_scrap)).setText("检索书签");
+                ((TextView) findViewById(R.id.btn_dasan)).setText("首尔茶山热线");
+                break;
+        }
+    }
+
+    private void initMapDetailPanelsLanguageText(int currentLanguage, PharmItem item) {
+        switch (currentLanguage) {
+            case R.drawable.btn_kor :
+                detailNameView.setText(item.getNameKor());
+                detailAvailableLanguageView.setText("| 외국어 가능 약국 |   " + item.getAvailLanKor());
+                detailAddressView.setText(item.getAddressKor());
+                break;
+
+            case R.drawable.btn_eng :
+                detailNameView.setText(item.getNameEng());
+                detailAvailableLanguageView.setText("| Available language |   " + item.getAvailLanEng());
+                detailAddressView.setText(item.getAddressEng());
+                break;
+
+            case R.drawable.btn_china :
+                detailNameView.setText(item.getNameChi());
+                detailAvailableLanguageView.setText("| 可以讲外语的药店 |   " + item.getAvailLanChi());
+                detailAddressView.setText(item.getAddressEng());
+                break;
+        }
+        detailTelephoneView.setText("Tel )  " + item.getTel());
+
+    }
+
 }

@@ -51,7 +51,7 @@ public class ConversationCustomTabView extends FrameLayout implements View.OnCli
         postTabTextView.setOnClickListener(this);
     }
 
-    private void initTabContents(String preTabText, String currentTabText, String postTabText) {
+    public void initTabContents(String preTabText, String currentTabText, String postTabText) {
         preTabTextView.setText(preTabText);
         currentTabTextView.setText(currentTabText);
         postTabTextView.setText(postTabText);
